@@ -1,0 +1,51 @@
+<%=render :partial=>'add_generators'%>
+
+<h1>New dialogue_line</h1>
+Room id:  <%= params[:room_id] %>
+<br />
+<br />
+
+
+
+<% form_for([@section,@room,@dialogue_line]) do |f| %>
+  <%= f.error_messages %>
+
+  Dialogue line visible when player enters room for first time?
+  <%= f.check_box :visible %><br />
+
+<div id="generator_select_area">
+
+ <p>
+     <%= f.label  :line_generator_type %><br />
+     <%= f.collection_select(:line_generator_type, @all_generators,:line_generator_type, :line_generator_type, {:prompt =>"Choose One"},
+                        :onchange => remote_function(:url => {:action => :find_generators},
+                        :with => "'value=' + value"))%>
+  </p>
+
+ <p>
+    <div id="select_space">Please choose from the list above.  Another list will then appear here.</div>
+</p>
+</div>
+
+
+
+  
+  <%= f.hidden_field :room_id, :value => "#{params[:room_id]}" %>
+  
+  
+
+  <p>
+    <%= f.label :content %><br />
+    <%= f.text_area :content, :class => "mceEditor" %>
+  </p>
+
+
+  
+ 
+
+
+
+  <p>
+    <%= f.submit 'Create line' %> <%= link_to 'Back to list', section_room_dialogue_lines_path %>
+  </p>
+<% end %>

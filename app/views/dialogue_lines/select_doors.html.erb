@@ -1,0 +1,63 @@
+Select doors that this dialogue line unlocks.
+
+<% form_for([@section,@room,@dialogue_line]) do |f|  %>
+
+<%= hidden_field_tag "dialogue_line[door_ids][]", "" %>
+<table>
+  <tr><td></td><th>Door to room . . .</th><td></td>
+</tr>
+<% for door in Door.find_all_by_child_room_id(params[:room_id]) %>
+  
+<tr>
+
+    <td><%= check_box_tag "dialogue_line[door_ids][]", door.id, @dialogue_line.doors.include?(door) %>
+    </td>
+
+
+  <td><%=door.parent_room.name %>
+    </td>
+
+    <td>
+      <% if door.door_direction == "vertical" %>
+        <%= add_door_img_dl("top",door.parent_room) %>
+      <%else%>
+        <%= add_door_img_dl("left",door.parent_room) %>
+      <% end %>
+
+    </td>
+    
+  
+
+</tr>
+<% end %>
+
+<% for door in Door.find_all_by_parent_room_id(params[:room_id]) %>
+
+<tr>
+ 
+
+    <td><%= check_box_tag "dialogue_line[door_ids][]", door.id, @dialogue_line.doors.include?(door) %>
+    </td>
+
+
+  <td><%=door.child_room.name %>
+    </td>
+
+     <td><% if door.door_direction == "vertical" %>
+        <%= add_door_img_dl("bottom",door.child_room) %>
+      <%else%>
+        <%= add_door_img_dl("right",door.child_room) %>
+      <% end %>
+    </td>
+</tr>
+
+  <% end %>
+
+
+  
+
+</table>
+<%= f.submit 'Select' %>
+<% end %>
+
+  

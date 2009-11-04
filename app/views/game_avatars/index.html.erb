@@ -1,0 +1,17 @@
+<h1>Listing Game Avatars</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @game_avatars.each do |game_avatar| %>
+  <tr><td><%=  image_tag(game_avatar.thumbnail.url(:small))%></td>
+    <td><%= link_to 'Edit', edit_game_avatar_path(game_avatar) %></td>
+    <td><%= link_to 'Destroy', game_avatar, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New game_avatar', new_game_avatar_path %>

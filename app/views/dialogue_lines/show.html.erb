@@ -1,0 +1,23 @@
+<p>
+  <b>Content:</b>
+  <%=h @dialogue_line.content %>
+</p>
+
+<p>
+  <b>Line generator type:</b>
+  <%=h @dialogue_line.line_generator_type %>
+</p>
+
+
+<p>
+  <b>Line generator:</b>
+  <%=h @dialogue_line.line_generator_id %>
+</p>
+
+<%= render :partial=>"media_object_list",:locals =>{:media_objects=>@media_objects} %>
+
+
+
+
+<%= link_to 'Edit', edit_section_room_dialogue_line_path(@section,@room,@dialogue_line) %> |
+<%= link_to 'Back', section_room_dialogue_lines_path(@section,@room) %>

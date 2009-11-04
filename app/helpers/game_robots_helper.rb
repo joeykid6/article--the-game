@@ -1,0 +1,2 @@
+module GameRobotsHelper
+end

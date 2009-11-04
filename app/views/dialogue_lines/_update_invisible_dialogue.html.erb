@@ -1,0 +1,21 @@
+
+<%= link_to 'Add/Remove Line', url_for(:controller=>"dialogue_lines",:action=>"select_invisible_dialogue_lines",
+  :section_id=>@section,:room_id=>@room,:id=>@dialogue_line)%>
+
+
+
+<table>
+<tr>
+  
+  <th>Content . . .</th>
+  
+
+</tr>
+<% @triggered_dialogue_lines.each do |dialogue_line| %>
+<tr>
+  <td><%=dialogue_line.content  %></td>
+</tr>
+ <% end %> 
+
+
+</table>

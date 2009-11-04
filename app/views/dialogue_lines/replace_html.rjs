@@ -1,0 +1,2 @@
+# TODO Operate on the page object
+page[:my_div].replace_html "New Text"

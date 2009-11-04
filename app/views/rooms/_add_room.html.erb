@@ -1,0 +1,8 @@
+<td id="add_room_<%= row %>_<%= col %>" class="add_room">
+  <%= link_to "Add Room", { :controller => new_section_room_path(@section), :row => row, :col => col } %>
+</td>
+<%= drop_receiving_element "add_room_#{row}_#{col}",
+  :hoverclass => "room_hover",
+  :url => { :action => "move_room", :row => row, :col => col },
+  #:confirm => "If this room has any doors, they will be deleted. Are you sure you want to move it?",
+  :before => "Element.hide(element)" %>

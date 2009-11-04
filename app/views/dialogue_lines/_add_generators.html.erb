@@ -1,0 +1,31 @@
+<div id="mini_map" class="mini_map">
+
+  <h3>Build Menu</h3>
+
+  
+    <%= link_to 'New Line', new_section_room_dialogue_line_path(@section,@room) -%>
+
+
+    <br />
+    <%= link_to 'Line List for Room',  section_room_dialogue_lines_path(@section,@room) %>
+    <br />
+
+    <%= link_to 'Section Map', section_rooms_path(@section) -%>
+
+
+    <br />
+    <br />
+    <%=link_to  "New Media Object", new_media_object_path, :class=>"lightview", :title=>"New Media Object:: :: width: 400, height: 600"  %>
+    <br />
+    <%=link_to  "New Speaker", new_speaker_path, :class=>"lightview", :title=>"New Speaker:: :: width: 400, height: 600"  %>
+    <br />
+    <%=link_to  "New Guide", new_guide_path, :class=>"lightview", :title=>"New Guide:: :: width: 400, height: 300"  %>
+    <br />
+    <%=link_to  "New GameRobot", new_game_robot_path, :class=>"lightview", :title=>"New Game Robot:: :: width: 400, height: 250"  %>
+    <br />
+    <%=link_to  "New Game Avatar", new_game_avatar_path, :class=>"lightview", :title=>"New Game Avatar:: :: width: 400, height: 250"  %>
+
+
+    
+
+  </div>

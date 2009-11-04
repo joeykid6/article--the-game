@@ -1,0 +1,41 @@
+<h1>New game</h1>
+
+<% form_for(@game) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :player_name %><br />
+    <%= f.text_field :player_name %>
+  </p>
+
+  <div class="form_row">
+    <%=  f.label :game_avatar %>
+    
+  <% @game_avatars.each do |game_avatar| %>
+      <br><%= f.radio_button 'game_avatar_id', game_avatar.id %>
+      <%=  image_tag(game_avatar.thumbnail.url(:tiny))%>
+    <% end unless @game_avatars.nil? %>
+  </div>
+
+
+
+
+
+
+
+
+
+  <p>
+    <%= f.label :current_room %><br />
+    <%= f.text_field :current_room %>
+  </p>
+  <p>
+    <%= f.label :finished %><br />
+    <%= f.check_box :finished %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', games_path %>

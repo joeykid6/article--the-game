@@ -1,0 +1,14 @@
+<h1>New door</h1>
+
+<% form_for([@section, @room, @door]) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.hidden_field :parent_room_id, :value => params[:parent_room_id] %>
+    <%= f.hidden_field :child_room_id, :value => params[:child_room_id] %>
+    <%= f.hidden_field :door_direction, :value => params[:door_direction] %>
+    <%= f.submit 'Create' %>
+  </p>
+
+    <%= params.inspect %>
+<% end %>

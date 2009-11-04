@@ -1,0 +1,91 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  id: 1
+  content: Welcome to intro room one!
+  parent_id: NULL
+  lft: 1
+  rgt: 14
+  line_generator: room_info (GameRobot)
+  room: intro_one
+
+two:
+  id: 2
+  content: Dave and I will be your guides for this experience.
+  parent_id: 1
+  lft: 2
+  rgt: 9
+  line_generator: joe (Guide)
+  room: intro_one
+
+three:
+  id: 3
+  content: What if I don't want a guide?
+  parent_id: 2
+  lft: 3
+  rgt: 6
+  line_generator: player_response (GameRobot)
+  room: intro_one
+
+four:
+  id: 4
+  content: Great, thanks!
+  parent_id: 2
+  lft: 7
+  rgt: 8
+  line_generator: player_response (GameRobot)
+  room: intro_one
+
+five:
+  id: 5
+  content: welcome to intro room two
+  parent_id: NULL
+  lft: 1
+  rgt: 6
+  line_generator: room_info (GameRobot)
+  room: intro_two
+
+six:
+  id: 6
+  content: Here is a video.
+  parent_id: 5
+  lft: 2
+  rgt: 5
+  line_generator: player_response (GameRobot)
+  room: intro_two
+
+seven:
+  id: 7
+  content: But you could be wrong.
+  parent_id: 3
+  lft: 3
+  rgt: 4
+  line_generator: player_response (GameRobot)
+  room: intro_two
+
+eight:
+  id: 8
+  content: You don't have to use one.
+  parent_id: 3
+  lft: 4
+  rgt: 5
+  line_generator: joe (Guide)
+  room: intro_one
+
+nine:
+  id: 9
+  content: I am a speaker.
+  parent_id: 1
+  lft: 10
+  rgt: 11
+  line_generator: speaker_one (Speaker)
+  room: intro_one
+
+ten:
+  id: 10
+  content: I am another speaker.
+  parent_id: 1
+  lft: 12
+  rgt: 13
+  line_generator: speaker_two (Speaker)
+  room: intro_one

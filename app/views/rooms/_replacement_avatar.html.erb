@@ -1,0 +1,16 @@
+
+
+<% #Generates the avatars for speakers, guides (and possibly player as well)%>
+<div class="replacement_avatar_wrapper">
+  
+
+<div class="replacement_<%= avatar.class.to_s.downcase %>" id="<%= avatar.id %>">
+  <h3><%= h(avatar.short_name) %></h3>
+
+    <%=link_to_remote (image_tag avatar.thumbnail.url(:small)),
+      :url=>{:action=>'start_conversation', :line_generator_id => avatar.id, :room_id=>room.id} %>
+
+
+</div>
+
+</div>

@@ -1,0 +1,10 @@
+#files and folders for git to ignore
+#place at root level of project
+
+doc/
+nbproject/
+log/development.log
+public/system/
+tmp/
+.DS_Store
+._.DS_Store

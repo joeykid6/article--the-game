@@ -1,0 +1,13 @@
+<h1>Listing doors</h1>
+
+<table>
+<% @doors.each do |door| %>
+  <tr>
+    <td><%= door.parent_room_id %></td>
+    <td><%= door.child_room_id %></td>
+    <td><%= door.door_direction %></td>
+    <td><%= link_to 'Show', section_room_door_path(@section, @room, door) %></td>
+    <td><%= link_to 'Edit', edit_section_room_door_path(@section, @room, door) %></td>
+  </tr>
+<% end %>
+</table>

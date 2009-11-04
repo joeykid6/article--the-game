@@ -1,0 +1,12 @@
+<%= image_tag "/sections/#{@section.id}/rooms/#{@room.id}/minimap?section_map=true",
+      :alt => "Section Map", :style => "border: none;", :usemap => "#room_image_map" %>
+
+<map name="room_image_map">
+  <% @rooms.each do |room| %>
+    <% unless room.id == @room.id -%>
+    <area shape="rect" coords="<%= room.coords(@current_room_usable_row,
+      @current_room_usable_column, 580, 580, 50, 6) %>" title="<%= room.name %>" 
+      href="<%= section_room_path(@section, room) %>" onClick="parent.Lightview.hide();parent.location='<%= section_room_path(@section, room) %>';" />
+    <% end -%>
+  <% end %>
+</map>

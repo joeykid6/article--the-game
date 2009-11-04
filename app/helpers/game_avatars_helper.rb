@@ -1,0 +1,2 @@
+module GameAvatarsHelper
+end

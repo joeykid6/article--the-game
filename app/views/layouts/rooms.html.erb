@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>ARTICLE: The Game</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+  <script type="text/javascript" charset="utf-8">
+        var Scriptaculous = { Version: '1.8.1' };
+    </script>
+
+    <%= javascript_include_tag(:all, :cache => true) %>
+
+
+
+  <%= stylesheet_link_tag "application" %>
+  <%= stylesheet_link_tag "rooms","lightview"  %>
+</head>
+  <body>
+    <%= render_flash_messages(div_id="flashMessages", div_class="headerMessage") %>
+    <div id="content_wrapper">
+      <%= yield %>
+    </div>
+    <!-- TODO Remove the following link in production environment -->
+    <%= link_to "Kill session and game", game_path(@game), :method => :delete if @game %>
+  </body>
+</html>

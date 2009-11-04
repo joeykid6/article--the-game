@@ -1,0 +1,35 @@
+
+
+
+<h4>Media Objects</h4>
+
+<table>
+<tr>
+  <th></th>
+  <th>Name</th>
+  <th>Short name</th>
+  <th>URL</th>
+
+</tr>
+<% @media_objects.each do |media_object| %>
+<tr>
+  <td><%= link_to image_tag(media_object.thumbnail.url(:medium), :border=>0),"#{media_object.url}", :class=>"lightview",
+          :title=>"#{media_object.short_name}:: :: width: #{media_object.object_width}, height: #{media_object.object_height}"  %>
+  </td>
+  <td><%=h media_object.name %></td>
+  <td><%=h media_object.short_name %></td>
+  <td><%=h media_object.url %></td>
+  
+
+
+    <td><%= link_to 'Edit', edit_media_object_path(media_object) %></td>
+    <td><%= link_to 'Destroy', media_object, :confirm => 'Are you sure?', :method => :delete %></td>
+
+    
+  
+</tr>
+ <% end %>
+</table>
+
+
+

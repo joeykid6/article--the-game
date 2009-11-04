@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+intro_one:
+  name: Introduction, Part One
+  row: 1
+  col: 0
+  section_id: 1
+
+intro_two:
+  name: Introduction, Part Two
+  row: 1
+  col: 1
+  section_id: 1
+
+intro_three:
+  name: Introduction, Part Three
+  row: 2
+  col: 0
+  section_id: 1
+
+intro_four:
+  name: Introduction, Part Four
+  row: 0
+  col: 1
+  section_id: 1

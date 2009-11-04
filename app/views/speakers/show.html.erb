@@ -1,0 +1,53 @@
+<p>
+  <b>Name:</b>
+  <%=h @speaker.name %>
+</p>
+
+<p>
+  <b>Short name:</b>
+  <%=h @speaker.short_name %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%=h @speaker.title %>
+</p>
+
+<p>
+  <b>Source name:</b>
+  <%=h @speaker.source_name %>
+</p>
+
+<p>
+  <b>Source type:</b>
+  <%=h @speaker.source_type %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%=h @speaker.url %>
+</p>
+
+<p>
+  <b>Thumbnail file name:</b>
+  <%=h @speaker.thumbnail_file_name %>
+</p>
+
+<p>
+  <b>Thumbnail content type:</b>
+  <%=h @speaker.thumbnail_content_type %>
+</p>
+
+<p>
+  <b>Thumbnail file size:</b>
+  <%=h @speaker.thumbnail_file_size %>
+</p>
+
+<p>
+  <b>Thumbnail updated at:</b>
+  <%=h @speaker.thumbnail_updated_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_speaker_path(@speaker) %> |
+<%= link_to 'Back', speakers_path %>

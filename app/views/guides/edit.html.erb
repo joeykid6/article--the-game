@@ -1,0 +1,23 @@
+<h1>Editing guide</h1>
+
+<% form_for(@guide, :html=>{:multipart=>true}) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :short_name %><br />
+    <%= f.text_field :short_name %>
+  </p>
+  <p><label for="thumbnail">Upload an image:</label><br />
+    <%= f.file_field :thumbnail %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @guide %> |
+<%= link_to 'Back', guides_path %>

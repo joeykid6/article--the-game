@@ -1,0 +1,65 @@
+<%=render :partial=>'add_generators'%>
+
+<h1>Editing dialogue_line</h1>
+
+<% form_for([@section,@room,@dialogue_line]) do |f| %>
+  <%= f.error_messages %>
+
+Dialogue line visible when player enters room for first time?
+  <%= f.check_box :visible %><br />
+
+<p>
+     <%= f.label  :line_generator_type %><br />
+     <%= f.collection_select(:line_generator_type, @all_generators,:line_generator_type, :line_generator_type, {:prompt =>"Choose One"},
+                        :onchange => remote_function(:url => {:action => :find_generators},
+                        :with => "'value=' + value"))%>
+
+  </p>
+
+
+<div id="select_space">
+  <p>
+	<%= f.label :line_generator_id %><br />
+    <%= f.collection_select(:line_generator_id, @existing_generator, :id, :name) %>
+  </p>
+</div>
+
+  <p>
+    <%= f.label :content %><br />
+    <%= f.text_area :content, :class => "mceEditor" %>
+  </p>
+  
+  
+  
+  <p>
+    <%= f.submit 'Update line' %> <%= link_to 'Back to list',  section_room_dialogue_lines_path(@section,@room) %>
+</p>
+<% end %>
+
+
+
+<h4>Attached Media Objects</h4>
+
+<div id="media_object_area">
+  <%= render :partial=>"media_objects/update_media" %>
+
+</div>
+
+<h4>Doors this line opens</h4>
+
+<div id="doors_area">
+  <%= render :partial=>"doors/update_doors" %>
+
+</div>
+
+
+<h4>Dialogue this line triggers</h4>
+<% if @dialogue_line.visible==true %>
+<div id="dialogue_area">
+  <%= render :partial=>"update_invisible_dialogue" %>
+</div>
+<% else %>
+This dialogue line is currently <em>invisible</em> and can't trigger the release of another dialogue line.
+<% end %>
+
+  

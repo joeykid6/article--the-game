@@ -1,0 +1,466 @@
+/* 
+    Document   : rooms.css
+    Created on : May 21, 2009, 12:33:45 PM
+    Author     : Joe
+    Description:
+        Styles for rooms.
+*/
+
+/* 
+   TODO organize this file into meaningful chunks (room_map, show room, etc.)
+*/
+
+#room_intro
+{
+    font-style: italic;
+    border-bottom: 3px dotted #888888;
+    margin-bottom: 0px;
+    font-family: Georgia, serif;
+}
+
+#heads_up_area
+{
+    margin-bottom: 10px;
+    padding-bottom: 0px;
+    float: right;
+}
+
+#minimap
+{
+    border: 3px solid #000000;
+    float: left;
+    height: 75px;
+    width: 75px;
+    overflow: hidden;
+}
+
+#minimap img
+{
+    margin: 0;
+    padding: 0;
+    height: 74px;
+    width: 74px;
+}
+
+/*
+td.mini_room, td.this_mini_room, td.empty_mini_room
+{
+    height: 8px;
+    width: 8px;
+    line-height: 0.5em;
+}
+
+td.this_mini_room, td.mini_room
+{
+    border: 1px solid #000000;
+}
+
+td.this_mini_room
+{
+    background-color: #afafff;
+}
+
+td.empty_mini_room
+{
+    
+}
+*/
+
+#compass
+{
+    border: 3px solid #000000;
+    margin-left: 7px;
+    float: right;
+    height: 75px;
+    width: 75px;
+    background: url("/images/compass-75.jpg") no-repeat;
+}
+
+#compass img
+{
+    height: 15px;
+    width: 15px;
+    border: 0px;
+}
+
+#compass_mid_wrapper
+{
+    height: 45px;
+}
+
+#compass_top
+{
+    text-align: center;
+    height: 15px;
+}
+
+#compass_left
+{
+    float: left;
+    margin-top: 15px;
+}
+
+#compass_right
+{
+    float: right;
+    margin-top: 15px;
+}
+
+#compass_bottom
+{
+    text-align: center;
+    height: 15px;
+}
+
+#avatars_area
+{
+    float: left;
+    padding: 8px;
+    margin: 0px;
+    width: 150px;
+    border: 1px solid #999999;
+}
+
+.avatar_wrapper
+{
+    width: 102px;
+    height: 172px;
+    border: 1px solid #000000;
+    background-color: #cccccc;
+    margin-bottom: 5px;
+}
+
+#dialogue_area
+{
+    float: left;
+    width: 662px;
+    padding: 8px;
+    margin: 0px;
+    border: 1px solid #999999;
+}
+
+#content_wrapper
+{
+    padding: 20px;
+}
+
+h1#title
+{
+    margin-top: 50px;
+    font-family: Libel, Arial, sans-serif;
+}
+
+table#room_map
+{
+    border-spacing: 5px;
+}
+
+td.room
+{
+    height: 200px;
+    width: 200px;
+    font-size: 11px;
+    padding: 0px;
+    text-align: center;
+    cursor: move;
+}
+
+td.add_room, td.empty_room
+{
+    height: 100px;
+    width: 100px;
+    font-size: 11px;
+    padding: 0px;
+    text-align: center;
+}
+
+td.add_room
+{
+    border: 3px dotted #8fff8f;
+    background-color: #efffef;
+}
+
+td.room_hover
+{
+    border: 3px solid #ffff0f;
+    background-color: #ffffcf;
+}
+
+td.empty_room
+{
+  /*  border: 3px dotted #cccccc; */
+}
+
+/*
+  Room Contents (including doors)
+*/
+
+td.room .room_wrapper
+{
+    border: 3px solid #000000;
+    background-color: #ffffff;
+}
+
+td.room #room_top
+{
+    height: 25px;
+    margin-top: 5px;
+}
+
+td.room #room_middle
+{
+    overflow: auto;
+    height: 135px;
+}
+
+td.room #room_left
+{
+    position: relative;
+    height: 135px;
+    width: 30px;
+    float: left;
+}
+
+td.room #room_left img
+{
+    position: absolute;
+    top: 50%;
+    height: 30px;
+    margin-top: -15px;
+    margin-left: 3px;
+}
+
+td.room #room_left a
+{
+    position: absolute;
+    top: 50%;
+    height: 30px;
+    margin-top: -15px;
+    margin-left: -13px;
+}
+
+td.room #room_content
+{
+    border: 1px solid #000000;
+    height: 122px;
+    width: 122px;
+    padding: 5px;
+    float: left;
+}
+
+td.room #room_right
+{
+    position: relative;
+    height: 135px;
+    width: 30px;
+    float: right;
+}
+
+td.room #room_right img
+{
+    position: absolute;
+    top: 50%;
+    height: 30px;
+    margin-top: -15px;
+    margin-left: 4px;
+}
+
+td.room #room_right a
+{
+    position: absolute;
+    top: 50%;
+    height: 30px;
+    margin-top: -15px;
+    margin-left: -13px;
+}
+
+td.room #room_bottom
+{
+    height: 25px;
+    margin-top: 5px;
+}
+
+td.room #room_content ul
+{
+    text-align: left;
+    padding-left: 15px;
+
+}
+
+#room_left img, #room_top img, #room_right img, #room_bottom img
+{
+    border: 0px;
+}
+
+#avatar_dialogue_wrapper
+{
+    width: 1100px;
+    border: 1px solid #999999;
+    padding: 10px;
+    overflow: auto;
+}
+
+#conversation_starter
+{
+    float: left;
+    border: 5px solid #888888;
+    height: 900px;
+    width: 102px;
+}
+
+#conversation_starter.hover
+{
+    background-color: #ccffcc;
+    border: 5px dotted #000000;
+}
+
+#dialogue_window
+{
+    background-color: #000000;
+    padding: 5px;
+    height: 500px;
+    color: #00ff00;
+    font-family: "Courier New", monospace;
+    margin-top: 15px;
+}
+
+#dialogue_window h3
+{
+    font-size: 1.2em;
+    font-family: Georgia, serif;
+}
+
+
+#dialogue_lines
+{
+    padding: 0px;
+    margin-left: 0px;
+}
+
+.dialogue_line
+{
+    border: 1px solid #ffffff;
+    background-color: #ffffff;
+    color: #000000;
+    list-style-type: none;
+    margin-bottom: 5px;
+    padding: 4px;
+}
+
+.response
+{
+    font-family: Georgia, serif;
+    border-bottom: 1px solid #00ff00;
+    list-style-type: none;
+    margin-bottom: 3px;
+    padding: 4px;
+}
+
+.dialogue_line a:link, .dialogue_line a:visited
+{
+    color: #00ff00;
+    list-style-type: none;
+    text-decoration: none;
+}
+
+.response a:link, .response a:visited
+{
+    color: #00ff00;
+    list-style-type: none;
+    text-decoration: none;
+}
+
+.dialogue_line a:hover
+{
+    color: #ffffff;
+    list-style-type: none;
+    text-decoration: none;
+}
+
+.guide, .speaker
+{
+    border: 1px solid #000000;
+    background-color: #ccccff;
+    cursor: move;
+    height: 170px;
+    width: 100px;
+    text-align: center;
+    list-style-type: none;
+    margin-bottom: 8px;
+}
+
+
+.mediaobject
+{
+    border: 1px solid #000000;
+    padding: 2px;
+    background-color: #ffffcc;
+    cursor: move;
+    height: 32px;
+    width: 125px;
+    
+    list-style-type: none;
+    margin-bottom: 8px;
+}
+
+.guide h3, .speaker h3
+{
+    font: 1em Georgia;
+    padding-top: 5px;
+    margin-top: 0px;
+    border-bottom: 1px solid #000000;
+    height: 2.5em;
+    background-color: #330099;
+    color: #ffffff;
+}
+
+
+.mediaobject h3
+{
+    
+    font: .75em Georgia;
+    
+    margin-top: 3px;
+    
+    height: 1.5em;
+    
+    color: #660000;
+}
+
+.guide img, .speaker img
+{
+    height: 90px;
+    width: 90px;
+    border: 1px solid #000000;
+}
+
+.mediaobject img
+{
+    float: left;
+    height: 30px;
+    width: 30px;
+    border: 1px solid #000000;
+
+
+}
+
+#speakers_div, #guides_div
+{
+    list-style-type: none;
+}
+
+#media_objects_div
+{
+    list-style-type: none;
+}
+
+/*Dave's test stuff*/
+
+
+#media_window
+{
+    float: left;
+    border: 5px dashed #888888;
+    height: 590px;
+    width: 130px;
+}

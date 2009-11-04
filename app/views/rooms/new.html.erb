@@ -1,0 +1,26 @@
+<h1>New Room in <%= @section.name %></h1>
+
+<% form_for([@section, @room]) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :starting_room %><br />
+    <%= f.check_box :starting_room %>
+  </p>
+  <p>
+    <%= f.label :ending_room %><br />
+    <%= f.check_box :ending_room %>
+  </p>
+  <p>
+    <%= f.hidden_field :row, :value => params[:row] %>
+    <%= f.hidden_field :col, :value => params[:col] %>
+    <%= f.hidden_field :section_id, :value => params[:section_id] %>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to "Room map for #{@section.name}", section_rooms_path(@section) %>

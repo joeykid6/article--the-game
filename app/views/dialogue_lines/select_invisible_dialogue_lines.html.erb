@@ -1,0 +1,25 @@
+Select invisible dialogue lines to trigger
+
+<% form_for([@section,@room,@dialogue_line]) do |f|  %>
+
+<%= hidden_field_tag "dialogue_line[invisible_dialogue_line_ids][]", "" %>
+<table>
+<% for invisible_dialogue_line in DialogueLine.find(:all, :conditions=>["visible = ? and room_id = ?", false,@room.id]) %>
+
+<tr>
+
+    <td><%= check_box_tag "dialogue_line[invisible_dialogue_line_ids][]",
+            invisible_dialogue_line.id, @dialogue_line.invisible_dialogue_lines.include?(invisible_dialogue_line) %>
+    </td>
+
+        <td><%= invisible_dialogue_line.content %></td>
+
+</tr>
+  <% end %>
+
+
+
+
+</table>
+<%= f.submit 'Select' %>
+<% end %>

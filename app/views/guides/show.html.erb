@@ -1,0 +1,33 @@
+<p>
+  <b>Name:</b>
+  <%=h @guide.name %>
+</p>
+
+<p>
+  <b>Short name:</b>
+  <%=h @guide.short_name %>
+</p>
+
+<p>
+  <b>Thumbnail file name:</b>
+  <%=h @guide.thumbnail_file_name %>
+</p>
+
+<p>
+  <b>Thumbnail content type:</b>
+  <%=h @guide.thumbnail_content_type %>
+</p>
+
+<p>
+  <b>Thumbnail file size:</b>
+  <%=h @guide.thumbnail_file_size %>
+</p>
+
+<p>
+  <b>Thumbnail updated at:</b>
+  <%=h @guide.thumbnail_updated_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_guide_path(@guide) %> |
+<%= link_to 'Back', guides_path %>

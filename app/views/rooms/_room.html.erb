@@ -1,0 +1,21 @@
+<td class="room" id="room_<%= room.id %>">
+  <div class="room_wrapper" id="room_wrapper_<%= room.id %>">
+    <div id="room_top"><%= add_or_link_to_door(@section, room, top_entrance, "top") %></div>
+    <div id="room_middle">
+    <div id="room_left"><%= add_or_link_to_door(@section, room, left_entrance, "left") %></div>
+      <div id="room_content">
+        <%= link_to h(room.name), section_room_path(@section, room) %>
+        <ul>
+          <li><%= link_to "Edit", edit_section_room_path(@section, room)  %></li>
+          <li><%= link_to "Delete", section_room_path(@section, room), :confirm => "Are you sure?", :method => :delete %></li>
+          <li><%= link_to "Edit Dialogue", section_room_dialogue_lines_path(@section, room) %></li>
+        </ul>
+        <%= content_tag(:p, "START", :class => "start_end_room") if room.starting_room == true %>
+        <%= content_tag(:p, "END", :class => "start_end_room") if room.ending_room == true %>
+      </div>
+      <div id="room_right"><%= add_or_link_to_door(@section, room, right_exit, "right") %></div>
+    </div>
+    <div id="room_bottom"><%= add_or_link_to_door(@section, room, bottom_exit, "bottom") %></div>
+  </div>
+</td>
+<%= draggable_element "room_wrapper_#{room.id}", :revert => true %>

@@ -1,0 +1,73 @@
+
+
+
+<%  if @room_root.nil? %><h1><%= link_to "Add dialogue", section_room_dialogue_lines_path(@section, @room) %></h1><% end %>
+<div id="heads_up_area">
+  <%= render :partial => 'worldmap' %>
+  <%= render :partial => 'minimap' %>
+  <%= render :partial => 'compass', :locals => {
+    :top_entrance => @top_entrance,
+    :left_entrance => @left_entrance,
+    :right_exit => @right_exit,
+    :bottom_exit => @bottom_exit,
+    :open_top => @open_top,
+    :open_left => @open_left,
+    :open_right => @open_right,
+    :open_bottom => @open_bottom
+    }
+  %>
+</div>
+
+<h1 id="title"><%= @room.name %> </h1>
+
+<div id="avatar_dialogue_wrapper">
+  <div id="avatars_area">
+
+   
+    <%if @guides.size>0 %>
+      <div class="avatar_group" id="guides_div">
+      <h2>Guides</h2>
+      <%= render :partial => 'avatar',:collection=>@guides, :locals=>{:room=>@room} %>
+      </div>
+    <% end %>
+
+    <% if @speakers.size>0 %>
+      <div class="avatar_group" id="speakers_div">
+      <h2>Speakers</h2>
+      <%= render :partial => 'avatar', :collection => @speakers, :locals=>{:room=>@room} %>
+      </div>
+    <% end %>
+
+  </div>
+
+  
+
+  <div id="dialogue_area">
+    <div id="dialogue_speaker_area"> </div>
+    <h2>Dialogue Window</h2>
+
+    <div id="dialogue_window">
+      
+      <h3><%= (@room_root.content) unless @room_root.nil? %></h3>
+      <ul id="dialogue_lines">
+      </ul>
+    </div>
+
+
+  </div>
+
+  
+    <div id="media_window">
+    <h2>Now Playing</h2>
+      <div class="avatar_group" id="media_objects_div">
+
+        <%= render :partial => 'media_avatar', :locals=>{:media_objects=>@media_objects} %>
+
+        
+
+      </div>
+    </div>
+  
+
+</div>
+  

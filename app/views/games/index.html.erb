@@ -1,0 +1,34 @@
+<h1>Welcome to ARTICLE: The Game!</h1>
+<p>Dave and I felt that it was high time someone mashed up a video game and a scholarly
+article. So we thought, why not us? We can do this.</p>
+<p>So we did.</p>
+<p>With a bit of <a href="http://rubyonrails.org">Ruby on Rails</a> lovin', some
+<a href="http://script.aculo.us">Scriptaculous</a> Ajax sauce, and a little good,
+old-fashioned theory (of the composition, rhetoric, new media, and game flavors), we've
+made ourselves a pretty hot little stew. If it sounds like something you'd like to taste, try the link below.</p>
+
+<%= link_to 'New game', new_game_path %>
+<%= '(Will overwrite your saved game)' if @game %>
+<br />
+<%= link_to 'Continue saved game', section_room_path(@current_section, @current_room) if @game %>
+
+
+<h1>Current games in DB</h1>
+<table>
+  <tr>
+    <th>Player name</th>
+    <th>Current room</th>
+    <th>Finished</th>
+  </tr>
+
+<% @games.each do |game| %>
+  <tr>
+    <td><%=h game.player_name %></td>
+    <td><%=h game.current_room %></td>
+    <td><%=h game.finished %></td>
+    <td><%= link_to 'Show', game %></td>
+    <td><%= link_to 'Edit', edit_game_path(game) %></td>
+    <td><%= link_to 'Destroy', game, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>

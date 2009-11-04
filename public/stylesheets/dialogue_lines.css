@@ -1,0 +1,133 @@
+/*
+Flash Messages
+*/
+
+/* TODO use ajax to highlight flash messages */
+#flashMessages {
+  margin-bottom: 10px;
+}
+
+#flashMessages p {
+  padding: 10px;
+}
+
+#flashMessages p.error {
+  background: #fcc;
+  border: 1px solid #f00;
+}
+
+#flashMessages p.notice {
+  background: #fee37a;
+  border: 1px solid #fd9b5b;
+}
+
+#flashMessages p.message {
+  background: #cbf285;
+  border: 1px solid #3cab09;
+}
+
+
+
+
+
+
+body{
+
+    font-family: Verdana, Geneva, Arial, sans-serif;
+    font-size: 12px;
+}
+
+.row_highlight{
+    
+    background-color: #ccffcc;
+    border: 5px dotted #000000;
+}
+
+#generator_select_area{
+    
+}
+
+#select_space{
+
+    
+    color: red;
+}
+
+#select_space p {
+
+    color:black;
+}
+
+
+th {
+    background:black;
+    color:white;
+}
+
+tr {
+    position: relative;
+}
+
+td.utterance{
+    
+
+    padding:10px;
+    border-color: black;
+    border:solid;
+    border-width: 1px;
+
+}
+
+td.utterer{
+
+    padding:10px;
+    
+    
+}
+
+
+#mini_map
+{
+    border: 3px solid #000000;
+    background: #FFFF99 ;
+    top: 20px;
+    right: 20px;
+    z-index:2;
+    position: fixed;
+    height: 170px;
+    width: 100px;
+    position: fixed;
+}
+
+.mini_map
+{
+
+    font-family: Verdana, Geneva, Arial, sans-serif ;
+    font-size: 10px;
+    padding: 2px;
+    text-align: left;
+
+
+}
+
+.tiny
+{
+
+    font-family: Verdana, Geneva, Arial, sans-serif ;
+    font-size: 10px;
+    padding: 0px;
+    text-align: left;
+    
+
+}
+
+.root
+{
+
+    font-family: Verdana, Geneva, Arial, sans-serif ;
+    font-size: 8px;
+    padding: 0px;
+    text-align: left;
+    color:red;
+    font-weight:bold
+}

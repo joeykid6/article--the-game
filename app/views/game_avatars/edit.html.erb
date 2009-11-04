@@ -1,0 +1,21 @@
+<h1>Editing Game Avatar</h1>
+
+<% form_for(@game_avatar, :html=>{:multipart=>true}) do |f| %>
+  <%= f.error_messages %>
+
+
+  <p>
+    <%= f.label :short_name %><br />
+    <%= f.text_field :short_name %>
+  </p>
+   <p><label for="thumbnail">Upload an image:</label><br />
+    <%= f.file_field :thumbnail %>
+  </p>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @game_avatar %> |
+<%= link_to 'Back', game_avatars_path %>

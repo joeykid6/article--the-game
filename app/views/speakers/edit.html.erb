@@ -1,0 +1,39 @@
+<h1>Editing speaker</h1>
+
+<% form_for(@speaker,:html=>{:multipart=>true} ) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :short_name %><br />
+    <%= f.text_field :short_name %>
+  </p>
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :source_name %><br />
+    <%= f.text_field :source_name %>
+  </p>
+  <p>
+    <%= f.label :source_type %><br />
+    <%= f.text_field :source_type %>
+  </p>
+  <p>
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </p>
+ <p><label for="thumbnail">Upload an image:</label>
+    <%= f.file_field :thumbnail %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @speaker %> |
+<%= link_to 'Back', speakers_path %>

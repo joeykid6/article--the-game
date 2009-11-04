@@ -1,0 +1,32 @@
+/* 
+    Document   : sections css
+    Created on : Aug 12, 2009, 11:25:41 PM
+    Author     : Joe
+*/
+
+#section_list li
+{
+    border: 1px solid #000000;
+    margin-bottom: 2px;
+    padding: 4px;
+    list-style-type: none;
+    overflow: auto;
+}
+
+#section_list
+{
+    width: 700px;
+    cursor: move;
+}
+
+#section_list li div#section_name
+{
+    float: left;
+    width: 455px;
+}
+
+#section_list li div#section_actions
+{
+    float: right;
+    width: 225px;
+}

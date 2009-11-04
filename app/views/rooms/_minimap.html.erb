@@ -1,0 +1,6 @@
+<div id="minimap" class="heads_up">
+  <%= link_to image_tag( minimap_path(@section, @room), :alt => "Section Map", :title => "Section Map" ),
+    section_map_path(@section, @room),
+    :class => "lightview",
+    :title => "Section Map:: Hover over a room to see its name. Click to go there. :: width: 600, height: 600" %>
+</div>

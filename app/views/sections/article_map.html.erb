@@ -1,0 +1,12 @@
+<%= image_tag "/sections/#{@section.id}/worldmap",
+      :alt => "Article Map", :style => "border: none;", :usemap => "#article_image_map" %>
+
+<map name="article_image_map">
+  <% @sections.each do |section| %>
+    <% if section.id != @section.id && @game.visible_sections.exists?(section) -%>
+    <area shape="rect" coords="<%= section.coords(section.position, @image_width, @image_height, @even_sections_count) %>"
+      title="<%= section.name %>" href="<%= section_path(section) %>"
+      onClick="parent.Lightview.hide();parent.location='<%= section_path(section) %>';" />
+    <% end -%>
+  <% end %>
+</map>

@@ -1,0 +1,177 @@
+
+<% room=Room.find(params[:room_id]) %>
+
+<%top_entrance = room.entrances.find_by_door_direction('vertical')  %>
+<%left_entrance = room.entrances.find_by_door_direction('horizontal')  %>
+<%bottom_exit = room.exits.find_by_door_direction('vertical')  %>
+<%right_exit = room.exits.find_by_door_direction('horizontal')  %>
+
+
+
+  
+  <tr  style="cursor: move;"  id="dialogue_line_<%= dialogue_line.id -%>" >
+   
+
+    <td valign="top">
+
+      <% triggered_ids=DialogueLine.find(:all,
+      :select=>"invisible_dialogue_line_id",
+      :from=>"visible_dialogue_lines_invisible_dialogue_lines",
+      :conditions=>["visible_dialogue_line_id = ?",dialogue_line.id])%>
+
+      <%if triggered_ids.size>0 %>
+    <%triggered_dialogue_lines = DialogueLine.find(:all,
+      :conditions=>["id IN (?)",triggered_ids.map(&:invisible_dialogue_line_id)])
+      %>
+
+
+
+
+
+    <% myhover ="|"%>
+        <%triggered_dialogue_lines.each do |line|  %>
+
+    <%- myhover << line.content + " | " -%>
+
+    
+
+        <% end %>
+      <%= image_tag("dialogue_swap.png", :border=>0,:alt=>"#{myhover}",:title=>"#{myhover}") %>
+      <% end %>
+      
+    </td>
+
+  <td valign="top">
+    <%-doors=Door.find(:all, :conditions=>['dialogue_line_id = ?', dialogue_line.id], :joins=>:dialogue_lines)  -%>
+    <% doors.each do |door| %>
+
+      <% if top_entrance %>
+          <% if door.id == top_entrance.id %>
+        <%= add_door_img_dl_small("top",door.parent_room) %>
+        <% end %>
+        <% end %>
+          
+  <% if bottom_exit %>
+  <% if door.id == bottom_exit.id  %>
+            <%= add_door_img_dl_small("bottom",door.child_room) %>
+    <% end %>
+        <% end %>
+  <% if left_entrance %>
+  <% if door.id == left_entrance.id  %>
+                <%= add_door_img_dl_small("left",door.parent_room) %>
+
+    <% end %>
+        <% end %>
+<% if right_exit %>
+  <% if door.id == right_exit.id %>
+                    <%= add_door_img_dl_small("right",door.child_room) %>
+    <% end %>
+        <% end %>
+
+      <% end %>
+   
+
+  </td>
+
+  <td valign="top">
+      <%- media_instances = MediaObject.count_by_sql("SELECT COUNT(*) FROM dialogue_lines_media_objects where dialogue_line_id = '#{dialogue_line.id}'") -%>
+
+
+
+      <% if media_instances >= 1 %>
+
+        <%- media_names = MediaObject.find(:all, :select=>"short_name",
+          :conditions=>["dialogue_line_id = ?", dialogue_line.id], :joins=>:dialogue_lines) -%>
+
+        <% myhover ="|"%>
+
+        <%-media_names.each do |name|  %>
+              <%- myhover << name.short_name + "|" -%>
+        <%end%>
+
+        <%= image_tag("media-object.gif", :border=>0,:alt=>"#{myhover}",:title=>"#{myhover}") %><%= "("+"#{media_instances}"+")" %>
+
+      <% end %>
+  </td>
+  <td valign="top" >
+
+    <% if dialogue_line.content.length > 50 %>
+      <%= link_to_function(image_tag("my_toggle.png",:title=>"show/hide more",:alt=>"show/hide more"),
+            "$('content-#{dialogue_line.id}').toggle(); $('stub-#{dialogue_line.id}').toggle();")-%>
+          <% end %>
+  </td>
+  
+
+  <% if dialogue_line.visible == false %>
+<td id="content_field" class="utterance" style="padding-left: <%= (2 * dialogue_line.level) + 1 -%>em;" width="400" bgcolor="#cccccc">
+
+  <% else %>
+  <td id="content_field" class="utterance" style="padding-left: <%= (2 * dialogue_line.level) + 1 -%>em;" width="400">
+    <% end %>
+
+  <% if dialogue_line.level==0 %>
+    <span class="root">root:</span>
+      <% end %>
+<% if dialogue_line.content.length > 50 %>
+  <%="<div id='stub-#{dialogue_line.id}'>"-%>
+    <% my_stub=dialogue_line.content.slice(0..50) + " . . . " -%>
+     <%= my_stub -%>
+     <% else%>
+    <%= dialogue_line.content -%>
+    <% end %>
+  </div>
+    
+
+
+    
+
+    
+
+    <%="<div id='content-#{dialogue_line.id}' style='display:none;'>"-%>
+    
+
+
+      <%=h dialogue_line.content -%>
+    </div>
+    
+  </td>
+
+  <td valign="top" class="utterer">
+      <% generator_name  = dialogue_line.line_generator_type.constantize.find(:all,
+        :select=>"name",
+        :conditions=> ["id = ?", dialogue_line.line_generator_id]) %>
+
+      <%=h generator_name[0].name-%>
+  </td>
+  
+  <td valign="top" class="utterer">
+    
+      <%= link_to 'Edit', edit_section_room_dialogue_line_path(@section,@room,dialogue_line), :method=>:get-%> |
+      <%= link_to 'Destroy', section_room_dialogue_line_path(@section,@room,dialogue_line), :confirm=>"Are you sure?  When you delete this line, you'll delete all its children too.", :method=>:delete-%>
+      
+
+
+      <%if dialogue_line.level != 0  %>
+        | <%= link_to "Make root",{:action=>"make_root",:dialogue_line_id => dialogue_line.id, :room_id=>@room, :section_id=>@section}%>
+      <%end%>
+  </td>
+</tr>
+<%= draggable_element(
+      "dialogue_line_#{dialogue_line.id}",
+      :ghosting => true,
+      :revert => true
+    )
+-%>
+<%= drop_receiving_element(
+       "dialogue_line_#{dialogue_line.id}",
+       :update => 'catlist',
+       :with => "'subcategory_id=' + element.id",
+       :url => { :action => 'restructure', :dialogue_line_id => dialogue_line.id, :room_id=>@room,:section_id=>@section },
+       :hoverclass => "row_highlight"
+     )
+-%>
+<%- dialogue_line.children.each do |subcat| -%>
+  <%= render :partial => 'dialogue_line_row', :locals => {:dialogue_line => subcat} -%>
+<%- end -%>
+
+

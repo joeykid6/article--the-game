@@ -1,0 +1,9 @@
+<%- @dialogue_lines.each do |dialogue_line| -%>  
+  
+  
+  <%= render :partial => 'dialogue_line_row', :locals => {:dialogue_line => dialogue_line} -%>
+
+
+<%- end -%>
+
+

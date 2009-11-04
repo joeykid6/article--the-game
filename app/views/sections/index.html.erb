@@ -1,0 +1,24 @@
+<h1>All article sections</h1>
+<p>Drag and drop to reorder.</p>
+<ul id="section_list">
+
+<% @sections.each do |section| %>
+    <li id="section_<%= section.id %>">
+      <div id="section_name"><%= h section.name %></div>
+      <div id="section_actions">
+        | <%= link_to 'View', section_rooms_path(section) %>
+        | <%= link_to 'Rename', edit_section_path(section) %> |
+        <%= link_to 'Destroy', section, :confirm => 'Are you sure?', :method => :delete %>
+      </div>
+    </li>
+<% end %>
+
+</ul>
+
+<%= sortable_element :section_list,
+      :url => { :action => "sort_sections" },
+      :complete => visual_effect(:highlight, "section_list") %>
+
+<br />
+
+<%= link_to 'New section', new_section_path %>

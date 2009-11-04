@@ -1,0 +1,35 @@
+<h1>Editing <%= @room.name %> in <%= @section.name %></h1>
+
+<% form_for([@section, @room]) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :section %><br />
+    <%= f.select(:section_id, Section.all.collect {|p| [ p.name, p.id ] }) %>
+  </p>
+  <p>
+    <%= f.label :row %><br />
+    <%= f.text_field :row %>
+  </p>
+  <p>
+    <%= f.label :col %><br />
+    <%= f.text_field :col %>
+  </p>
+  <p>
+    <%= f.label :starting_room %><br />
+    <%= f.check_box :starting_room %>
+  </p>
+  <p>
+    <%= f.label :ending_room %><br />
+    <%= f.check_box :ending_room %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to "Room map for #{@section.name}", section_rooms_path(@section) %>

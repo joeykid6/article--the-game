@@ -1,0 +1,72 @@
+<div id="compass" class="heads_up">
+  <%= image_tag "compass-75.jpg", :id => "compass_background" %>
+  <div id="compass_top">
+
+
+  <% unless @top_entrance.nil? %>
+    <% status = "locked" %>
+      <%if open_top==true %>
+        <% status = "unlocked" %>
+      
+      <%= link_to(add_door_img_compass("top", top_entrance.parent_room, status),
+            section_room_path(@section, top_entrance.parent_room_id))%>
+      <% else %>
+        <%= add_door_img_compass("top", top_entrance.parent_room, status)%>
+
+    <% end %>
+    <% end %>
+  </div>
+
+<div id="compass_mid_wrapper">
+  <div id="compass_left">
+    <% unless left_entrance.nil? %>
+      <% status = "locked" %>
+      <%if open_left==true %>
+        <% status = "unlocked" %>
+      
+  
+        <%= link_to(add_door_img_compass("left", left_entrance.parent_room, status),
+            section_room_path(@section, left_entrance.parent_room_id))%>
+  
+      <% else %>
+        <%= add_door_img_compass("left", left_entrance.parent_room, status)%>
+      
+      <% end %>
+    <% end %>
+
+  </div>
+
+  <div id="compass_right">
+    <% unless right_exit.nil? %>
+    <% status = "locked" %>
+    <%if open_right==true %>
+        <% status = "unlocked" %>
+      
+      <%= link_to(add_door_img_compass("right", right_exit.child_room, status),
+            section_room_path(@section, right_exit.child_room_id))%>
+    <% else %>
+        <%= add_door_img_compass("right", right_exit.child_room, status)%>
+
+  <% end %>
+  <% end %>
+  </div>
+</div>
+
+  <div id="compass_bottom">
+    <% unless bottom_exit.nil? %>
+      <% status = "locked" %>
+      <%if open_bottom==true %>
+        <% status = "unlocked" %>
+      
+
+    <%= link_to(add_door_img_compass("bottom", bottom_exit.child_room, status),
+            section_room_path(@section, bottom_exit.child_room_id))%>
+
+    <% else %>
+        <%= add_door_img_compass("bottom", bottom_exit.child_room, status)%>
+
+  <% end %>
+  <% end %>
+  </div>
+
+</div>

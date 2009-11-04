@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+ one:
+   parent_room: intro_one
+   child_room: intro_two
+   door_direction: horizontal
+
+ two:
+   parent_room: intro_one
+   child_room: intro_three
+   door_direction: vertical
