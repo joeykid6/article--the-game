@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   private
 
   def game_check_then_authenticate
-     unless current_game
+    unless current_game
       authenticate
     end
   end

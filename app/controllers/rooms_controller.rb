@@ -168,7 +168,7 @@ include Magick
 
   def start_conversation
       if request.xhr?
-       @game=current_game
+       @game = current_game
      
 #      The params used here are from the backend of a drop_receiving_element in show.html.erb
 #      DF:  commenting out to make avatar clickable
@@ -210,7 +210,6 @@ include Magick
       session[:avatar_dom_id] = params[:id]
 
 #      RJS replacement for render :partial; this allows multiple page element updates via JS
-#      Thus we can add the avatar to the droppable area before we start the dialogue lines
       render :update do |page|
 #        page.hide(params[:id])
 

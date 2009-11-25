@@ -144,16 +144,21 @@ module RoomsHelper
     return false
   end
 
-
-
+#  Used for choosing locked versus unlocked icons in compass
   def add_door_img_compass(direction, room, status)
     if status=="locked"
-    image_tag("door-arrow-#{direction}.gif", :alt => "Door to #{room.name}", :title => "Door to #{room.name}", :class => "door")
+      image_tag("door-arrow-#{direction}.gif", :alt => "Door to #{room.name}", :title => "Door to #{room.name}", :class => "door")
     else
-    image_tag("door-arrow-#{direction}-unlocked.gif", :alt => "Door to #{room.name}", :title => "Door to #{room.name}", :class => "door")
-
+      image_tag("door-arrow-#{direction}-unlocked.gif", :alt => "Door to #{room.name}", :title => "Door to #{room.name}", :class => "door")
     end
+  end
 
+#  Generates the avatar div in the avatar partial so we can create a link_to_remote properly
+  def avatar_div(avatar)
+    content_tag :div, :class => avatar.class.to_s.downcase, :id => avatar.id do
+      content_tag :h3, h(avatar.short_name)
+      image_tag avatar.thumbnail.url(:small)
+    end
   end
 
 

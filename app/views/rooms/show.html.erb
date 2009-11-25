@@ -23,18 +23,18 @@
 <div id="avatar_dialogue_wrapper">
   <div id="avatars_area">
 
-   
-    <%if @guides.size>0 %>
+   <h2>People you can talk to</h2>
+    <%if @guides.size > 0 %>
       <div class="avatar_group" id="guides_div">
-      <h2>Guides</h2>
-      <%= render :partial => 'avatar',:collection=>@guides, :locals=>{:room=>@room} %>
+      <!-- <h2>Guides</h2> -->
+      <%= render :partial => 'avatar', :collection => @guides, :locals => { :room => @room } %>
       </div>
     <% end %>
 
-    <% if @speakers.size>0 %>
+    <% if @speakers.size > 0 %>
       <div class="avatar_group" id="speakers_div">
-      <h2>Speakers</h2>
-      <%= render :partial => 'avatar', :collection => @speakers, :locals=>{:room=>@room} %>
+      <!-- <h2>Speakers</h2> -->
+      <%= render :partial => 'avatar', :collection => @speakers, :locals => { :room => @room } %>
       </div>
     <% end %>
 
@@ -58,7 +58,7 @@
 
   
     <div id="media_window">
-    <h2>Now Playing</h2>
+    <h2>Stuff you can look at</h2>
       <div class="avatar_group" id="media_objects_div">
 
         <%= render :partial => 'media_avatar', :locals=>{:media_objects=>@media_objects} %>

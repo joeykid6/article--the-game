@@ -1,6 +1,9 @@
 class GameAvatarsController < ApplicationController
   # GET /game_avatars
   # GET /game_avatars.xml
+
+  before_filter :authenticate
+  
   def index
     @game_avatars = GameAvatar.all
 
@@ -44,10 +47,10 @@ class GameAvatarsController < ApplicationController
 
     
       if @game_avatar.save
-        render :partial=>"save_result"
+        render :partial => "save_result"
 
       else
-        flash[:message] = "There was an error saving the game avatar."
+        flash[:error] = "There was an error saving the game avatar."
       end
   end
 
