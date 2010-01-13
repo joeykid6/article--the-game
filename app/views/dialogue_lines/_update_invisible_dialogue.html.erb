@@ -1,6 +1,5 @@
 
-<%= link_to 'Add/Remove Line', url_for(:controller=>"dialogue_lines",:action=>"select_invisible_dialogue_lines",
-  :section_id=>@section,:room_id=>@room,:id=>@dialogue_line)%>
+<h4>Dialogue this line triggers</h4>
 
 
 
@@ -19,3 +18,5 @@
 
 
 </table>
+<%= link_to 'Edit Dialogue-Line Trigger(s)', url_for(:controller=>"dialogue_lines",:action=>"select_invisible_dialogue_lines",
+  :section_id=>@section,:room_id=>@room,:id=>@dialogue_line)%>
