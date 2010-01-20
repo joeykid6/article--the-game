@@ -1,5 +1,7 @@
-<%=render :partial=>'add_generators'%>
 
+
+
+<div id="main_space">
 <h1>Editing dialogue_line</h1>
 
 <% form_for([@section,@room,@dialogue_line]) do |f| %>
@@ -38,28 +40,117 @@ Dialogue line visible when player enters room for first time?
 
 
 
-<h4>Attached Media Objects</h4>
-
-<div id="media_object_area">
-  <%= render :partial=>"media_objects/update_media" %>
 
 </div>
 
-<h4>Doors this line opens</h4>
+<% if @media_objects.size |  @doors.size | @triggered_dialogue_lines.size  > 0 %>
+
+<div id="toggle_extra_space" style="display:none" >
+
+  <%= link_to_function(image_tag("my_toggle.png",:title=>"show/hide more",:alt=>"show/hide more"),
+            "$('extra_space').toggle(); $('toggle_extra_space').toggle();")%>
+  <%= link_to_function "Assign keys, media objects, and dialogue triggers",
+            "$('extra_space').toggle(); $('toggle_extra_space').toggle();"%>
+
+
+
+</div>
+
+
+  <div id="extra_space">
+    
+    <%= link_to_function(image_tag("my_toggle.png",:title=>"show/hide more",:alt=>"show/hide more"),
+            "$('extra_space').toggle(); $('toggle_extra_space').toggle();")%>
+
+      <%= link_to_function "Hide",
+            "$('extra_space').toggle(); $('toggle_extra_space').toggle();"%>
+
+    
+
+    <% else %>
+
+  <div id="toggle_extra_space">
+    <%= link_to_function(image_tag("my_toggle.png",:title=>"show/hide more",:alt=>"show/hide more"),
+            "$('extra_space').toggle(); $('toggle_extra_space').toggle();")%>
+    <%= link_to_function "Assign keys, media objects, and dialogue triggers",
+            "$('extra_space').toggle(); $('toggle_extra_space').toggle();"%>
+   </div>
+
+
+
+<div id="extra_space" style="display:none">
+
+  <%= link_to_function(image_tag("my_toggle.png",:title=>"show/hide more",:alt=>"show/hide more"),
+            "$('extra_space').toggle(); $('toggle_extra_space').toggle();")%>
+
+      <%= link_to_function "Hide",
+            "$('extra_space').toggle(); $('toggle_extra_space').toggle();"%>
+  
+  <% end %>
+
+
+    
+   
+
+  <h4>Items assigned to this dialogue line</h4>
+
+<% if @media_objects.size > 0 %>
+ 
+
+  <div id="media_object_area">
+    <%= render :partial=>"media_objects/update_media" %>
+
+  </div>
+
+    <% else %>
+
+  <div id="media_object_area">
+  <%= link_to 'Attach Media Object(s)', url_for(:controller=>"dialogue_lines",:action=>"select_media_objects",
+  :section_id=>@section,:room_id=>@room,:id=>@dialogue_line)%>
+    </div>
+
+<% end %>
+
+
+<% if @doors.size > 0 %>
+  
 
 <div id="doors_area">
   <%= render :partial=>"doors/update_doors" %>
+ </div>
+    <% else%>
 
-</div>
+  <div id="doors_area">
+  <%= link_to 'Unlock door(s)', url_for(:controller=>"dialogue_lines",:action=>"select_doors",
+  :section_id=>@section,:room_id=>@room,:id=>@dialogue_line)%>
+   </div>
 
-
-<h4>Dialogue this line triggers</h4>
-<% if @dialogue_line.visible==true %>
-<div id="dialogue_area">
-  <%= render :partial=>"update_invisible_dialogue" %>
-</div>
-<% else %>
-This dialogue line is currently <em>invisible</em> and can't trigger the release of another dialogue line.
 <% end %>
 
+
+
+
+
+<% if @triggered_dialogue_lines.size > 0 %>
+
   
+    <% if @dialogue_line.visible==true %>
+  <div id="dialogue_area">
+      
+        <%= render :partial=>"update_invisible_dialogue" %>
+    
+    <% else %>
+    This dialogue line is currently <em>invisible</em> and can't trigger the release of another dialogue line.
+</div>
+  
+  <% end %>
+  <% else %>
+  <div id="dialogue_area">
+
+  <%= link_to 'Trigger invisible dialogue line', url_for(:controller=>"dialogue_lines",:action=>"select_invisible_dialogue_lines",
+  :section_id=>@section,:room_id=>@room,:id=>@dialogue_line)-%>
+</div>
+<% end %>
+    
+ 
+</div>

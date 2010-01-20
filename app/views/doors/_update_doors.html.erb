@@ -2,8 +2,7 @@
 
 
 
-<%= link_to 'Add/Remove Door', url_for(:controller=>"dialogue_lines",:action=>"select_doors",
-  :section_id=>@section,:room_id=>@room,:id=>@dialogue_line)%>
+<h4>Doors this line opens</h4>
 <table>
 <tr>
   <th></th>
@@ -36,6 +35,7 @@
 </tr>
  <% end %>
 </table>
-
+<%= link_to 'Edit Door Assignment', url_for(:controller=>"dialogue_lines",:action=>"select_doors",
+  :section_id=>@section,:room_id=>@room,:id=>@dialogue_line)%>
 
  

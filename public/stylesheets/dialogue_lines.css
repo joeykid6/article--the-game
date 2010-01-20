@@ -1,8 +1,3 @@
-/*
-Flash Messages
-*/
-
-/* TODO use ajax to highlight flash messages */
 #flashMessages {
   margin-bottom: 10px;
 }
@@ -25,9 +20,6 @@ Flash Messages
   background: #cbf285;
   border: 1px solid #3cab09;
 }
-
-
-
 
 
 
@@ -57,6 +49,60 @@ body{
 
     color:black;
 }
+    
+
+#main_space{
+width:400px;
+    
+}
+
+#toggle_extra_space{
+
+   margin: 10px 10px 10px 10px;
+   padding: 10px 10px 10px 10px;
+   position:absolute;
+   top: 60px;
+   left: 405px;
+       
+}
+
+
+#extra_space{
+
+
+   margin: 10px 10px 10px 10px;
+   padding: 10px 10px 10px 10px;
+   position:absolute;
+   top: 60px;
+   left: 405px;
+   
+   
+   border-width:thin;
+   border-style:solid;
+
+   }
+
+   #media_object_area{
+       margin: 10px 0px 10px 0px;
+       padding: 5px 5px 5px 5px;
+       border-style:groove;
+
+   }
+
+   #doors_area{
+       margin: 10px 0px 10px 0px;
+       padding: 5px 5px 5px 5px;
+       border-style:groove;
+
+   }
+   
+   #dialogue_area{
+       margin: 10px 0px 10px 0px;
+       padding: 5px 5px 5px 5px;
+       border-style:groove;
+
+   }
+
 
 
 th {
@@ -96,7 +142,7 @@ td.utterer{
     position: fixed;
     height: 170px;
     width: 100px;
-    position: fixed;
+    
 }
 
 .mini_map
