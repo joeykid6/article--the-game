@@ -1,29 +1,29 @@
 
+<div id="header">
 
+  <%  if @room_root.nil? %><h1><%= link_to "Add dialogue", section_room_dialogue_lines_path(@section, @room) %></h1><% end %>
+  <div id="heads_up_area">
+    <%= render :partial => 'worldmap' %>
+    <%= render :partial => 'minimap' %>
+    <%= render :partial => 'compass', :locals => {
+      :top_entrance => @top_entrance,
+      :left_entrance => @left_entrance,
+      :right_exit => @right_exit,
+      :bottom_exit => @bottom_exit
+      }
+    %>
+  </div>
 
-<%  if @room_root.nil? %><h1><%= link_to "Add dialogue", section_room_dialogue_lines_path(@section, @room) %></h1><% end %>
-<div id="heads_up_area">
-  <%= render :partial => 'worldmap' %>
-  <%= render :partial => 'minimap' %>
-  <%= render :partial => 'compass', :locals => {
-    :top_entrance => @top_entrance,
-    :left_entrance => @left_entrance,
-    :right_exit => @right_exit,
-    :bottom_exit => @bottom_exit,
-    :open_top => @open_top,
-    :open_left => @open_left,
-    :open_right => @open_right,
-    :open_bottom => @open_bottom
-    }
-  %>
+  <h1 id="title"><%= @room.name %></h1>
+
 </div>
 
-<h1 id="title"><%= @room.name %> </h1>
 
-<div id="avatar_dialogue_wrapper">
+
+<div id="content">
   <div id="avatars_area">
 
-   <h2>People you can talk to</h2>
+   <h2>People in this room</h2>
     <%if @guides.size > 0 %>
       <div class="avatar_group" id="guides_div">
       <!-- <h2>Guides</h2> -->
@@ -44,13 +44,16 @@
 
   <div id="dialogue_area">
     <div id="dialogue_speaker_area"> </div>
-    <h2>Dialogue Window</h2>
 
     <div id="dialogue_window">
       
-      <h3><%= (@room_root.content) unless @room_root.nil? %></h3>
+      <%= (@room_root.content) unless @room_root.nil? %>
       <ul id="dialogue_lines">
       </ul>
+    </div>
+
+    <div id="response_window">
+      response window
     </div>
 
 
@@ -58,7 +61,7 @@
 
   
     <div id="media_window">
-    <h2>Stuff you can look at</h2>
+    <h2>Media in this room</h2>
       <div class="avatar_group" id="media_objects_div">
 
         <%= render :partial => 'media_avatar', :locals=>{:media_objects=>@media_objects} %>

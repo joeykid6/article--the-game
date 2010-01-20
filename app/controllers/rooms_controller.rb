@@ -2,8 +2,8 @@ require 'RMagick'
 class RoomsController < ApplicationController
 include Magick
   
-  before_filter :authenticate, :except => [:show, :minimap, :section_map]
-  before_filter :game_check_then_authenticate, :only => [:show, :minimap, :section_map]
+  before_filter :authenticate, :except => [:show, :minimap, :section_map, :start_conversation, :generate_dialogue]
+  before_filter :game_check_then_authenticate, :only => [:show, :minimap, :section_map, :start_conversation, :generate_dialogue]
 
   def index
     @section = Section.find(params[:section_id])
@@ -167,41 +167,37 @@ include Magick
   end
 
   def start_conversation
-      if request.xhr?
-       @game = current_game
-     
+    if request.xhr?
+      @game = current_game
+
 #      The params used here are from the backend of a drop_receiving_element in show.html.erb
 #      DF:  commenting out to make avatar clickable
 #
-       @room = Room.find(params[:room_id])
-       line_generator_id = params[:line_generator_id]
+      @room = Room.find(params[:room_id])
+      line_generator_id = params[:line_generator_id]
 #      params_id_array = params[:id].split("_")
 
 #      line_generator_id = params_id_array[1]
 #      line_generator_type = params_id_array[0]
 
+      @all_root_lines = DialogueLine.conversation_roots(@room.id)
 
-      
+      @disposed_roots = DialogueLine.find(:all,
+        :conditions => ["game_id = ? and dialogue_line_id IN (?)", @game.id, @all_root_lines.map(&:id)],
+        :joins => ("INNER JOIN disposed_of_dialogue_lines ON disposed_of_dialogue_lines.dialogue_line_id = dialogue_lines.id"))
 
-      @all_root_lines=DialogueLine.conversation_roots(@room.id)
-
-      @disposed_roots=DialogueLine.find(:all,
-        :conditions=>["game_id = ? and dialogue_line_id IN (?)",@game.id, @all_root_lines.map(&:id)],
-        :joins=>("INNER JOIN disposed_of_dialogue_lines ON disposed_of_dialogue_lines.dialogue_line_id = dialogue_lines.id"))
-
-      if @disposed_roots.size>0
-      @root_lines = DialogueLine.find(:all,
-        :conditions=>["id IN (?) and id NOT IN (?)",@all_root_lines.map(&:id), @disposed_roots.map(&:id)])
+      if @disposed_roots.size > 0
+        @root_lines = DialogueLine.find(:all,
+          :conditions => ["id IN (?) and id NOT IN (?)", @all_root_lines.map(&:id), @disposed_roots.map(&:id)])
       else
-        @root_lines=DialogueLine.find(:all,
-        :conditions=>["id IN (?) and visible = ?",@all_root_lines.map(&:id),true])
-
+        @root_lines = DialogueLine.find(:all,
+          :conditions => ["id IN (?) and visible = ?", @all_root_lines.map(&:id), true])
       end
 
-      @conversation_root=DialogueLine.find(:first, 
-        :conditions=>["line_generator_id = ? and id IN (?)", line_generator_id, @root_lines.map(&:id)])
+      @conversation_root = DialogueLine.find(:first,
+        :conditions => ["line_generator_id = ? and id IN (?)", line_generator_id, @root_lines.map(&:id)])
 
-        #DialogueLine.conversation_root(room_id, line_generator_id, line_generator_type)
+      #DialogueLine.conversation_root(room_id, line_generator_id, line_generator_type)
 
 #      finding the speaker/guide/media object
       @avatar = @conversation_root.line_generator
@@ -213,13 +209,8 @@ include Magick
       render :update do |page|
 #        page.hide(params[:id])
 
-        page[:dialogue_speaker_area].replace_html :partial=> 'speaker', :locals=>{:avatar => @avatar}
-
-
- #      page[:conversation_starter].replace_html :partial => 'avatar', :locals => {:avatar => @avatar, :room=>@room}
-
-       
-
+#        page[:dialogue_speaker_area].replace_html :partial=> 'speaker', :locals=>{:avatar => @avatar}
+#      page[:conversation_starter].replace_html :partial => 'avatar', :locals => {:avatar => @avatar, :room=>@room}
         page[:dialogue_lines].visual_effect :opacity, :from => 0, :to => 1, :duration => 1
         page[:dialogue_lines].replace_html :partial => 'dialogue_line', :locals => {
           :avatar => @avatar,
@@ -259,7 +250,7 @@ include Magick
       end
 
       if @doors.size > 0
-          @doors.each do |door|
+        @doors.each do |door|
           @game.visible_doors << door unless @game.visible_doors.exists?(door)
         end
       end
@@ -270,61 +261,47 @@ include Magick
       :from=>"visible_dialogue_lines_invisible_dialogue_lines",
       :conditions=>["visible_dialogue_line_id = ?",@dialogue_line.id])
 
-     
-     
-
-      
-
-
-
-
       render :update do |page|
-          page[:compass].replace :partial =>'compass_test', :locals=>{:top_entrance=>@top_entrance,:left_entrance=>@left_entrance,
-            :right_exit=>@right_exit,:bottom_exit=>@bottom_exit}
-
+        page[:compass].replace :partial =>'compass', :locals =>
+          {:top_entrance => @top_entrance,
+          :left_entrance => @left_entrance,
+          :right_exit => @right_exit,
+          :bottom_exit => @bottom_exit}
        
-          @media_objects.each do |media_object|
-           page.insert_html :bottom, :media_objects_div, :partial => 'conversation_media_avatar', :locals=>{:avatar=>media_object}
-           end
-
+        @media_objects.each do |media_object|
+          page.insert_html :bottom, :media_objects_div, :partial => 'conversation_media_avatar', :locals=>{:avatar=>media_object}
+        end
        
-        if @triggered_ids.size>0
-     
-          @triggered_dialogue_lines =  DialogueLine.find(:all,
+        if @triggered_ids.size > 0
+          @triggered_dialogue_lines = DialogueLine.find(:all,
             :conditions=>["id IN (?)",@triggered_ids.map(&:invisible_dialogue_line_id)])
 
           @triggered_dialogue_lines.each do |triggered_line|
 
-          @replaced_dialogue_line=DialogueLine.find(:first,
-            :conditions=>["line_generator_id = ? and visible = ? and room_id = ?",triggered_line.line_generator_id, true,@room.id])
+            @replaced_dialogue_line = DialogueLine.find(:first,
+              :conditions=>["line_generator_id = ? and visible = ? and room_id = ?", triggered_line.line_generator_id, true,@room.id])
 
-           
-         @game.disposed_of_dialogue_lines << @replaced_dialogue_line unless @game.disposed_of_dialogue_lines.exists?(@replaced_dialogue_line)
-         @avatar_replacement = triggered_line.line_generator
 
-#       TODO the "replacement_avatar" partial (below) is the same as "avatar" with the exctption of style. We can DRY up
-#       if we don't see any need to do something else in the partial for the look and feel of a newly triggered root.
+            @game.disposed_of_dialogue_lines << @replaced_dialogue_line unless @game.disposed_of_dialogue_lines.exists?(@replaced_dialogue_line)
+            @avatar_replacement = triggered_line.line_generator
 
-            page[triggered_line.line_generator_id.to_s].replace_html :partial => 'replacement_avatar',
-            :locals=>{:avatar=>@avatar_replacement, :room=>@room}
+    #            TODO the "replacement_avatar" partial (below) is the same as "avatar" with the exception of style. We can DRY up
+    #            if we don't see any need to do something else in the partial for the look and feel of a newly triggered root.
+
+             page[triggered_line.line_generator_id.to_s].replace_html :partial => 'replacement_avatar',
+              :locals => { :avatar => @avatar_replacement, :room => @room }
+          end
         end
-
-  
-
-        
-      end
-
-
 
         unless @dialogue_line.children.empty?
           page[:dialogue_lines].replace_html :partial => 'dialogue_line', :locals => {
             :avatar => @avatar,
             :dialogue_line => @dialogue_line,
             :responses => @dialogue_line.children }
-          page[:dialogue_speaker_area].replace_html :partial=> 'speaker', :locals=>{:avatar => @avatar}
+          page[:dialogue_speaker_area].replace_html :partial=> 'speaker', :locals => { :avatar => @avatar }
+
         else
           
-
 #         page[:media_objects_div].visual_effect :opacity, :from => 1, :to => 0, :duration => 2
 #         page[:media_objects_div].replace_html ""
           page[:dialogue_lines].replace_html "End of Conversation"

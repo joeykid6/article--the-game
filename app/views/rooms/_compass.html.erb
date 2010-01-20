@@ -5,7 +5,7 @@
 
   <% unless @top_entrance.nil? %>
     <% status = "locked" %>
-      <%if open_top==true %>
+      <%if @open_top == true %>
         <% status = "unlocked" %>
       
       <%= link_to(add_door_img_compass("top", top_entrance.parent_room, status),
@@ -21,7 +21,7 @@
   <div id="compass_left">
     <% unless left_entrance.nil? %>
       <% status = "locked" %>
-      <%if open_left==true %>
+      <%if @open_left == true %>
         <% status = "unlocked" %>
       
   
@@ -39,7 +39,7 @@
   <div id="compass_right">
     <% unless right_exit.nil? %>
     <% status = "locked" %>
-    <%if open_right==true %>
+    <%if @open_right == true %>
         <% status = "unlocked" %>
       
       <%= link_to(add_door_img_compass("right", right_exit.child_room, status),
@@ -55,7 +55,7 @@
   <div id="compass_bottom">
     <% unless bottom_exit.nil? %>
       <% status = "locked" %>
-      <%if open_bottom==true %>
+      <%if @open_bottom == true %>
         <% status = "unlocked" %>
       
 

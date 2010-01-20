@@ -10,6 +10,14 @@
    TODO organize this file into meaningful chunks (room_map, show room, etc.)
 */
 
+#header
+{
+    padding: 8px;
+    padding-bottom: 51px;
+    border-bottom: 3px solid #000000;
+    background-color: #99ff55;
+}
+
 #room_intro
 {
     font-style: italic;
@@ -120,8 +128,7 @@
     float: left;
     padding: 8px;
     margin: 0px;
-    width: 75px;
-    border: 1px solid #999999;
+    width: 90px;
 }
 
 
@@ -140,7 +147,7 @@
 #dialogue_area
 {
     float: left;
-    width: 662px;
+    width: 690px;
     padding: 8px;
     margin: 0px;
     border: 1px solid #999999;
@@ -157,12 +164,13 @@
 
 #content_wrapper
 {
-    padding: 20px;
+    width: 960px;
+    padding: 0px;
 }
 
 h1#title
 {
-    margin-top: 50px;
+    margin: 0px;
     font-family: Libel, Arial, sans-serif;
 }
 
@@ -316,10 +324,10 @@ td.room #room_content ul
     border: 0px;
 }
 
-#avatar_dialogue_wrapper
+#content
 {
-    width: 900px;
-    border: 1px solid #999999;
+    width: 930px;
+   /* border: 1px solid #999999; */
     padding: 10px;
     overflow: auto;
 }
@@ -340,11 +348,10 @@ td.room #room_content ul
 
 #dialogue_window
 {
-    background-color: #000000;
+    border: 2px solid #000000;
     padding: 5px;
     height: 500px;
-    color: #00ff00;
-    font-family: "Courier New", monospace;
+    font-family: Helvetica, Arial, sans-serif;
     margin-top: 15px;
 }
 
@@ -405,9 +412,7 @@ td.room #room_content ul
 
 .replacement_guide, .replacement_speaker
 {
-
     background-color: #993333;
-
     height: 85px;
     width: 50px;
     text-align: center;
@@ -415,17 +420,9 @@ td.room #room_content ul
     margin-bottom: 8px;
 }
 
-
-
-
-
-
-
 .guide, .speaker
-{
-    
+{   
     background-color: #ccccff;
-    
     height: 85px;
     width: 50px;
     text-align: center;
@@ -515,7 +512,9 @@ h4
 #media_window
 {
     float: left;
-    border: 5px dashed #888888;
+    text-align: center;
+    padding: 8px;
+   /* border: 5px dashed #888888; */
     
     width: 100px;
 }
