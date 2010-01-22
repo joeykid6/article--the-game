@@ -4,7 +4,19 @@ class DialogueLinesController < ApplicationController
 
   # GET /dialogue_lines
   # GET /dialogue_lines.xml
-uses_tiny_mce
+  uses_tiny_mce :options => {
+                              :theme=>'advanced',
+                              :theme_advanced_disable=>'underline,strikethrough,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,outdent,indent,image,cleanup,help,hr,removeformat,formatselect,fontselect,fontsizeselect,styleselect,sub,sup,forecolor,backcolor,forecolorpicker,backcolorpicker,charmap,visualaid,anchor,newdocument,blockquote,separator',
+
+                              :theme_advanced_buttons1 => 'bold,italic,cut,copy,paste,link,unlink,code',
+                              :theme_advanced_buttons2 => "",
+                              :theme_advanced_buttons3 => "",
+
+
+                              :force_br_newlines=>'true',
+                              :forced_root_block=>''
+                            }
+
 
  
 
