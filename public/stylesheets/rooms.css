@@ -23,7 +23,7 @@
     font-style: italic;
     border-bottom: 3px dotted #888888;
     margin-bottom: 0px;
-    font-family: Georgia, serif;
+    font-family: Arial, serif;
 }
 
 #heads_up_area
@@ -128,29 +128,40 @@
     float: left;
     padding: 8px;
     margin: 0px;
-    width: 90px;
+    width: 140px;
 }
 
+#avatars_area h2, #dialogue_area h2, #media_window h2
+{
+    margin-bottom: 2px;
+    text-align: center;
+}
 
-
-
+#avatars_window, #media_objects_div
+{
+    border: 3px solid #000000;
+    background-color: #ffffff;
+    padding: 8px;
+    height: 590px;
+    overflow-y: scroll;
+}
 
 .avatar_wrapper
 {
-    width: 51px;
-    height: 86px;
+    width: 95px;
+    height: 115px;
     border: 1px solid #000000;
-    background-color: #cccccc;
-    margin-bottom: 5px;
+    background-color: #bbbbbb;
+    margin-bottom: 10px;
+    padding-top: 0px;
 }
 
 #dialogue_area
 {
     float: left;
-    width: 690px;
-    padding: 8px;
+    width: 648px;
+    padding-top: 8px;
     margin: 0px;
-    border: 1px solid #999999;
 }
 
 #dialogue_speaker_area
@@ -326,10 +337,10 @@ td.room #room_content ul
 
 #content
 {
-    width: 930px;
+    width: 960px;
    /* border: 1px solid #999999; */
-    padding: 10px;
     overflow: auto;
+    background-color: #88dd88;
 }
 
 #conversation_starter
@@ -348,30 +359,37 @@ td.room #room_content ul
 
 #dialogue_window
 {
-    border: 2px solid #000000;
+    border: 3px solid #000000;
+    background-color: #ffffff;
     padding: 5px;
-    height: 500px;
-    font-family: Helvetica, Arial, sans-serif;
-    margin-top: 15px;
+    height: 450px;
+    font-family: Arial, sans-serif;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    overflow: auto;
 }
 
 #dialogue_window h3
 {
     font-size: 1.2em;
-    font-family: Georgia, serif;
+    font-family: Arial, sans-serif;
 }
 
-
-#dialogue_lines
+#response_window
 {
-    padding: 0px;
-    margin-left: 0px;
+    border: 3px solid #000000;
+    background-color: #ffffff;
+    padding: 5px;
+    height: 120px;
+    font-family: Arial, sans-serif;
+    margin-bottom: 10px;
+    overflow: auto;
 }
 
 .dialogue_line
 {
-    border: 1px solid #ffffff;
-    background-color: #ffffff;
+    border: 1px solid #000000;
+    background-color: #eeeeee;
     color: #000000;
     list-style-type: none;
     margin-bottom: 5px;
@@ -380,7 +398,7 @@ td.room #room_content ul
 
 .response
 {
-    font-family: Georgia, serif;
+    font-family: Arial, sans-serif;
     border-bottom: 1px solid #00ff00;
     list-style-type: none;
     margin-bottom: 3px;
@@ -408,28 +426,24 @@ td.room #room_content ul
     text-decoration: none;
 }
 
-
-
-.replacement_guide, .replacement_speaker
-{
-    background-color: #993333;
-    height: 85px;
-    width: 50px;
-    text-align: center;
-    list-style-type: none;
-    margin-bottom: 8px;
-}
-
-.guide, .speaker
+.guide, .speaker, .replacement_guide, .replacement_speaker
 {   
-    background-color: #ccccff;
-    height: 85px;
-    width: 50px;
+    background-color: #dddddd;
+    height: 110px;
+    width: 95px;
     text-align: center;
     list-style-type: none;
-    margin-bottom: 8px;
+    padding-top: 5px;
 }
 
+.guide h3, .speaker h3, .replacement_guide h3, .replacement_speaker h3
+{
+    font: .75em Arial, sans-serif;
+    padding-top: 5px;
+    margin-top: 0px;
+    background-color: #dddddd;
+    color: #000000;
+}
 
 .mediaobject
 {
@@ -444,35 +458,25 @@ td.room #room_content ul
     text-align: right;
     
     margin-bottom: 8px;
-    font: .8em Georgia, serif;
+    font: .8em Arial, sans-serif;
     color: #660000;
 }
 
 
 h2
 {
-    font: 1em Georgia, serif;
-    font-weight:bold;
+    font-family: Libel, Arial, sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
     padding-top: 5px;
     margin-top: 0px;
     
 }
 
-.guide h3, .speaker h3
-{
-    font: .75em Georgia;
-    padding-top: 5px;
-    margin-top: 0px;
-    border-bottom: 1px solid #000000;
-    height: 2.5em;
-    background-color: #330099;
-    color: #ffffff;
-}
-
 h4
 {
 
- font: .75em Georgia, serif;
+ font: .75em Arial, sans-serif;
     font-weight:bold;
     padding-top: 5px;
     margin-top: 0px;
@@ -501,11 +505,6 @@ h4
     list-style-type: none;
 }
 
-#media_objects_div
-{
-    list-style-type: none;
-}
-
 /*Dave's test stuff*/
 
 
@@ -516,5 +515,5 @@ h4
     padding: 8px;
    /* border: 5px dashed #888888; */
     
-    width: 100px;
+    width: 140px;
 }

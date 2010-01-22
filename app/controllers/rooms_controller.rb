@@ -211,11 +211,23 @@ include Magick
 
 #        page[:dialogue_speaker_area].replace_html :partial=> 'speaker', :locals=>{:avatar => @avatar}
 #      page[:conversation_starter].replace_html :partial => 'avatar', :locals => {:avatar => @avatar, :room=>@room}
-        page[:dialogue_lines].visual_effect :opacity, :from => 0, :to => 1, :duration => 1
-        page[:dialogue_lines].replace_html :partial => 'dialogue_line', :locals => {
+#        page[:dialogue_window].visual_effect :opacity, :from => 0, :to => 1, :duration => 1
+        page.insert_html :bottom, 'dialogue_window', :partial => 'dialogue_line', :locals => {
           :avatar => @avatar,
-          :dialogue_line => @conversation_root,
-          :responses => @conversation_root.children }
+          :dialogue_line => @conversation_root }
+#          :responses => @conversation_root.children }
+#        if @conversation_root.children.first TODO include conditional for player responses
+        @conversation_root.children.each do |child|
+          page.delay(4) do #TODO calculate delay by dividing the number of characters in previous dialogue line
+#            page[:dialogue_lines].visual_effect :opacity, :from => 0, :to => 1, :duration => 1
+            page.insert_html :bottom, 'dialogue_window', :partial => 'dialogue_line', :locals => {
+              :avatar => child.line_generator,
+              :dialogue_line => child
+            } # TODO get new dialogue lines to appear more slowly
+          end
+
+        end unless @conversation_root.children.empty?
+
         page[:media_objects_div].replace_html ""
       end
 
@@ -233,12 +245,12 @@ include Magick
       @game = current_game
       @dialogue_line = DialogueLine.find_by_id(params[:id])
 
-      @media_objects=MediaObject.find(:all, :conditions=>['dialogue_line_id = ?', @dialogue_line.id], :joins=>:dialogue_lines)
-      @doors=Door.find(:all, :conditions=>['dialogue_line_id = ?', @dialogue_line.id], :joins=>:dialogue_lines)
+      @media_objects = MediaObject.find(:all, :conditions => ['dialogue_line_id = ?', @dialogue_line.id], :joins => :dialogue_lines)
+      @doors = Door.find(:all, :conditions => ['dialogue_line_id = ?', @dialogue_line.id], :joins => :dialogue_lines)
       @avatar = @dialogue_line.line_generator
 
-      @room = Room.find(:first,:conditions=>["id = ?",@dialogue_line.room_id])
-      @section = Section.find(:first,:conditions=>["id = ?",@room.section_id])
+      @room = Room.find(:first, :conditions => ["id = ?", @dialogue_line.room_id])
+      @section = Section.find(:first, :conditions => ["id = ?", @room.section_id])
       @top_entrance = @room.entrances.find_by_door_direction('vertical')
       @left_entrance = @room.entrances.find_by_door_direction('horizontal')
       @bottom_exit = @room.exits.find_by_door_direction('vertical')
@@ -256,13 +268,13 @@ include Magick
       end
       
       
-      @triggered_ids=DialogueLine.find(:all,
-      :select=>"invisible_dialogue_line_id",
-      :from=>"visible_dialogue_lines_invisible_dialogue_lines",
-      :conditions=>["visible_dialogue_line_id = ?",@dialogue_line.id])
+      @triggered_ids = DialogueLine.find(:all,
+        :select => "invisible_dialogue_line_id",
+        :from => "visible_dialogue_lines_invisible_dialogue_lines",
+        :conditions => ["visible_dialogue_line_id = ?", @dialogue_line.id])
 
       render :update do |page|
-        page[:compass].replace :partial =>'compass', :locals =>
+        page[:compass].replace :partial => 'compass', :locals =>
           {:top_entrance => @top_entrance,
           :left_entrance => @left_entrance,
           :right_exit => @right_exit,

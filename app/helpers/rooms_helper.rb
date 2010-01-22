@@ -155,8 +155,8 @@ module RoomsHelper
 
 #  Generates the avatar div in the avatar partial so we can create a link_to_remote properly
   def avatar_div(avatar)
-    html_content = "<h3>#{h(avatar.short_name)}</h3>\n#{image_tag(avatar.thumbnail.url(:small))}"
-    content_tag :div, :class => avatar.class.to_s.downcase, :id => avatar.id do
+    html_content = "#{image_tag(avatar.thumbnail.url(:medium))}\n<h3>#{h(truncate(avatar.short_name, :length => 14))}</h3>"
+    content_tag :div, :class => avatar.class.to_s.downcase, :id => avatar.id, :alt => avatar.short_name do
       html_content
     end
   end

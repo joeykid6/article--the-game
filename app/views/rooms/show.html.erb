@@ -24,36 +24,37 @@
   <div id="avatars_area">
 
    <h2>People in this room</h2>
+    <div id="avatars_window">
+
     <%if @guides.size > 0 %>
-      <div class="avatar_group" id="guides_div">
+      <!-- <div class="avatar_group" id="guides_div"> -->
       <!-- <h2>Guides</h2> -->
       <%= render :partial => 'avatar', :collection => @guides, :locals => { :room => @room } %>
-      </div>
+      <!-- </div> -->
     <% end %>
 
     <% if @speakers.size > 0 %>
-      <div class="avatar_group" id="speakers_div">
+      <!-- <div class="avatar_group" id="speakers_div"> -->
       <!-- <h2>Speakers</h2> -->
       <%= render :partial => 'avatar', :collection => @speakers, :locals => { :room => @room } %>
-      </div>
+      <!-- </div> -->
     <% end %>
-
+    </div>
   </div>
 
   
 
   <div id="dialogue_area">
-    <div id="dialogue_speaker_area"> </div>
+    <h2>Chat</h2>
 
     <div id="dialogue_window">
       
-      <%= (@room_root.content) unless @room_root.nil? %>
-      <ul id="dialogue_lines">
-      </ul>
+      <div class="dialogue_line" id="dialogue_root"><%= (@room_root.content) unless @room_root.nil? %></div>
+      
     </div>
 
     <div id="response_window">
-      response window
+      When you have conversation options, your choices will appear here...
     </div>
 
 
