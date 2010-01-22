@@ -16,7 +16,9 @@ module TinyMCE
       # first we set some defaults, then we merge in the controller level options
       # and finally merge in the view level options (to give presidence)
       @tiny_mce_options ||= {}
-      default_options = { 'mode' => 'textareas',
+      default_options = {
+                  
+                  'mode' => 'textareas',
                   'editor_selector' => 'mceEditor',
                   'theme' => 'simple',
                   'language' => (defined?(I18n) ? I18n.locale : :en) }
