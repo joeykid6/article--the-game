@@ -87,13 +87,7 @@ Body
 
 body
 {
-    font-family: Verdana, sans-serif;
-}
-
-
-h1, h2, h3
-{
-    font-family: Georgia, serif;
+    font-family: Arial, sans-serif;
 }
 
 #content_wrapper

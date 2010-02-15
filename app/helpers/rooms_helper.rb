@@ -84,9 +84,9 @@ module RoomsHelper
   end
 
 #  Generates an image tag for a door, given its direction
-#  TODO modify this to include locked/unlocked images
+#  TODO modify this to include locked/unlocked images?
   def add_door_img(direction, room)
-      image_tag("door-arrow-#{direction}.gif", :alt => "Door to #{room.name}", :title => "Door to #{room.name}")
+      image_tag("lock-icon.png", :alt => "Door to #{room.name}", :title => "Door to #{room.name}")
   end
 
 #  Decides whether to create a link to add a door, or to display an image representing a door.
@@ -147,9 +147,9 @@ module RoomsHelper
 #  Used for choosing locked versus unlocked icons in compass
   def add_door_img_compass(direction, room, status)
     if status=="locked"
-      image_tag("door-arrow-#{direction}.gif", :alt => "Door to #{room.name}", :title => "Door to #{room.name}", :class => "door")
+      image_tag("lock-icon.png", :alt => "Door to #{room.name}", :title => "Door to #{room.name}", :class => "door")
     else
-      image_tag("door-arrow-#{direction}-unlocked.gif", :alt => "Door to #{room.name}", :title => "Door to #{room.name}", :class => "door")
+      image_tag("door-arrow-#{direction}-unlocked.png", :alt => "Door to #{room.name}", :title => "Door to #{room.name}", :class => "door")
     end
   end
 
@@ -161,8 +161,33 @@ module RoomsHelper
     end
   end
 
+#  helper for rendering RJS dialogue lines in start_conversation.rjs
+  def render_dialogue_line(avatar, avatar_thumbnail, dialogue_line, delay = 0)
+    page.delay(delay) do
+      page.insert_html :bottom, 'dialogue_window', :partial => 'dialogue_line', :locals => {
+        :avatar => avatar,
+        :avatar_thumbnail => avatar_thumbnail,
+        :dialogue_line => dialogue_line }
+    end
+  end
 
+#  wraps dialogue line content in em tags if it is issued by the game
+  def wrap_dialogue(avatar, dialogue_line_content)
+    unless avatar.class.to_s == 'GameRobot' && avatar.short_name == 'The Game'
+      dialogue_line_content
+    else
+      content_tag(:em, dialogue_line_content)
+    end
+  end
 
-
+  def delay_timer_calc(dialogue_line)
+    delay_time = case dialogue_line.content.length/30
+      when (0..2) then 2
+      when (10..1000) then 10
+    else
+      dialogue_line.content.length/30
+    end
+    return delay_time
+  end
 
 end

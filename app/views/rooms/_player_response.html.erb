@@ -1,0 +1,6 @@
+  <div class="response">
+  <%= link_to_remote player_response.content,
+    :url => { :action => 'build_conversation',
+    :dialogue_line_id => player_response.id,
+    :room_id => room.id } %>
+  </div>

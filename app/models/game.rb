@@ -7,8 +7,8 @@ class Game < ActiveRecord::Base
   has_and_belongs_to_many :visible_rooms, :class_name => "Room", :join_table => "visible_rooms"
   has_and_belongs_to_many :visible_sections, :class_name => "Section", :join_table => "visible_sections"
 
-  has_one :game_avatar
+  belongs_to :game_avatar
   
-  validates_presence_of :player_name
+  validates_presence_of :short_name, :game_avatar_id
 
 end

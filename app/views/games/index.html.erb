@@ -23,7 +23,7 @@ made ourselves a pretty hot little stew. If it sounds like something you'd like 
 
 <% @games.each do |game| %>
   <tr>
-    <td><%=h game.player_name %></td>
+    <td><%=h game.short_name %></td>
     <td><%=h game.current_room %></td>
     <td><%=h game.finished %></td>
     <td><%= link_to 'Show', game %></td>
