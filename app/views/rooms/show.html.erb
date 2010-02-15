@@ -1,4 +1,3 @@
-
 <div id="header">
 
   <%  if @room_root.nil? %><h1><%= link_to "Add dialogue", section_room_dialogue_lines_path(@section, @room) %></h1><% end %>
@@ -24,21 +23,21 @@
   <div id="avatars_area">
 
    <h2>People in this room</h2>
-    <div id="avatars_window">
 
-    <%if @guides.size > 0 %>
-      <!-- <div class="avatar_group" id="guides_div"> -->
-      <!-- <h2>Guides</h2> -->
+    <div id="avatars_window">
+    <div id="click_blocker" style="display:none;"></div>
+    <% if @guides.size > 0 %>
+
       <%= render :partial => 'avatar', :collection => @guides, :locals => { :room => @room } %>
-      <!-- </div> -->
+
     <% end %>
 
     <% if @speakers.size > 0 %>
-      <!-- <div class="avatar_group" id="speakers_div"> -->
-      <!-- <h2>Speakers</h2> -->
+
       <%= render :partial => 'avatar', :collection => @speakers, :locals => { :room => @room } %>
-      <!-- </div> -->
+
     <% end %>
+
     </div>
   </div>
 
@@ -49,25 +48,26 @@
 
     <div id="dialogue_window">
       
-      <div class="dialogue_line" id="dialogue_root"><%= (@room_root.content) unless @room_root.nil? %></div>
+      <%= render :partial => 'dialogue_line', :locals => {
+          :dialogue_line => @room_root,
+          :avatar => @room_root.line_generator,
+          :avatar_thumbnail => @room_root.line_generator.thumbnail.url(:small)} unless @room_root.nil? %>
       
     </div>
 
     <div id="response_window">
-      When you have conversation options, your choices will appear here...
+      Player Responses
     </div>
 
 
   </div>
 
   
-    <div id="media_window">
+    <div id="media_area">
     <h2>Media in this room</h2>
-      <div class="avatar_group" id="media_objects_div">
+      <div id="media_window">
 
-        <%= render :partial => 'media_avatar', :locals=>{:media_objects=>@media_objects} %>
-
-        
+        <%= render :partial => 'media_avatar', :collection => @media_objects unless @media_objects.nil? %>
 
       </div>
     </div>

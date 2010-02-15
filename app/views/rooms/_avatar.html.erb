@@ -1,9 +1,5 @@
 <% #Generates the avatars for speakers and guides -%>
-<div class="avatar_wrapper">
-
   <%= link_to_remote avatar_div(avatar),
-      :url => { :action => 'start_conversation', 
+      :url => { :action => 'build_conversation',
       :line_generator_id => avatar.id,
       :room_id => room.id } %>
-
-</div>

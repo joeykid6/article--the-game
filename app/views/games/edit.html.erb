@@ -4,9 +4,22 @@
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :player_name %><br />
-    <%= f.text_field :player_name %>
+    <%= f.label :short_name %><br />
+    <%= f.text_field :short_name %>
   </p>
+
+
+    <div class="form_row">
+    <%=  f.label :game_avatar %>
+
+  <% GameAvatar.find(:all).each do |game_avatar| %>
+      <br><%= f.radio_button 'game_avatar_id', game_avatar.id %>
+      <%=  image_tag(game_avatar.thumbnail.url(:small))%>
+    <% end unless GameAvatar.find(:all).nil? %>
+  </div>
+
+
+
   <p>
     <%= f.label :current_room %><br />
     <%= f.text_field :current_room %>

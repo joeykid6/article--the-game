@@ -1,7 +1,10 @@
 class CreateGames < ActiveRecord::Migration
   def self.up
     create_table :games do |t|
-      t.string :player_name
+
+#     This is the player name, but to make it match the other avatars in the
+#     abstract dialogue_line code, we used "short_name" instead
+      t.string :short_name
      
       t.integer :game_avatar_id
 

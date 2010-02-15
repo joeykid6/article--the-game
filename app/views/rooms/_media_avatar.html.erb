@@ -1,18 +1,5 @@
 <% #Generates the avatars for media objects %>
-
-
-<% media_objects.each do |avatar| %>
-
-<div class="<%= avatar.class.to_s.downcase %>">
-  <%= h(avatar.short_name) %>
-
-
-      <%= link_to image_tag(avatar.thumbnail.url(:small), :border=>0),
-            "#{avatar.url}", :class=>"lightview", :title=>"#{avatar.short_name}:: :: width: #{avatar.object_width}, height: #{avatar.object_height}"  %>
-
-
-
-</div>
-
-<%end unless media_objects.nil?%>
-
+  <%= link_to avatar_div(media_avatar),
+        "#{media_avatar.url}",
+        :class => "lightview",
+        :title => h(media_avatar.short_name) + ':: :: width: ' + media_avatar.object_width.to_s + ', height: ' + media_avatar.object_height.to_s  %>

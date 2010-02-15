@@ -81,8 +81,8 @@
 {
     position: relative;
     top: -75px;
-    height: 15px;
-    width: 15px;
+    height: 18px;
+    width: 18px;
     border: 0px;
     z-index: 1;
 }
@@ -96,31 +96,33 @@
 
 #compass_mid_wrapper
 {
-    height: 45px;
+    height: 38px;
 }
 
 #compass_top
 {
     text-align: center;
-    height: 15px;
+    height: 18px;
 }
 
 #compass_left
 {
     float: left;
-    margin-top: 15px;
+    margin-top: 8px;
+    margin-left: -2px;
 }
 
 #compass_right
 {
     float: right;
-    margin-top: 15px;
+    margin-top: 8px;
+    margin-right: -2px;
 }
 
 #compass_bottom
 {
     text-align: center;
-    height: 15px;
+    height: 18px;
 }
 
 #avatars_area
@@ -131,29 +133,40 @@
     width: 140px;
 }
 
-#avatars_area h2, #dialogue_area h2, #media_window h2
+#click_blocker
+{
+    position: absolute;
+    top: inherit;
+    left: inherit;
+    height: 590px;
+    width: 105px;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 4;
+}
+
+#media_area
+{
+    float: left;
+    margin: 0px;
+    padding: 8px;
+    width: 140px;
+}
+
+#avatars_area h2, #dialogue_area h2, #media_area h2
 {
     margin-bottom: 2px;
     text-align: center;
 }
 
-#avatars_window, #media_objects_div
+#avatars_window, #media_window
 {
     border: 3px solid #000000;
     background-color: #ffffff;
     padding: 8px;
     height: 590px;
     overflow-y: scroll;
-}
-
-.avatar_wrapper
-{
-    width: 95px;
-    height: 115px;
-    border: 1px solid #000000;
-    background-color: #bbbbbb;
-    margin-bottom: 10px;
-    padding-top: 0px;
+    position: relative;
+    z-index: 0;
 }
 
 #dialogue_area
@@ -260,8 +273,8 @@ td.room #room_left img
 {
     position: absolute;
     top: 50%;
-    height: 30px;
-    margin-top: -15px;
+    height: 19px;
+    margin-top: -9px;
     margin-left: 3px;
 }
 
@@ -269,7 +282,7 @@ td.room #room_left a
 {
     position: absolute;
     top: 50%;
-    height: 30px;
+    height: 19px;
     margin-top: -15px;
     margin-left: -13px;
 }
@@ -303,8 +316,8 @@ td.room #room_right img
 {
     position: absolute;
     top: 50%;
-    height: 30px;
-    margin-top: -15px;
+    height: 19px;
+    margin-top: -9px;
     margin-left: 4px;
 }
 
@@ -312,7 +325,7 @@ td.room #room_right a
 {
     position: absolute;
     top: 50%;
-    height: 30px;
+    height: 19px;
     margin-top: -15px;
     margin-left: -13px;
 }
@@ -333,6 +346,8 @@ td.room #room_content ul
 #room_left img, #room_top img, #room_right img, #room_bottom img
 {
     border: 0px;
+    height: 19px;
+    width: 19px;
 }
 
 #content
@@ -389,6 +404,8 @@ td.room #room_content ul
 .dialogue_line
 {
     border: 1px solid #000000;
+    -moz-border-radius: 5px;
+    -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.4);
     background-color: #eeeeee;
     color: #000000;
     list-style-type: none;
@@ -396,72 +413,90 @@ td.room #room_content ul
     padding: 4px;
 }
 
+.dialogue_line img
+{
+    margin-right: 7px;
+    padding: 2px;
+    float: left;
+    border: 1px solid #888888;
+    -moz-border-radius: 4px;
+}
+
+.dialogue_line h4
+{
+    margin-top: 0px;
+    padding-top: 0px;
+    margin-bottom: 3px;
+}
+
+.dialogue_line p
+{
+    font-size: 0.8em;
+    margin-top: 4px;
+    margin-left: 43px;
+    margin-bottom: 4px;
+}
+
 .response
 {
     font-family: Arial, sans-serif;
-    border-bottom: 1px solid #00ff00;
-    list-style-type: none;
-    margin-bottom: 3px;
+    font-size: 0.8em;
+    font-weight: bold;
+    background-color: #eee;
+    border: 1px solid #000;
+    -moz-border-radius: 5px;
+    -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.4);
+    margin-bottom: 5px;
     padding: 4px;
-}
-
-.dialogue_line a:link, .dialogue_line a:visited
-{
-    color: #00ff00;
-    list-style-type: none;
-    text-decoration: none;
+    padding-left: 8px;
 }
 
 .response a:link, .response a:visited
+
 {
-    color: #00ff00;
+    color: #000;
     list-style-type: none;
     text-decoration: none;
 }
 
-.dialogue_line a:hover
+.response a:hover
 {
-    color: #ffffff;
-    list-style-type: none;
-    text-decoration: none;
+    color: #000;
+    text-decoration: underline;
 }
 
-.guide, .speaker, .replacement_guide, .replacement_speaker
+.guide, .speaker, .replacement_guide, .replacement_speaker, .mediaobject
 {   
-    background-color: #dddddd;
-    height: 110px;
-    width: 95px;
+    background-color: #ddd;
+    border: 1px solid #888;
+    -moz-border-radius: 5px;
+    -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.4);
+    height: 107px;
+    width: 96px;
     text-align: center;
     list-style-type: none;
-    padding-top: 5px;
-}
-
-.guide h3, .speaker h3, .replacement_guide h3, .replacement_speaker h3
-{
-    font: .75em Arial, sans-serif;
-    padding-top: 5px;
-    margin-top: 0px;
-    background-color: #dddddd;
-    color: #000000;
-}
-
-.mediaobject
-{
-    border-top: 1px solid #999999;
-    border-bottom: 1px solid #999999;
-    
-    padding: 2px;
-    background-color: #ffffcc;
-    
-    height: 32px;
-    width: 80px;
-    text-align: right;
-    
+    padding-top: 4px;
     margin-bottom: 8px;
-    font: .8em Arial, sans-serif;
-    color: #660000;
 }
 
+.guide h3, .speaker h3, .replacement_guide h3, .replacement_speaker h3, .mediaobject h3
+{
+    font-size: .7em;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    padding-top: 2px;
+    margin-top: 0px;
+    color: #000;
+}
+
+.guide img, .speaker img, .replacement_guide img, .replacement_speaker img, .mediaobject img
+
+{
+    padding: 4px;
+    border: 1px solid #888;
+    -moz-border-radius: 5px;
+    background-color: #ffffff;
+}
 
 h2
 {
@@ -481,39 +516,4 @@ h4
     padding-top: 5px;
     margin-top: 0px;
 
-}
-
-
-.guide img, .speaker img
-{
-    
-    border: 1px solid #000000;
-}
-
-.mediaobject img
-{
-    height: 30px;
-    width: 30px;
-    
-    
-
-
-}
-
-#speakers_div, #guides_div
-{
-    list-style-type: none;
-}
-
-/*Dave's test stuff*/
-
-
-#media_window
-{
-    float: left;
-    text-align: center;
-    padding: 8px;
-   /* border: 5px dashed #888888; */
-    
-    width: 140px;
 }

@@ -1,0 +1,77 @@
+
+# TODO
+# 1) Disable all avatar clickables at start of conversation  DONE
+# 2) Force dialogue window to drop to the bottom when new content is added
+# 3) Work on spinner waiting subroutine
+# 4) modify response window background
+# 5) Add player thumbnail to response window right side
+# 6) Properly refresh response window at the end of the view routine below
+# 7) Add better visual feedback generally for dialogue changes
+# 8) tweak positions of compass arrows
+# 9) consider different timing of conversation changes, particularly player responses should immediately fade
+# 10) write some real content
+# 11) automate URL generation for image-only media objects
+# 12) Figure out proper use of h and sanitize on all user input and view output
+# 13) Force thumbnails to be square
+
+page.render_dialogue_line(@avatar, @avatar_thumbnail, @dialogue_line)
+
+page[:click_blocker].show
+
+page[:compass].replace :partial => 'compass', :locals =>
+  {:top_entrance => @top_entrance,
+  :left_entrance => @left_entrance,
+  :right_exit => @right_exit,
+  :bottom_exit => @bottom_exit} unless @redraw_compass == false
+
+page.insert_html :bottom, 'media_window',
+  :partial => 'media_avatar',
+  :collection => @media_objects unless @media_objects.nil?
+
+delay_timer = delay_timer_calc(@dialogue_line)
+
+unless @dialogue_line.descendants.empty?
+  @dialogue_line.descendants.each do |descendant|
+    if descendant.line_generator.name == 'player_response'
+      @player_responses = descendant.self_and_siblings
+
+      page.delay(delay_timer) do
+        page[:response_window].replace_html :partial => 'player_response',
+          :collection => @player_responses,
+          :locals => { :room => @room }
+      end
+
+      break
+
+    else
+      page.render_dialogue_line(descendant.line_generator, descendant.line_generator.thumbnail.url(:small), descendant, delay_timer)
+      delay_timer += delay_timer_calc(descendant)
+
+  #    This is where the conversation ending/reset sequence happens
+      page.delay(delay_timer) do
+        page[:response_window].replace_html "Player Responses"
+        page[:click_blocker].hide
+
+        @triggered_dialogue_lines.each do |triggered_line|
+
+          replaced_dialogue_line = DialogueLine.find(:first,
+            :conditions => ["line_generator_id = ? and visible = ? and room_id = ?",
+              triggered_line.line_generator_id,
+              true,
+              @room.id])
+
+          @game.disposed_of_dialogue_lines << replaced_dialogue_line unless @game.disposed_of_dialogue_lines.exists?(replaced_dialogue_line)
+          @avatar_replacement = triggered_line.line_generator
+
+          page[triggered_line.line_generator_id.to_s].replace_html :partial => 'avatar',
+            :locals => { :avatar => @avatar_replacement, :room => @room }
+
+        end unless @triggered_dialogue_lines.nil?
+      end if descendant.descendants.empty?
+    end
+
+  end # @dialogue_line.descendants.each do...
+else
+  page[:click_blocker].hide
+
+end
