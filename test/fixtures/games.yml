@@ -1,9 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  player_name: MyString
-  finished: false
-
-two:
-  player_name: MyString
-  finished: false

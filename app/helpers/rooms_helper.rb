@@ -162,12 +162,16 @@ module RoomsHelper
   end
 
 #  helper for rendering RJS dialogue lines in start_conversation.rjs
-  def render_dialogue_line(avatar, avatar_thumbnail, dialogue_line, delay = 0)
+  def render_dialogue_line(avatar, avatar_thumbnail, dialogue_line, fade_in_time, delay = 0)
     page.delay(delay) do
+      d_time_stamp = dialogue_time_stamp
       page.insert_html :bottom, 'dialogue_window', :partial => 'dialogue_line', :locals => {
         :avatar => avatar,
         :avatar_thumbnail => avatar_thumbnail,
+        :d_time_stamp => d_time_stamp,
         :dialogue_line => dialogue_line }
+      page.hide "dialogue_line_#{dialogue_line.id}_#{d_time_stamp}"
+      page.visual_effect(:appear, "dialogue_line_#{dialogue_line.id}_#{d_time_stamp}", :duration => fade_in_time)
     end
   end
 
@@ -180,6 +184,7 @@ module RoomsHelper
     end
   end
 
+#  Sets the delay time for building dialogue sequences in build_conversation.rjs
   def delay_timer_calc(dialogue_line)
     delay_time = case dialogue_line.content.length/30
       when (0..2) then 2
@@ -188,6 +193,20 @@ module RoomsHelper
       dialogue_line.content.length/30
     end
     return delay_time
+  end
+
+#  Scrolls the dialogue window to the bottom TODO requires cross-browser testing
+  def dialogue_scroll_to_bottom(delay = 0)
+    page.delay(delay) do #necessary for proper window height
+      page << 'var objDiv = $("dialogue_window");'
+      page << 'objDiv.scrollTop = 0;' #I believe necessary for IE
+      page << 'objDiv.scrollTop = objDiv.scrollHeight;'
+    end
+  end
+
+#  used to create a timestamp for distinguishing dialogue lines
+  def dialogue_time_stamp
+    Time.now.strftime("%j%H%M%S")
   end
 
 end

@@ -50,15 +50,15 @@
       
       <%= render :partial => 'dialogue_line', :locals => {
           :dialogue_line => @room_root,
+          :d_time_stamp => dialogue_time_stamp,
           :avatar => @room_root.line_generator,
           :avatar_thumbnail => @room_root.line_generator.thumbnail.url(:small)} unless @room_root.nil? %>
       
     </div>
 
     <div id="response_window">
-      Player Responses
+      <h1>Player Responses</h1>
     </div>
-
 
   </div>
 
