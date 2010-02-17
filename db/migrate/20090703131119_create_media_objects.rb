@@ -3,6 +3,7 @@ class CreateMediaObjects < ActiveRecord::Migration
     create_table :media_objects do |t|
       t.string :name
       t.string :short_name
+      t.boolean :image_object, :default=>0
 
       
 

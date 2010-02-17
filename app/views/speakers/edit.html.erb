@@ -1,5 +1,10 @@
 <h1>Editing speaker</h1>
 
+<p>
+Current thumbnail or image:<br>
+  <%= image_tag @speaker.thumbnail.url(:medium) %>
+</p>
+
 <% form_for(@speaker,:html=>{:multipart=>true} ) do |f| %>
   <%= f.error_messages %>
 
@@ -35,5 +40,5 @@
   </p>
 <% end %>
 
-<%= link_to 'Show', @speaker %> |
+
 <%= link_to 'Back', speakers_path %>

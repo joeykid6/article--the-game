@@ -210,7 +210,7 @@ include Magick
 
   #      find the player info and thumbnail to use for the player response posting
         @avatar = @game
-        @avatar_thumbnail = @game.game_avatar.thumbnail.url(:small)
+        @avatar_thumbnail = @game.thumbnail.url(:small)
 
       end
 

@@ -69,10 +69,13 @@ ActiveRecord::Schema.define(:version => 20091011140837) do
   end
 
   create_table "games", :force => true do |t|
-    t.string   "player_name"
-    t.integer  "game_avatar_id"
+    t.string   "short_name"
+    t.string   "thumbnail_file_name"
+    t.string   "thumbnail_content_type"
+    t.integer  "thumbnail_file_size"
+    t.datetime "thumbnail_updated_at"
     t.integer  "current_room"
-    t.boolean  "finished",       :default => false
+    t.boolean  "finished",               :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -91,6 +94,7 @@ ActiveRecord::Schema.define(:version => 20091011140837) do
   create_table "media_objects", :force => true do |t|
     t.string   "name"
     t.string   "short_name"
+    t.boolean  "image_object",           :default => false
     t.string   "thumbnail_file_name"
     t.string   "thumbnail_content_type"
     t.integer  "thumbnail_file_size"

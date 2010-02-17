@@ -7,18 +7,16 @@
 <tr>
   <th></th>
   <th>Name</th>
-  <th>Short name</th>
-  <th>URL</th>
+  
 
 </tr>
 <% @media_objects.each do |media_object| %>
 <tr>
-  <td><%= link_to image_tag(media_object.thumbnail.url(:medium), :border=>0),"#{media_object.url}", :class=>"lightview",
+  <td><%= link_to image_tag(media_object.thumbnail.url(:small), :border=>0),"#{media_object.url}", :class=>"lightview",
           :title=>"#{media_object.short_name}:: :: width: #{media_object.object_width}, height: #{media_object.object_height}"  %>
   </td>
   <td><%=h media_object.name %></td>
-  <td><%=h media_object.short_name %></td>
-  <td><%=h media_object.url %></td>
+  
   <td>
       
   </td>

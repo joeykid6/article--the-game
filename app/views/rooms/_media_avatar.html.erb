@@ -1,5 +1,20 @@
 <% #Generates the avatars for media objects %>
-  <%= link_to avatar_div(media_avatar),
+
+ <% if media_avatar.image_object == true%>
+
+
+<%= link_to avatar_div(media_avatar),
+        "#{media_avatar.thumbnail.url}",
+        :class => "lightview",
+        :autosize=>"true",
+        :title => h(media_avatar.short_name) %>
+
+
+<%else%>
+
+<%= link_to avatar_div(media_avatar),
         "#{media_avatar.url}",
         :class => "lightview",
-        :title => h(media_avatar.short_name) + ':: :: width: ' + media_avatar.object_width.to_s + ', height: ' + media_avatar.object_height.to_s  %>
+        :title => h(media_avatar.short_name) + ':: :: width: '+ media_avatar.object_width.to_s + ', height: ' + media_avatar.object_height.to_s  %>
+
+<%end%>

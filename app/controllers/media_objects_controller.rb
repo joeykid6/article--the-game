@@ -71,16 +71,17 @@ class MediaObjectsController < ApplicationController
     #@section=Section.find(params[:section_id])
 
     
-      if @media_object.save
-        
-      
-      render(:partial=>"save_result")
+      respond_to do |format|
+        if @media_object.save
 
+        flash[:notice] = 'Media object was successfully created.'
+        format.html { redirect_to(media_objects_path) }
+        #render :partial=>"save_result"
       else
         flash[:message] = "There was an error saving the media object.  Did you browse for a picture to upload?"
         render :partial =>"problem"
       end
-
+      end
     end
 
   # PUT /media_objects/1
@@ -93,12 +94,16 @@ class MediaObjectsController < ApplicationController
     @media_object = MediaObject.find(params[:id])
 
    
+      respond_to do |format|
       if @media_object.update_attributes(params[:media_object])
-        render(:partial=>"update_result")
+        flash[:notice] = 'Media object was successfully updated.'
+        format.html { redirect_to(media_objects_path) }
+        format.xml  { head :ok }
       else
-        flash[:message] = "There was an error saving the media object."
-        
+        flash[:message] = "There was an error saving the media object.  Did you browse for a picture to upload?"
+        render :partial =>"problem"
       end
+    end
   end
 
   # DELETE /media_objects/1

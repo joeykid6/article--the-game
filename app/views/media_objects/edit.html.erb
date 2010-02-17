@@ -1,9 +1,11 @@
 <h1>Editing media_object</h1>
 
+
 <% form_for([@section,@room,@dialogue_line,@media_object], :html=>{:multipart=>true}) do |f| %>
   <%= f.error_messages %>
 
-  <p>
+
+<p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>
@@ -11,10 +13,34 @@
     <%= f.label :short_name %><br />
     <%= f.text_field :short_name %>
   </p>
-  <p><label for="thumbnail">Upload an image:</label><br />
+  <br />
+  <br />
+<div id="selection_wrapper">
+<h3>Image or thumbnail</h3>
+  <p>
+Current thumbnail or image:<br>
+  <%= image_tag @media_object.thumbnail.url(:small) %>
+</p>
+
+<p><label for="thumbnail">Upload a different image:</label><br />
     <%= f.file_field :thumbnail %>
   </p>
 
+  <p>
+    <%= f.check_box :image_object %>Use the image I upload as my media object
+  </p>
+
+
+
+</div>
+
+ <br />
+  <br />
+  
+
+  
+  <div id="selection_wrapper">
+  <h3>Videos and webpages</h3>
   If you want to embed a video from YouTube or Google, include the embed URL below, *not* the watch URL.
   <p>
     <%= f.label :url %><br />
@@ -29,7 +55,11 @@
     <%= f.label :object_height %><br />
     <%= f.text_field :object_height %>
   </p>
+  </div>
   <p>
-    <%= f.submit 'Update' %><%= link_to_remote "Close window",:url=>{:action=>"close_lightview"} -%>
+
+    <%= f.submit 'Update' %>
   </p>
 <% end %>
+
+  <%= link_to 'Back', media_objects_path %>
