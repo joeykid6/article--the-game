@@ -1,4 +1,8 @@
 <h1>Editing guide</h1>
+<p>
+Current thumbnail or image:<br>
+  <%= image_tag @guide.thumbnail.url(:medium) %>
+</p>
 
 <% form_for(@guide, :html=>{:multipart=>true}) do |f| %>
   <%= f.error_messages %>
@@ -19,5 +23,4 @@
   </p>
 <% end %>
 
-<%= link_to 'Show', @guide %> |
 <%= link_to 'Back', guides_path %>

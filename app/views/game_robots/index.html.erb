@@ -2,15 +2,16 @@
 
 <table>
   <tr>
+    <th>&nbsp;</th>
     <th>Name</th>
-    <th>Short name</th>
+    
   </tr>
 
 <% @game_robots.each do |game_robot| %>
   <tr>
+    <td><%= image_tag game_robot.thumbnail.url(:small) %></td>
     <td><%=h game_robot.name %></td>
-    <td><%=h game_robot.short_name %></td>
-    <td><%= link_to 'Show', game_robot %></td>
+    
     <td><%= link_to 'Edit', edit_game_robot_path(game_robot) %></td>
     <td><%= link_to 'Destroy', game_robot, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
@@ -19,4 +20,3 @@
 
 <br />
 
-<%= link_to 'New game_robot', new_game_robot_path %>

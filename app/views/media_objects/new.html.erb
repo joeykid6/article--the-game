@@ -3,6 +3,10 @@
 <% form_for(@media_object, :html=>{:multipart=>true}) do |f| %>
   <%= f.error_messages %>
 
+
+
+
+
   <p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>
@@ -14,10 +18,22 @@
     <%= f.text_field :short_name %>
   </p>
 
+<div id="selection_wrapper">
 
-  <p><label for="thumbnail">Upload an image:</label><br />
+
+<p><label for="thumbnail">Upload an image:</label><br />
     <%= f.file_field :thumbnail %>
   </p>
+
+  <p>
+    <%= f.check_box :image_object %>Use the image I upload as my media object
+  </p>
+  
+
+
+</div>
+
+  
 
 
 
