@@ -1,20 +1,30 @@
 
 # TODO
 # 1) Disable all avatar clickables at start of conversation  DONE
-# 2) Force dialogue window to drop to the bottom when new content is added
+# 2) Force dialogue window to drop to the bottom when new content is added DONE
 # 3) Work on spinner waiting subroutine
-# 4) modify response window background
+# 4) modify response window background DONE
 # 5) Add player thumbnail to response window right side
-# 6) Properly refresh response window at the end of the view routine below
-# 7) Add better visual feedback generally for dialogue changes
+# 6) Properly refresh response window at the end of the view routine below DONE
+# 7) Add fade out for response window post click
 # 8) tweak positions of compass arrows
-# 9) consider different timing of conversation changes, particularly player responses should immediately fade
+# 9) consider different timing of conversation changes DONE
 # 10) write some real content
-# 11) automate URL generation for image-only media objects
+# 11) automate URL generation for image-only media objects DAVE WILL DO
 # 12) Figure out proper use of h and sanitize on all user input and view output
-# 13) Force thumbnails to be square
+# 13) Force thumbnails to be square DAVE WILL DO
+# 14) Make entire player response div clickable
 
-page.render_dialogue_line(@avatar, @avatar_thumbnail, @dialogue_line)
+# set the fade in time for dialogue lines to appear, and the necessary wait time for the
+# scroll to happen properly.
+fade_in_time = 1.5
+scroll_wait_time = 0.2
+
+page.render_dialogue_line(@avatar, @avatar_thumbnail, @dialogue_line, fade_in_time)
+
+page.dialogue_scroll_to_bottom(scroll_wait_time)
+
+page[:response_window].replace_html content_tag(:h1, "Player Responses")
 
 page[:click_blocker].show
 
@@ -39,18 +49,22 @@ unless @dialogue_line.descendants.empty?
         page[:response_window].replace_html :partial => 'player_response',
           :collection => @player_responses,
           :locals => { :room => @room }
+        @player_responses.each do |player_response|
+          page.hide("player_response_#{player_response.id}")
+          page.visual_effect(:appear, "player_response_#{player_response.id}", :duration => 1.5)
+        end
       end
 
       break
 
     else
-      page.render_dialogue_line(descendant.line_generator, descendant.line_generator.thumbnail.url(:small), descendant, delay_timer)
-      delay_timer += delay_timer_calc(descendant)
+      page.render_dialogue_line(descendant.line_generator, descendant.line_generator.thumbnail.url(:small), descendant, fade_in_time, delay_timer)
+      page.dialogue_scroll_to_bottom(delay_timer + scroll_wait_time)
+      
+      delay_timer += delay_timer_calc(descendant) unless descendant.descendants.empty?
 
   #    This is where the conversation ending/reset sequence happens
       page.delay(delay_timer) do
-        page[:response_window].replace_html "Player Responses"
-        page[:click_blocker].hide
 
         @triggered_dialogue_lines.each do |triggered_line|
 
@@ -67,6 +81,9 @@ unless @dialogue_line.descendants.empty?
             :locals => { :avatar => @avatar_replacement, :room => @room }
 
         end unless @triggered_dialogue_lines.nil?
+
+        page[:click_blocker].hide
+
       end if descendant.descendants.empty?
     end
 
