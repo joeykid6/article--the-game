@@ -1,4 +1,4 @@
-<div id="mini_map" class="mini_map">
+<div id="build_menu" class="build_menu">
 
   <h3>Build Menu</h3>
 
@@ -15,15 +15,35 @@
 
     <br />
     <br />
-    <%=link_to  "New Media Object", new_media_object_path, :class=>"lightview", :title=>"New Media Object:: :: width: 400, height: 600"  %>
+    Guides:<br />
+    <%=link_to  "New", new_guide_path, :class=>"lightview", :title=>"Guides:: :: width: 400, height: 800"  %>
+    &nbsp;|
+    <%=link_to  "Edit/Destroy", guides_path, :class=>"lightview", :title=>"Guides:: :: width: 400, height: 800"  %>
+
     <br />
-    <%=link_to  "New Speaker", new_speaker_path, :class=>"lightview", :title=>"New Speaker:: :: width: 400, height: 600"  %>
+    Speakers:<br />
+    <%=link_to  "New", new_speaker_path, :class=>"lightview", :title=>"Speakers:: :: width: 400, height: 800"  %>
+    &nbsp;|
+
+    <%=link_to  "Edit/Destroy", speakers_path, :class=>"lightview", :title=>"Speakers:: :: width: 400, height: 800"  %>
+
     <br />
-    <%=link_to  "New Guide", new_guide_path, :class=>"lightview", :title=>"New Guide:: :: width: 400, height: 300"  %>
+    Media Objects:<br />
+    <%=link_to  "New", new_media_object_path, :class=>"lightview", :title=>"Media Objects:: :: width: 300, height: 800"  %>
+    &nbsp;|
+    <%=link_to  "Edit/Destroy", media_objects_path, :class=>"lightview", :title=>"Media Objects:: :: width: 300, height: 800"  %>
     <br />
-    <%=link_to  "New GameRobot", new_game_robot_path, :class=>"lightview", :title=>"New Game Robot:: :: width: 400, height: 250"  %>
+    
+    
+    Game Robots:<br />
+    <%=link_to  "New", new_game_robot_path, :class=>"lightview", :title=>"Game Robots:: :: width: 400, height: 400"  %>
+    &nbsp;|
+    <%=link_to  "Edit/Destroy", game_robots_path, :class=>"lightview", :title=>"Game Robots:: :: width: 400, height: 400"  %>
+
+
+
     <br />
-    <%=link_to  "New Game Avatar", new_game_avatar_path, :class=>"lightview", :title=>"New Game Avatar:: :: width: 400, height: 250"  %>
+    
 
 
     

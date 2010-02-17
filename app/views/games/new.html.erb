@@ -1,38 +1,19 @@
 <h1>New game</h1>
 
-<% form_for(@game) do |f| %>
+<% form_for(@game, :html=>{:multipart=>true}) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label :short_name %><br />
+
+
+<p>
+    Enter the name you want to use.<br />
     <%= f.text_field :short_name %>
   </p>
 
-  <div class="form_row">
-    <%=  f.label :game_avatar %>
-
-  <% GameAvatar.find(:all).each do |game_avatar| %>
-      <br><%= f.radio_button 'game_avatar_id', game_avatar.id %>
-      <%=  image_tag(game_avatar.thumbnail.url(:small))%>
-    <% end unless GameAvatar.find(:all).nil? %>
-  </div>
-
-
-
-
-
-
-
-
-
-  <p>
-    <%= f.label :current_room %><br />
-    <%= f.text_field :current_room %>
+<p><label for="thumbnail">Upload an image to use as your avatar.  If you don't upload one, we'll provide a default.</label><br />
+    <%= f.file_field :thumbnail %>
   </p>
-  <p>
-    <%= f.label :finished %><br />
-    <%= f.check_box :finished %>
-  </p>
+
   <p>
     <%= f.submit 'Create' %>
   </p>

@@ -35,13 +35,10 @@ class GamesController < ApplicationController
     @game = Game.new
 
     respond_to do |format|
-      unless @game_avatars = GameAvatar.find(:all)
-        flash[:notice] = 'You must upload some avatar images before you can start a new game.'
-        format.html { redirect_to new_game_avatar_path }
-      else
+      
         format.html # new.html.erb
 #        format.xml  { render :xml => @game }
-      end
+     
     end
   end
 

@@ -45,15 +45,20 @@ class SpeakersController < ApplicationController
   def create
     @speaker = Speaker.new(params[:speaker])
 
-    if @speaker.save
+   respond_to do |format|
+     if @speaker.save
 
-
-      render :partial=>"save_result"
+        flash[:notice] = 'Speaker was successfully created.'
+        format.html { redirect_to(speakers_path) }
+        #render :partial=>"save_result"
+     
 
       else
-        flash[:message] = "There was an error saving the speaker."
+        flash[:message] = "There was an error saving the speaker.  Did you browse for a picture to upload?"
+        render :partial =>"problem"
       end
-  end
+      end
+    end
 
   # PUT /speakers/1
   # PUT /speakers/1.xml
@@ -63,7 +68,7 @@ class SpeakersController < ApplicationController
     respond_to do |format|
       if @speaker.update_attributes(params[:speaker])
         flash[:notice] = 'Speaker was successfully updated.'
-        format.html { redirect_to(@speaker) }
+        format.html { redirect_to(speakers_path) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

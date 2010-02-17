@@ -45,15 +45,19 @@ class GameRobotsController < ApplicationController
   def create
     @game_robot = GameRobot.new(params[:game_robot])
 
-   if @game_robot.save
+   respond_to do |format|
+     if @game_robot.save
 
-
-      render :partial=>"save_result"
+        flash[:notice] = 'Game robot was successfully created.'
+        format.html { redirect_to(game_robots_path) }
+        #render :partial=>"save_result"
 
       else
-        flash[:message] = "There was an error saving the game robot."
+        flash[:message] = "There was an error saving the game_robot.  Did you browse for a picture to upload?"
+        render :partial =>"problem"
       end
-  end
+      end
+    end
 
   # PUT /game_robots/1
   # PUT /game_robots/1.xml
@@ -63,7 +67,7 @@ class GameRobotsController < ApplicationController
     respond_to do |format|
       if @game_robot.update_attributes(params[:game_robot])
         flash[:notice] = 'GameRobot was successfully updated.'
-        format.html { redirect_to(@game_robot) }
+        format.html { redirect_to(game_robots_path) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

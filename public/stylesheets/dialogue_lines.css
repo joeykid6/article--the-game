@@ -132,6 +132,31 @@ td.utterer{
 }
 
 
+#build_menu
+{
+    border: 3px solid #000000;
+    background: #FFFF99 ;
+    top: 20px;
+    right: 20px;
+    z-index:2;
+    position: fixed;
+    height: 210px;
+    width: 110px;
+    
+}
+
+.build_menu
+{
+
+    font-family: Verdana, Geneva, Arial, sans-serif ;
+    font-size: 10px;
+    padding: 2px;
+    text-align: left;
+
+
+}
+
+
 #mini_map
 {
     border: 3px solid #000000;
@@ -142,7 +167,7 @@ td.utterer{
     position: fixed;
     height: 170px;
     width: 100px;
-    
+
 }
 
 .mini_map
@@ -155,6 +180,12 @@ td.utterer{
 
 
 }
+
+
+
+
+
+
 
 .tiny
 {
