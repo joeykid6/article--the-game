@@ -332,9 +332,6 @@ include Magick
 #            @game.disposed_of_dialogue_lines << @replaced_dialogue_line unless @game.disposed_of_dialogue_lines.exists?(@replaced_dialogue_line)
 #            @avatar_replacement = triggered_line.line_generator
 #
-#    #            TODO the "replacement_avatar" partial (below) is the same as "avatar" with the exception of style. We can DRY up
-#    #            if we don't see any need to do something else in the partial for the look and feel of a newly triggered root.
-#
 #             page[triggered_line.line_generator_id.to_s].replace_html :partial => 'replacement_avatar',
 #              :locals => { :avatar => @avatar_replacement, :room => @room }
 #          end
@@ -358,7 +355,7 @@ include Magick
 #
 ##         page[:conversation_starter].replace_html "Drag stuff here to interact with it."
 #
-##         page.delay(0.5) {page[session[:avatar_dom_id]].visual_effect :appear} #TODO set up real handler to return from conversation
+##         page.delay(0.5) {page[session[:avatar_dom_id]].visual_effect :appear}
 #        end
 #
 #      end

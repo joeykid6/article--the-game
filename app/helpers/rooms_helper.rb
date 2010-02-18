@@ -20,7 +20,7 @@ module RoomsHelper
     end unless @rooms.length == 0 #for the case where the section is empty
 
 #    Next, we need to append one row to the end of the array for potentially added rooms.
-      @room_map << Array.new
+    @room_map << Array.new
 
 #    Since the iteration through @rooms only creates row arrays where it finds rooms, we need
 #    to replace any nils that are inserted with valid row arrays.  Assuming all rooms are connected,
@@ -199,7 +199,7 @@ module RoomsHelper
   def dialogue_scroll_to_bottom(delay = 0)
     page.delay(delay) do #necessary for proper window height
       page << 'var objDiv = $("dialogue_window");'
-      page << 'objDiv.scrollTop = 0;' #I believe necessary for IE
+      page << 'objDiv.scrollTop = 0;' #I believe this is necessary for IE to scroll properly
       page << 'objDiv.scrollTop = objDiv.scrollHeight;'
     end
   end

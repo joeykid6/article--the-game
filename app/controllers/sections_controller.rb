@@ -37,7 +37,7 @@ class SectionsController < ApplicationController
   # GET /sections/new.xml
   def new
     @section = Section.new
-    @new_position = Section.last(:order => :position).position.to_i + 1
+    @new_position = Section.all.empty? ? 1 : (Section.last(:order => :position).position.to_i + 1)
 
     respond_to do |format|
       format.html # new.html.erb
