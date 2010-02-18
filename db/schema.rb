@@ -9,7 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091011140837) do
+ActiveRecord::Schema.define(:version => 20100218181628) do
+
+  create_table "dialogue_generators", :force => true do |t|
+    t.string   "generator_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "dialogue_lines", :force => true do |t|
     t.text     "content"
@@ -47,16 +53,6 @@ ActiveRecord::Schema.define(:version => 20091011140837) do
     t.datetime "updated_at"
   end
 
-  create_table "game_avatars", :force => true do |t|
-    t.string   "short_name"
-    t.string   "thumbnail_file_name"
-    t.string   "thumbnail_content_type"
-    t.integer  "thumbnail_file_size"
-    t.datetime "thumbnail_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "game_robots", :force => true do |t|
     t.string   "name"
     t.string   "short_name"
@@ -87,6 +83,12 @@ ActiveRecord::Schema.define(:version => 20091011140837) do
     t.string   "thumbnail_content_type"
     t.integer  "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "line_generators", :force => true do |t|
+    t.string   "line_generator_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
