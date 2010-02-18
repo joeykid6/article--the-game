@@ -63,9 +63,7 @@ class DialogueLinesController < ApplicationController
     #@media_objects=@room.media_objects.find(:all)
 
     @dialogue_line = DialogueLine.new
-# TODO Must draw the GameRobot, Guide, and Speaker values from somewhere else 
-# or there will be no way to populate an empty DB with dialogue lines.
-    @all_generators = DialogueLine.find(:all,
+    @all_generators = LineGenerator.find(:all,
                                         :select=>"line_generator_type",
                                         :group=>"line_generator_type")
   
@@ -81,7 +79,7 @@ class DialogueLinesController < ApplicationController
     @section=Section.find(params[:section_id])
     @room = Room.find(params[:room_id])
     @dialogue_line = DialogueLine.find(params[:id])
-    @all_generators = DialogueLine.find(:all,
+    @all_generators = LineGenerator.find(:all,
                                         :select=>"line_generator_type",
                                         :group=>"line_generator_type")
 
