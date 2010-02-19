@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class GameAvatarTest < ActiveSupport::TestCase
+class LineGeneratorTest < ActiveSupport::TestCase
   # Replace this with your real tests.
   test "the truth" do
     assert true

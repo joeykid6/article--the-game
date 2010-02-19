@@ -23,10 +23,6 @@ include Magick
     @next_section = Section.find_by_position(@section.position.to_i + 1)
     @room = Room.find(params[:id])
 
-
-    
-
-
     
     if @game
 #      Store the current room in the game record
@@ -38,8 +34,8 @@ include Magick
       @game.visible_rooms << @room unless @game.visible_rooms.exists?(@room) || @room.ending_room
       @game.visible_sections << @section unless @game.visible_sections.exists?(@section)
 
-#   If the player has been to this room before, display the media objects she's already looked at.  If the same media object appears with several conversations
-#   in the room, show it only once.
+#   If the player has been to this room before, display the media objects she's already looked at.
+#   If the same media object appears with several conversations in the room, show it only once.
       @dialogue_lines = @room.dialogue_lines.find(:all)
       @lines_with_objects = @game.visible_dialogue_lines_media_objects.find(:all,
         :conditions => ["dialogue_line_id IN (?)",  @dialogue_lines.map(&:id)])
@@ -50,27 +46,12 @@ include Magick
 
     end
 
-#    Since the next two variables pull from the DialogueLine association, they create duplicates
-#    if a guide or speaker has more than one dialogue line in the room--thus the .uniq method.
+#   Gather visible root lines in room and check whether they belong to Guides or Speakers.
+    guide_roots = DialogueLine.visible_at_start.guides_only.conversation_roots(@room)
+    speaker_roots = DialogueLine.visible_at_start.speakers_only.conversation_roots(@room)
 
-#   DF:Adjusting for multiple root lines in room.  Maybe remove game robot message when user enters room?
-    @root_lines = DialogueLine.conversation_roots(@room.id)
-
-    @root_lines_visible = DialogueLine.roots.find(:all, :conditions => ["room_id = ? and visible = ?", @room.id, true])
-
-#    DF: The following should be used to identify the seed dialogue line, unless there's another reason a game robot would speak?
-#    Still not sure what we're doing with "player response."
-#    @game_robot =GameRobot.find(:all, :conditions=>["id IN (?)", @root_lines.map(&:line_generator_id)])
-
-
-
-    @guides = Guide.find(:all, :conditions=>["id IN (?)", @root_lines_visible.map(&:line_generator_id)])
-    @speakers = Speaker.find(:all, :conditions=>["id IN (?)", @root_lines_visible.map(&:line_generator_id)])
-
-
-#   TODO  Delete these. See above.  Updated these so that only those avatars who speak root lines appear as conversation starters.
-#   @guides = @room.guides.uniq
-#   @speakers = @room.speakers.uniq
+    @guides = Guide.find(:all, :conditions => ["id IN (?)", guide_roots.map(&:line_generator_id)])
+    @speakers = Speaker.find(:all, :conditions => ["id IN (?)", speaker_roots.map(&:line_generator_id)])
     
 
 #    Compass variables
@@ -86,15 +67,16 @@ include Magick
     my_doors << @right_exit if @right_exit
     my_doors << @bottom_exit if @bottom_exit
 
-    unlocked_doors = Door.find(:all,
-      :conditions => [ "id in (?) and game_id= ?", my_doors.map(&:id), @game.id ],
-      :joins => "INNER JOIN visible_doors ON visible_doors.door_id = doors.id")
+    unless my_doors.empty?
+      unlocked_doors = Door.find(:all,
+        :conditions => [ "id in (?) and game_id= ?", my_doors.map(&:id), @game.id ],
+        :joins => "INNER JOIN visible_doors ON visible_doors.door_id = doors.id")
 
-    @open_top = unlocked_doors.include?(@top_entrance)
-    @open_left = unlocked_doors.include?(@left_entrance)
-    @open_right = unlocked_doors.include?(@right_exit)
-    @open_bottom = unlocked_doors.include?(@bottom_exit)
-    
+      @open_top = unlocked_doors.include?(@top_entrance)
+      @open_left = unlocked_doors.include?(@left_entrance)
+      @open_right = unlocked_doors.include?(@right_exit)
+      @open_bottom = unlocked_doors.include?(@bottom_exit)
+    end
 
 #    The root conversation line in the room--normally a room description. Must create dialogue if it's nil.
     if (@room_root = DialogueLine.room_root(params[:id])).nil?
@@ -180,8 +162,9 @@ include Magick
 #   It is called from _avatar.html.erb.
       if params[:line_generator_id]
         line_generator_id = params[:line_generator_id]
+        line_generator_type = params[:line_generator_type]
 
-        @all_root_lines = DialogueLine.conversation_roots(@room.id)
+        @all_root_lines = DialogueLine.conversation_roots(@room)
 
         @disposed_roots = DialogueLine.find(:all,
           :conditions => ["game_id = ? and dialogue_line_id IN (?)", @game.id, @all_root_lines.map(&:id)],
@@ -196,7 +179,10 @@ include Magick
         end
 
         @dialogue_line = DialogueLine.find(:first,
-          :conditions => ["line_generator_id = ? and id IN (?)", line_generator_id, @root_lines.map(&:id)])
+          :conditions => ["line_generator_id = ? and line_generator_type = ? and id IN (?)",
+            line_generator_id,
+            line_generator_type,
+            @root_lines.map(&:id)])
 
 
   #      find the speaker or guide associated with the root dialogue line
@@ -252,15 +238,17 @@ include Magick
       my_doors << @right_exit if @right_exit
       my_doors << @bottom_exit if @bottom_exit
 
-      unlocked_doors = Door.find(:all,
-        :conditions => [ "id in (?) and game_id= ?", my_doors.map(&:id), @game.id ],
-        :joins => "INNER JOIN visible_doors ON visible_doors.door_id = doors.id")
+      unless my_doors.empty?
+        unlocked_doors = Door.find(:all,
+          :conditions => [ "id in (?) and game_id= ?", my_doors.map(&:id), @game.id ],
+          :joins => "INNER JOIN visible_doors ON visible_doors.door_id = doors.id")
 
-      @open_top = unlocked_doors.include?(@top_entrance)
-      @open_left = unlocked_doors.include?(@left_entrance)
-      @open_right = unlocked_doors.include?(@right_exit)
-      @open_bottom = unlocked_doors.include?(@bottom_exit)
-
+        @open_top = unlocked_doors.include?(@top_entrance)
+        @open_left = unlocked_doors.include?(@left_entrance)
+        @open_right = unlocked_doors.include?(@right_exit)
+        @open_bottom = unlocked_doors.include?(@bottom_exit)
+      end
+      
       triggered_ids = DialogueLine.find(:all,
         :select => "invisible_dialogue_line_id",
         :from => "visible_dialogue_lines_invisible_dialogue_lines",
@@ -273,94 +261,6 @@ include Magick
     end
   end
 
-#  THE FOLLOWING METHOD IS DEPRECATED
-#  def generate_dialogue
-#
-#    if request.xhr?
-#      @game = current_game
-#      @dialogue_line = DialogueLine.find_by_id(params[:id])
-#
-#      @media_objects = MediaObject.find(:all, :conditions => ['dialogue_line_id = ?', @dialogue_line.id], :joins => :dialogue_lines)
-#      @doors = Door.find(:all, :conditions => ['dialogue_line_id = ?', @dialogue_line.id], :joins => :dialogue_lines)
-#      @avatar = @dialogue_line.line_generator
-#
-#      @room = Room.find(:first, :conditions => ["id = ?", @dialogue_line.room_id])
-#      @section = Section.find(:first, :conditions => ["id = ?", @room.section_id])
-#      @top_entrance = @room.entrances.find_by_door_direction('vertical')
-#      @left_entrance = @room.entrances.find_by_door_direction('horizontal')
-#      @bottom_exit = @room.exits.find_by_door_direction('vertical')
-#      @right_exit = @room.exits.find_by_door_direction('horizontal')
-#
-##     (Viewed media objects)Store the current dialogue line in the visible_dialogue_lines_media_objects join table unless it's already in there.
-#      if @media_objects.size > 0
-#        @game.visible_dialogue_lines_media_objects << @dialogue_line unless @game.visible_dialogue_lines_media_objects.exists?(@dialogue_line)
-#      end
-#
-#      if @doors.size > 0
-#        @doors.each do |door|
-#          @game.visible_doors << door unless @game.visible_doors.exists?(door)
-#        end
-#      end
-#
-#
-#      @triggered_ids = DialogueLine.find(:all,
-#        :select => "invisible_dialogue_line_id",
-#        :from => "visible_dialogue_lines_invisible_dialogue_lines",
-#        :conditions => ["visible_dialogue_line_id = ?", @dialogue_line.id])
-#
-#      render :update do |page|
-#        page[:compass].replace :partial => 'compass', :locals =>
-#          {:top_entrance => @top_entrance,
-#          :left_entrance => @left_entrance,
-#          :right_exit => @right_exit,
-#          :bottom_exit => @bottom_exit}
-#
-#        @media_objects.each do |media_object|
-#          page.insert_html :bottom, :media_objects_div, :partial => 'conversation_media_avatar', :locals=>{:avatar => media_object}
-#        end
-#
-#        if @triggered_ids.size > 0
-#          @triggered_dialogue_lines = DialogueLine.find(:all,
-#            :conditions=>["id IN (?)",@triggered_ids.map(&:invisible_dialogue_line_id)])
-#
-#          @triggered_dialogue_lines.each do |triggered_line|
-#
-#            @replaced_dialogue_line = DialogueLine.find(:first,
-#              :conditions=>["line_generator_id = ? and visible = ? and room_id = ?", triggered_line.line_generator_id, true,@room.id])
-#
-#
-#            @game.disposed_of_dialogue_lines << @replaced_dialogue_line unless @game.disposed_of_dialogue_lines.exists?(@replaced_dialogue_line)
-#            @avatar_replacement = triggered_line.line_generator
-#
-#             page[triggered_line.line_generator_id.to_s].replace_html :partial => 'replacement_avatar',
-#              :locals => { :avatar => @avatar_replacement, :room => @room }
-#          end
-#        end
-#
-#        unless @dialogue_line.children.empty?
-#          page[:dialogue_lines].replace_html :partial => 'dialogue_line', :locals => {
-#            :avatar => @avatar,
-#            :dialogue_line => @dialogue_line,
-#            :responses => @dialogue_line.children }
-#          page[:dialogue_speaker_area].replace_html :partial=> 'speaker', :locals => { :avatar => @avatar }
-#
-#        else
-#
-##         page[:media_objects_div].visual_effect :opacity, :from => 1, :to => 0, :duration => 2
-##         page[:media_objects_div].replace_html ""
-#          page[:dialogue_lines].replace_html "End of Conversation"
-#          page[:dialogue_lines].visual_effect :opacity, :from => 1, :to => 0, :duration => 2
-#          page[:dialogue_speaker_area].replace_html ""
-##         page[:dialogueLines].show
-#
-##         page[:conversation_starter].replace_html "Drag stuff here to interact with it."
-#
-##         page.delay(0.5) {page[session[:avatar_dom_id]].visual_effect :appear}
-#        end
-#
-#      end
-#    end
-#  end
 
 #  Ajax updater to move a room via drag and drop.  The params come from the draggable/droppable.
 #  TODO This should probably be refactored to be part of the update method.
@@ -439,9 +339,9 @@ include Magick
     canvas = Magick::Image.new(image_width, image_height, Magick::HatchFill.new('white','lightcyan2',7)) #'#6666cc','#cccc99',18
     canvas.border!( image_border_size, image_border_size, image_border_color ) if image_border
 
-#    TODO display locked/unlocked doors in different colors from game model
 #    TODO refactor to move the following loop into the Room model
 #    Draw the rooms and doors, checking to see if a given room is visible in-game
+#    Keep in mind that the minimap will not display outside of a game, since no rooms are visible...
     @rooms.each do |room|
       if @game.visible_rooms.exists?(room)
   #      Draw the room rectangle first

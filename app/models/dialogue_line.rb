@@ -1,10 +1,11 @@
 class DialogueLine < ActiveRecord::Base
   acts_as_nested_set :scope => :room
   validates_presence_of :content
-  validates_uniqueness_of :content
+#  validates_uniqueness_of :content  TODO Find out why this is here?
 
-
-  
+  named_scope :visible_at_start, :conditions => {:visible => true}
+  named_scope :guides_only, :conditions => {:line_generator_type => "Guide"}
+  named_scope :speakers_only, :conditions => {:line_generator_type => "Speaker"}
 
 # These next two make the necessary associations for has_many_polymorphs
   belongs_to :room
@@ -30,14 +31,14 @@ class DialogueLine < ActiveRecord::Base
 
 #  to access all conversation root dialogue lines in a given room
 #  This may not be necessary now that conversation_root is active.
-  def self.conversation_roots(room_id)
-    roots.find(:all, :conditions=>["room_id = ?",room_id])
+  def self.conversation_roots(room)
+    roots.find(:all, :conditions => ["room_id = ?", room.id])
   end
 
 #  TODO currently taking care of this in controller for room with multiple roots
 #  to access a particular conversation root dialogue line in a given room
-  def self.conversation_root(room_id, line_generator_id, line_generator_type)
-    conversation_roots(room_id).find_by_line_generator_id_and_line_generator_type(line_generator_id, line_generator_type)
+  def self.conversation_root(room)
+    conversation_roots(room.id).find_by_line_generator_id_and_line_generator_type(self.line_generator_id, self.line_generator_type)
   end
-
+  
 end

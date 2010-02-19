@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   def close_lightview
     if request.xhr?
         render :update do |page|
-            page<<"parent.Lightview.hide();"
+            page << "parent.Lightview.hide();"
           end
     end
   end
@@ -23,9 +23,7 @@ class ApplicationController < ActionController::Base
   private
 
   def game_check_then_authenticate
-    unless current_game
-      authenticate
-    end
+    authenticate unless current_game
   end
 
   def authenticate

@@ -7,12 +7,10 @@ class Game < ActiveRecord::Base
   has_and_belongs_to_many :visible_rooms, :class_name => "Room", :join_table => "visible_rooms"
   has_and_belongs_to_many :visible_sections, :class_name => "Section", :join_table => "visible_sections"
 
-  #belongs_to :game_avatar
   has_attached_file :thumbnail, :styles => {:large=>"121x121#", :medium=>"80x80#", :small=>"30x30#", :tiny=>"12x12#"},
-    :default_url => "/images/default.jpg"
+    :default_url => "/images/player-blank.jpg"
   #validates_attachment_presence :thumbnail
   
   validates_presence_of :short_name
-  #validates_presence_of :short_name, :game_avatar_id
 
 end

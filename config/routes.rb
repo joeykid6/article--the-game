@@ -1,8 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :game_avatars
 
-
-  map.connect '/sections/:section_id/rooms/:room_id/dialogue_line/:id/', :controller=>'media_objects',:action=>'update_media'
+  map.connect '/sections/:section_id/rooms/:room_id/dialogue_line/:id/', :controller=>'media_objects', :action=>'update_media'
 
   map.resources :game_robots
 

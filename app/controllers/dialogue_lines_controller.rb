@@ -88,6 +88,7 @@ class DialogueLinesController < ApplicationController
     @existing_generator = @dialogue_line.line_generator_type.constantize.find(:all, :order=>'name')
 
     @media_objects=MediaObject.find(:all, :conditions=>['dialogue_line_id = ?', @dialogue_line.id], :joins=>:dialogue_lines)
+    
     @doors=Door.find(:all, :conditions=>['dialogue_line_id = ?', @dialogue_line.id], :joins=>:dialogue_lines)
 
 

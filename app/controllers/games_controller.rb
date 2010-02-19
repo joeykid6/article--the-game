@@ -7,7 +7,7 @@ class GamesController < ApplicationController
   def index
     @games = Game.all #TODO wrap this for admin view only
     if current_game
-      @game = Game.find(current_game)
+      @game = current_game
       @current_room = Room.find(@game.current_room)
       @current_section = Section.find(@current_room.section_id)
     end
@@ -61,7 +61,7 @@ class GamesController < ApplicationController
 #        If a game already exists, delete it and clear the session
         if current_game
           Game.destroy(current_game)
-          reset_session
+          reset_session if session
         end
 
         session[:current_game_id] = @game.id
@@ -97,7 +97,7 @@ class GamesController < ApplicationController
   def destroy
     @game = Game.find(params[:id])
     @game.destroy
-    reset_session
+    reset_session if session
 
     respond_to do |format|
       format.html { redirect_to(root_path) }
