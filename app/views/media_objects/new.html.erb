@@ -2,19 +2,19 @@
 
 <% form_for(@media_object, :html=>{:multipart=>true}) do |f| %>
   <%= f.error_messages %>
-
+<p>&#42;=required field</p>
 
 
 
 
   <p>
-    <%= f.label :name %><br />
+    &#42;<%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>
 
    
   <p>
-    <%= f.label :short_name %><br />
+    &#42;<%= f.label :short_name %><br />
     <%= f.text_field :short_name %>
   </p>
 
@@ -22,7 +22,7 @@
 
 
 <p><label for="thumbnail">Upload an image:</label><br />
-    <%= f.file_field :thumbnail %>
+    &#42;<%= f.file_field :thumbnail %>
   </p>
 
   <p>
@@ -37,7 +37,10 @@
 
 
 
-If you want to embed a video from YouTube or Google, include the embed URL below, *not* the watch URL.
+  <p>If you want to embed a video from YouTube or Google, include the <em>embed</em> URL below, <em>not</em> the watch URL.</p>
+  
+  
+
   <p>
     <%= f.label :url %><br />
     <%= f.text_field :url %>

@@ -1,7 +1,7 @@
 class GuidesController < ApplicationController
-
+  
   before_filter :authenticate
-
+  rescue_from ::NoMethodError, :with=>:no_method_recover
   # GET /guides
   # GET /guides.xml
   def index
@@ -47,14 +47,18 @@ class GuidesController < ApplicationController
 
     respond_to do |format|
      if @guide.save
+     
+        
+
+
 
         flash[:notice] = 'Guide was successfully created.'
         format.html { redirect_to(guides_path) }
         #render :partial=>"save_result"
 
       else
-        flash[:message] = "There was an error saving the guide.  Did you browse for a picture to upload?"
-        render :partial =>"problem"
+        #flash[:message] = "Please try again."
+        #render :partial =>"problem"
       end
      end
   end
@@ -70,8 +74,8 @@ class GuidesController < ApplicationController
         format.html { redirect_to(guides_path) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @guide.errors, :status => :unprocessable_entity }
+        #format.html { render :action => "edit" }
+        #format.xml  { render :xml => @guide.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -87,6 +91,14 @@ class GuidesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+private
+ 
+  def no_method_recover
+    render :partial =>"problem"
+  end
+
+
 
 
   

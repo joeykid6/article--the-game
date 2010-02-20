@@ -3,14 +3,14 @@
 
 <% form_for([@section,@room,@dialogue_line,@media_object], :html=>{:multipart=>true}) do |f| %>
   <%= f.error_messages %>
-
+<p>&#42;=required field</p>
 
 <p>
-    <%= f.label :name %><br />
+    &#42;<%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>
   <p>
-    <%= f.label :short_name %><br />
+    &#42;<%= f.label :short_name %><br />
     <%= f.text_field :short_name %>
   </p>
   <br />
@@ -22,7 +22,7 @@ Current thumbnail or image:<br>
   <%= image_tag @media_object.thumbnail.url(:small) %>
 </p>
 
-<p><label for="thumbnail">Upload a different image:</label><br />
+<p>&#42;<label for="thumbnail">Upload a different image:</label><br />
     <%= f.file_field :thumbnail %>
   </p>
 
@@ -41,7 +41,7 @@ Current thumbnail or image:<br>
   
   <div id="selection_wrapper">
   <h3>Videos and webpages</h3>
-  If you want to embed a video from YouTube or Google, include the embed URL below, *not* the watch URL.
+  If you want to embed a video from YouTube or Google, include the embed URL below, &#42;not&#42; the watch URL.
   <p>
     <%= f.label :url %><br />
     <%= f.text_field :url %>
