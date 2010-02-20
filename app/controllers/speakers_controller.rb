@@ -1,7 +1,7 @@
 class SpeakersController < ApplicationController
 
   before_filter :authenticate
-
+  rescue_from ::NoMethodError, :with=>:no_method_recover
   # GET /speakers
   # GET /speakers.xml
   def index
@@ -54,8 +54,8 @@ class SpeakersController < ApplicationController
      
 
       else
-        flash[:message] = "There was an error saving the speaker.  Did you browse for a picture to upload?"
-        render :partial =>"problem"
+        #flash[:message] = "There was an error saving the speaker.  Did you browse for a picture to upload?"
+        #render :partial =>"problem"
       end
       end
     end
@@ -71,8 +71,8 @@ class SpeakersController < ApplicationController
         format.html { redirect_to(speakers_path) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @speaker.errors, :status => :unprocessable_entity }
+        #format.html { render :action => "edit" }
+        #format.xml  { render :xml => @speaker.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -89,7 +89,11 @@ class SpeakersController < ApplicationController
     end
   end
 
+private
 
+  def no_method_recover
+    render :partial =>"problem"
+  end
 
 
 

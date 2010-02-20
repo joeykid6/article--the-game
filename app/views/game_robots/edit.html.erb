@@ -2,13 +2,13 @@
 
 <% form_for(@game_robot,:html=>{:multipart=>true}) do |f| %>
   <%= f.error_messages %>
-
+  <p>&#42;=required field</p>
   <p>
-    <%= f.label :name %><br />
+    &#42;<%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>
   <p>
-    <%= f.label :short_name %><br />
+    &#42;<%= f.label :short_name %><br />
     <%= f.text_field :short_name %>
   </p>
 
@@ -17,7 +17,7 @@ Current thumbnail or image:<br>
   <%= image_tag @game_robot.thumbnail.url(:small) %>
 </p>
   
-  <p><label for="thumbnail">Upload a new image:</label>
+  <p>&#42;<label for="thumbnail">Upload a new image:</label>
     <%= f.file_field :thumbnail %>
   </p>
 

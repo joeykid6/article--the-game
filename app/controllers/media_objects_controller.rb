@@ -1,7 +1,7 @@
 class MediaObjectsController < ApplicationController
 
   before_filter :authenticate
-
+  rescue_from ::NoMethodError, :with=>:no_method_recover
   # GET /media_objects
   # GET /media_objects.xml
   def index
@@ -78,8 +78,8 @@ class MediaObjectsController < ApplicationController
         format.html { redirect_to(media_objects_path) }
         #render :partial=>"save_result"
       else
-        flash[:message] = "There was an error saving the media object.  Did you browse for a picture to upload?"
-        render :partial =>"problem"
+        #flash[:message] = "There was an error saving the media object.  Did you browse for a picture to upload?"
+        #render :partial =>"problem"
       end
       end
     end
@@ -100,8 +100,8 @@ class MediaObjectsController < ApplicationController
         format.html { redirect_to(media_objects_path) }
         format.xml  { head :ok }
       else
-        flash[:message] = "There was an error saving the media object.  Did you browse for a picture to upload?"
-        render :partial =>"problem"
+        #flash[:message] = "There was an error saving the media object.  Did you browse for a picture to upload?"
+        #render :partial =>"problem"
       end
     end
   end
@@ -131,5 +131,12 @@ class MediaObjectsController < ApplicationController
 
     render :partial=>"update_media",:locals =>{:media_objects=>@media_objects}
 end
+
+  private
+
+  def no_method_recover
+    render :partial =>"problem"
+  end
+
 
 end

@@ -1,7 +1,7 @@
 class GameRobotsController < ApplicationController
 
   before_filter :authenticate
-
+  rescue_from ::NoMethodError, :with=>:no_method_recover
   # GET /game_robots
   # GET /game_robots.xml
   def index
@@ -53,8 +53,8 @@ class GameRobotsController < ApplicationController
         #render :partial=>"save_result"
 
       else
-        flash[:message] = "There was an error saving the game_robot.  Did you browse for a picture to upload?"
-        render :partial =>"problem"
+        #flash[:message] = "There was an error saving the game_robot.  Did you browse for a picture to upload?"
+        #render :partial =>"problem"
       end
       end
     end
@@ -70,8 +70,8 @@ class GameRobotsController < ApplicationController
         format.html { redirect_to(game_robots_path) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @game_robot.errors, :status => :unprocessable_entity }
+        #format.html { render :action => "edit" }
+        #format.xml  { render :xml => @game_robot.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -88,6 +88,10 @@ class GameRobotsController < ApplicationController
     end
   end
 
- 
+ private
+
+  def no_method_recover
+    render :partial =>"problem"
+  end
 
 end
