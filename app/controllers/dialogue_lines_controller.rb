@@ -1,7 +1,7 @@
 class DialogueLinesController < ApplicationController
 
   before_filter :authenticate
-
+  rescue_from ::NoMethodError, :with=>:no_method_recover
   # GET /dialogue_lines
   # GET /dialogue_lines.xml
   uses_tiny_mce :options => {
@@ -131,8 +131,8 @@ class DialogueLinesController < ApplicationController
         format.html { redirect_to(edit_section_room_dialogue_line_path(@section,@room,@dialogue_line)) }
         format.xml  { render :xml => @dialogue_line, :status => :created, :location => @dialogue_line }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @dialogue_line.errors, :status => :unprocessable_entity }
+        #format.html { render :action => "new" }
+        #format.xml  { render :xml => @dialogue_line.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -237,6 +237,13 @@ class DialogueLinesController < ApplicationController
     @room = Room.find(params[:room_id])
     @dialogue_line = DialogueLine.find(params[:id])
 
+  end
+
+
+private
+
+  def no_method_recover
+    render :partial =>"problem"
   end
 
 

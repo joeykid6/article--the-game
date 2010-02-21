@@ -1,5 +1,5 @@
 <div id="header">
-  <%  unless @game %><h1>You are not currently in a <a href="/games/">live game</a>. Many parts of the interface will not work.</h1><% end %>
+  <%  unless @game %><h1>You are not currently in a <%= link_to "live game", games_path %>. Many parts of the interface will not work.</h1><% end %>
   <%  if @room_root.nil? %><h1><%= link_to "Add dialogue", section_room_dialogue_lines_path(@section, @room) %></h1><% end %>
   <div id="heads_up_area">
     <%= render :partial => 'worldmap' %>
