@@ -66,21 +66,7 @@ unless @dialogue_line.descendants.empty?
   #    This is where the conversation ending/reset sequence happens
       page.delay(delay_timer) do
 
-        @triggered_dialogue_lines.each do |triggered_line|
-
-          replaced_dialogue_line = DialogueLine.find(:first,
-            :conditions => ["line_generator_id = ? and visible = ? and room_id = ?",
-              triggered_line.line_generator_id,
-              true,
-              @room.id])
-
-          @game.disposed_of_dialogue_lines << replaced_dialogue_line unless @game.disposed_of_dialogue_lines.exists?(replaced_dialogue_line)
-          @avatar_replacement = triggered_line.line_generator
-
-          page[triggered_line.line_generator_id.to_s].replace_html :partial => 'avatar',
-            :locals => { :avatar => @avatar_replacement, :room => @room }
-
-        end unless @triggered_dialogue_lines.nil?
+        
 
         page[:click_blocker].hide
 
