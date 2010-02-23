@@ -19,7 +19,5 @@
     <div id="content_wrapper">
       <%= yield %>
     </div>
-    <!-- TODO Remove the following link in production environment -->
-    <%= link_to "Kill session and game", game_path(@game), :method => :delete if @game %>
   </body>
 </html>

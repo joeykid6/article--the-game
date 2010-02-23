@@ -13,22 +13,14 @@
 #header
 {
     padding: 8px;
-    padding-bottom: 51px;
     border-bottom: 3px solid #000000;
     background-color: #99ff55;
-}
-
-#room_intro
-{
-    font-style: italic;
-    border-bottom: 3px dotted #888888;
-    margin-bottom: 0px;
-    font-family: Arial, serif;
+    overflow: hidden;
 }
 
 #heads_up_area
 {
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     padding-bottom: 0px;
     float: right;
 }
@@ -140,7 +132,7 @@
     left: inherit;
     height: 590px;
     width: 105px;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0);
     z-index: 4;
 }
 
@@ -195,6 +187,8 @@
 h1#title
 {
     margin: 0px;
+    float: left;
+    width: 650px;
     font-family: Libel, Arial, sans-serif;
 }
 
@@ -396,21 +390,35 @@ td.room #room_content ul
     background-color: #ffffff;
     padding: 5px;
     height: 120px;
+    width: 504px;
     font-family: Arial, sans-serif;
     margin-bottom: 10px;
+    float: left;
     overflow: auto;
 }
 
-#response_window h1
+#response_window h2
 {
     text-align: center;
     color: #ccc;
     font-family: Libel, Arial, sans-serif;
-    font-size: 40px;
-    letter-spacing: 15px;
+    font-size: 45px;
+    letter-spacing: 14px;
+    margin-top: 30px;
+    margin-left: 15px;
 }
 
-.dialogue_line
+#player_avatar_box
+{
+    border: 3px solid #000000;
+    background-color: #fff;
+    padding: 8px;
+    padding-bottom: 1px;
+    float: right;
+    margin: 0px;
+}
+
+.dialogue_line, .dialogue_line_player
 {
     border: 1px solid #000000;
     -moz-border-radius: 5px;
@@ -422,9 +430,16 @@ td.room #room_content ul
     padding: 4px;
 }
 
-.dialogue_line img
+.dialogue_line_player
+{
+    color: #fff;
+    background-color: #555;
+}
+
+.dialogue_line img, .dialogue_line_player img
 {
     margin-right: 7px;
+    background-color: #fff;
     padding: 2px;
     height: 30px;
     width: 30px;
@@ -433,14 +448,14 @@ td.room #room_content ul
     -moz-border-radius: 4px;
 }
 
-.dialogue_line h4
+.dialogue_line h4, .dialogue_line_player h4
 {
     margin-top: 0px;
     padding-top: 0px;
     margin-bottom: 3px;
 }
 
-.dialogue_line p
+.dialogue_line p, .dialogue_line_player p
 {
     font-size: 0.8em;
     margin-top: 4px;
@@ -458,25 +473,30 @@ td.room #room_content ul
     -moz-border-radius: 5px;
     -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.4);
     margin-bottom: 5px;
+}
+
+.response a
+{
     padding: 4px;
     padding-left: 8px;
+    display: block;
 }
 
 .response a:link, .response a:visited
 
 {
     color: #000;
-    list-style-type: none;
     text-decoration: none;
 }
 
 .response a:hover
 {
-    color: #000;
-    text-decoration: underline;
+    color: #fff;
+    background-color: #555;
+    text-decoration: none;
 }
 
-.guide, .speaker, .replacement_guide, .replacement_speaker, .mediaobject
+.guide, .speaker, .mediaobject, .game
 {   
     background-color: #ddd;
     border: 1px solid #888;
@@ -490,7 +510,7 @@ td.room #room_content ul
     margin-bottom: 8px;
 }
 
-.guide h3, .speaker h3, .replacement_guide h3, .replacement_speaker h3, .mediaobject h3
+.guide h3, .speaker h3, .mediaobject h3, .game h3
 {
     font-size: .7em;
     font-weight: bold;
@@ -500,13 +520,24 @@ td.room #room_content ul
     color: #000;
 }
 
-.guide img, .speaker img, .replacement_guide img, .replacement_speaker img, .mediaobject img
+.guide img, .speaker img, .mediaobject img, .game img
 
 {
     padding: 4px;
     border: 1px solid #888;
     -moz-border-radius: 5px;
     background-color: #ffffff;
+}
+
+.game
+{
+    background-color: #555;
+}
+
+.game h3
+{
+    margin-bottom: 0px;
+    color: #fff;
 }
 
 h2

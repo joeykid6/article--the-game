@@ -1,6 +1,10 @@
 <div id="header">
+
+  <h1 id="title"><%= @room.name %></h1>
+
   <%  unless @game %><h1>You are not currently in a <%= link_to "live game", games_path %>. Many parts of the interface will not work.</h1><% end %>
   <%  if @room_root.nil? %><h1><%= link_to "Add dialogue", section_room_dialogue_lines_path(@section, @room) %></h1><% end %>
+
   <div id="heads_up_area">
     <%= render :partial => 'worldmap' %>
     <%= render :partial => 'minimap' %>
@@ -12,8 +16,6 @@
       }
     %>
   </div>
-
-  <h1 id="title"><%= @room.name %></h1>
 
 </div>
 
@@ -57,10 +59,14 @@
     </div>
 
     <div id="response_window">
-      <h1>Player Responses</h1>
+      <h2>Player Responses</h2>
+    </div>
+    
+    <div id="player_avatar_box">
+      <%= avatar_div(@game) %>
     </div>
 
-  </div>
+</div>
 
   
     <div id="media_area">

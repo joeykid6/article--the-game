@@ -4,44 +4,60 @@
 # 2) Force dialogue window to drop to the bottom when new content is added DONE
 # 3) Work on spinner waiting subroutine
 # 4) modify response window background DONE
-# 5) Add player thumbnail to response window right side
+# 5) Add player thumbnail to response window right side DONE
 # 6) Properly refresh response window at the end of the view routine below DONE
-# 7) Add fade out for response window post click
+# 7) Add fade out for response window post click DONE
 # 8) tweak positions of compass arrows
 # 9) consider different timing of conversation changes DONE
 # 10) write some real content
 # 11) automate URL generation for image-only media objects DAVE WILL DO
 # 12) Figure out proper use of h and sanitize on all user input and view output
 # 13) Force thumbnails to be square DAVE WILL DO
-# 14) Make entire player response div clickable
+# 14) Make entire player response div clickable DONE
 
 # set the fade in time for dialogue lines to appear, and the necessary wait time for the
 # scroll to happen properly.
 fade_in_time = 1.5
+fade_out_time = 0.5
 scroll_wait_time = 0.2
 
 page.render_dialogue_line(@avatar, @avatar_thumbnail, @dialogue_line, fade_in_time)
 
 page.dialogue_scroll_to_bottom(scroll_wait_time)
 
-page[:response_window].replace_html content_tag(:h1, "Player Responses")
+# Properly fade player responses and refresh response window
+if @dialogue_line.line_generator.name == 'player_response'
+  @dialogue_line.self_and_siblings.each { |player_response| page.visual_effect(:fade,
+      "player_response_#{player_response.id}",
+      :duration => fade_out_time) }
+  page.delay(fade_out_time) { page[:response_window].replace_html "<h2>Player Responses</h2>" }
+end
 
+# disable clicking other avatars for the duration of a conversation
 page[:click_blocker].show
 
+# redraw any compass doors unlocked by this dialogue line
 page[:compass].replace :partial => 'compass', :locals =>
   {:top_entrance => @top_entrance,
   :left_entrance => @left_entrance,
   :right_exit => @right_exit,
   :bottom_exit => @bottom_exit} unless @redraw_compass == false
 
+# draw any media objects made visible by this dialogue line
 page.insert_html :bottom, 'media_window',
   :partial => 'media_avatar',
   :collection => @media_objects unless @media_objects.nil?
 
+# start a delay timer to pace all lines of dialogue properly
 delay_timer = delay_timer_calc(@dialogue_line)
 
+# handle all descendants of the current dialogue line
 unless @dialogue_line.descendants.empty?
+
   @dialogue_line.descendants.each do |descendant|
+
+#    Handle groups of player responses
+#    Note that all siblilngs of a player response will be treated as player responses
     if descendant.line_generator.name == 'player_response'
       @player_responses = descendant.self_and_siblings
 
@@ -51,23 +67,29 @@ unless @dialogue_line.descendants.empty?
           :locals => { :room => @room }
         @player_responses.each do |player_response|
           page.hide("player_response_#{player_response.id}")
-          page.visual_effect(:appear, "player_response_#{player_response.id}", :duration => 1.5)
+          page.visual_effect(:appear, "player_response_#{player_response.id}", :duration => fade_in_time)
         end
       end
 
       break
 
+#    Handle continuations of the conversation which don't include a player response
     else
       page.render_dialogue_line(descendant.line_generator, descendant.line_generator.thumbnail.url(:small), descendant, fade_in_time, delay_timer)
       page.dialogue_scroll_to_bottom(delay_timer + scroll_wait_time)
       
       delay_timer += delay_timer_calc(descendant) unless descendant.descendants.empty?
 
-  #    This is where the conversation ending/reset sequence happens
+  #    This is where the conversation ending/reset sequence happens when there are no more descendants
       page.delay(delay_timer) do
 
+#        Adds avatar links for any dialogue lines set to be activated by the original line (@dialogue_line)
+#        In other words, make sure you tagged the right line!
         @triggered_dialogue_lines.each do |triggered_line|
 
+#          The following controller code is deliberately left in here because some conversations may be
+#          quite long.  We don't want the game saving dialogue line changes which the player may
+#          not get to if he/she decides to take a break and come back later.
           replaced_dialogue_line = DialogueLine.find(:first,
             :conditions => ["line_generator_id = ? and visible = ? and room_id = ?",
               triggered_line.line_generator_id,
@@ -89,6 +111,8 @@ unless @dialogue_line.descendants.empty?
 
   end # @dialogue_line.descendants.each do...
 else
+
+#  For clicks which only yield a single line of dialogue
   page[:click_blocker].hide
 
 end

@@ -1,5 +1,5 @@
 <td id="add_room_<%= row %>_<%= col %>" class="add_room">
-  <%= link_to "Add Room", { :controller => new_section_room_path(@section), :row => row, :col => col } %>
+  <%= link_to "Add Room", new_section_room_path(@section, :row => row, :col => col)  %>
 </td>
 <%= drop_receiving_element "add_room_#{row}_#{col}",
   :hoverclass => "room_hover",
