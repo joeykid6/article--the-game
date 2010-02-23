@@ -83,27 +83,6 @@ unless @dialogue_line.descendants.empty?
   #    This is where the conversation ending/reset sequence happens when there are no more descendants
       page.delay(delay_timer) do
 
-#        Adds avatar links for any dialogue lines set to be activated by the original line (@dialogue_line)
-#        In other words, make sure you tagged the right line!
-        @triggered_dialogue_lines.each do |triggered_line|
-
-#          The following controller code is deliberately left in here because some conversations may be
-#          quite long.  We don't want the game saving dialogue line changes which the player may
-#          not get to if he/she decides to take a break and come back later.
-          replaced_dialogue_line = DialogueLine.find(:first,
-            :conditions => ["line_generator_id = ? and visible = ? and room_id = ?",
-              triggered_line.line_generator_id,
-              true,
-              @room.id])
-
-          @game.disposed_of_dialogue_lines << replaced_dialogue_line unless @game.disposed_of_dialogue_lines.exists?(replaced_dialogue_line)
-          @avatar_replacement = triggered_line.line_generator
-
-          page[triggered_line.line_generator_id.to_s].replace_html :partial => 'avatar',
-            :locals => { :avatar => @avatar_replacement, :room => @room }
-
-        end unless @triggered_dialogue_lines.nil?
-
         page[:click_blocker].hide
 
       end if descendant.descendants.empty?

@@ -166,14 +166,19 @@ include Magick
 
         @all_root_lines = DialogueLine.conversation_roots(@room)
 
+        #these are the roots (if any) that have already been triggered
         @disposed_roots = DialogueLine.find(:all,
           :conditions => ["game_id = ? and dialogue_line_id IN (?)", @game.id, @all_root_lines.map(&:id)],
           :joins => ("INNER JOIN disposed_of_dialogue_lines ON disposed_of_dialogue_lines.dialogue_line_id = dialogue_lines.id"))
 
         if @disposed_roots.size > 0
+
+          #show the triggered roots
           @root_lines = DialogueLine.find(:all,
             :conditions => ["id IN (?) and id NOT IN (?)", @all_root_lines.map(&:id), @disposed_roots.map(&:id)])
         else
+
+          #show all the originally visible roots
           @root_lines = DialogueLine.find(:all,
             :conditions => ["id IN (?) and visible = ?", @all_root_lines.map(&:id), true])
         end
@@ -249,14 +254,32 @@ include Magick
         @open_bottom = unlocked_doors.include?(@bottom_exit)
       end
       
+      #Dealing with invisible and triggered dialogue lines (speaker unwilling to talk, triggered to talk by another dialogue line)
+      #Does work reflexively for speaker (i.e., click on speaker once she doesn't want to talk; click again, she's ready)
       triggered_ids = DialogueLine.find(:all,
         :select => "invisible_dialogue_line_id",
         :from => "visible_dialogue_lines_invisible_dialogue_lines",
         :conditions => ["visible_dialogue_line_id = ?", @dialogue_line.id])
 
+
       @triggered_dialogue_lines = DialogueLine.find(:all,
-          :conditions => ["id IN (?)",
+        #:select=>"id",
+        :conditions => ["id IN (?)",
             triggered_ids.map(&:invisible_dialogue_line_id)]) unless triggered_ids.empty?
+
+
+      @triggered_dialogue_lines.each do |triggered_line|
+
+          replaced_dialogue_line = DialogueLine.find(:first,
+            :conditions => ["line_generator_id = ? and line_generator_type =? and visible = ? and room_id = ? and parent_id is NULL",
+              triggered_line.line_generator_id,
+              triggered_line.line_generator_type,
+              true,
+              @room.id])
+
+          @game.disposed_of_dialogue_lines << replaced_dialogue_line unless @game.disposed_of_dialogue_lines.exists?(replaced_dialogue_line)
+
+        end unless @triggered_dialogue_lines.nil?
 
     end
   end
