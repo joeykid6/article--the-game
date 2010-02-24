@@ -270,16 +270,16 @@ include Magick
 
       @triggered_dialogue_lines.each do |triggered_line|
 
-          replaced_dialogue_line = DialogueLine.find(:first,
-            :conditions => ["line_generator_id = ? and line_generator_type =? and visible = ? and room_id = ? and parent_id is NULL",
-              triggered_line.line_generator_id,
-              triggered_line.line_generator_type,
-              true,
-              @room.id])
+        replaced_dialogue_line = DialogueLine.find(:first,
+          :conditions => ["line_generator_id = ? and line_generator_type =? and visible = ? and room_id = ? and parent_id is NULL",
+            triggered_line.line_generator_id,
+            triggered_line.line_generator_type,
+            true,
+            @room.id])
 
-          @game.disposed_of_dialogue_lines << replaced_dialogue_line unless @game.disposed_of_dialogue_lines.exists?(replaced_dialogue_line)
+        @game.disposed_of_dialogue_lines << replaced_dialogue_line unless @game.disposed_of_dialogue_lines.exists?(replaced_dialogue_line)
 
-        end unless @triggered_dialogue_lines.nil?
+      end unless @triggered_dialogue_lines.nil?
 
     end
   end
