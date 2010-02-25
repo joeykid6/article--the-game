@@ -29,8 +29,13 @@ class ApplicationController < ActionController::Base
   def authenticate
     authenticate_or_request_with_http_basic do |user_name, password|
       user_name == USER_NAME && password == PASSWORD
+      
+      if user_name==USER_NAME && password == PASSWORD
+      session[:authenticated] = "yes"
+      end
+     end
     end
-  end
+
 
   def current_game
     @_current_game ||= session[:current_game_id] &&
