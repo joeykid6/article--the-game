@@ -146,6 +146,7 @@
 
 #avatars_area h2, #dialogue_area h2, #media_area h2
 {
+    font-size: 1.3em;
     margin-bottom: 2px;
     text-align: center;
 }
@@ -347,23 +348,8 @@ td.room #room_content ul
 #content
 {
     width: 960px;
-   /* border: 1px solid #999999; */
     overflow: auto;
     background-color: #88dd88;
-}
-
-#conversation_starter
-{
-    float: left;
-    border: 5px solid #888888;
-    height: 900px;
-    width: 102px;
-}
-
-#conversation_starter.hover
-{
-    background-color: #ccffcc;
-    border: 5px dotted #000000;
 }
 
 #dialogue_window
@@ -402,7 +388,7 @@ td.room #room_content ul
     text-align: center;
     color: #ccc;
     font-family: Libel, Arial, sans-serif;
-    font-size: 45px;
+    font-size: 40px;
     letter-spacing: 14px;
     margin-top: 30px;
     margin-left: 15px;
@@ -418,13 +404,13 @@ td.room #room_content ul
     margin: 0px;
 }
 
-.dialogue_line, .dialogue_line_player
+.dialogue_line, .dialogue_line_player, .dialogue_line_game
 {
-    border: 1px solid #000000;
+    border: 1px solid #000;
     -moz-border-radius: 5px;
     -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.4);
-    background-color: #eeeeee;
-    color: #000000;
+    background-color: #eee;
+    color: #000;
     list-style-type: none;
     margin-bottom: 5px;
     padding: 4px;
@@ -432,11 +418,15 @@ td.room #room_content ul
 
 .dialogue_line_player
 {
-    color: #fff;
-    background-color: #555;
+
 }
 
-.dialogue_line img, .dialogue_line_player img
+.dialogue_line_game
+{
+    background-color: #ccc;
+}
+
+.dialogue_line img, .dialogue_line_player img, .dialogue_line_game img
 {
     margin-right: 7px;
     background-color: #fff;
@@ -448,14 +438,14 @@ td.room #room_content ul
     -moz-border-radius: 4px;
 }
 
-.dialogue_line h4, .dialogue_line_player h4
+.dialogue_line h4, .dialogue_line_player h4, .dialogue_line_game h4
 {
     margin-top: 0px;
     padding-top: 0px;
     margin-bottom: 3px;
 }
 
-.dialogue_line p, .dialogue_line_player p
+.dialogue_line p, .dialogue_line_player p, .dialogue_line_game p
 {
     font-size: 0.8em;
     margin-top: 4px;
@@ -527,6 +517,13 @@ td.room #room_content ul
     border: 1px solid #888;
     -moz-border-radius: 5px;
     background-color: #ffffff;
+}
+
+.guide a, .speaker a, .mediaobject a
+{
+    display: block;
+    text-decoration: none;
+    color: #000;
 }
 
 .game

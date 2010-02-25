@@ -14,6 +14,8 @@
 # 12) Figure out proper use of h and sanitize on all user input and view output
 # 13) Force thumbnails to be square DAVE WILL DO
 # 14) Make entire player response div clickable DONE
+# 15) Unwrap avatar divs so a tags are inside; validate XHTML
+# 16) Test and fix interface in IE 6,7,8
 
 # set the fade in time for dialogue lines to appear, and the necessary wait time for the
 # scroll to happen properly.
@@ -75,7 +77,11 @@ unless @dialogue_line.descendants.empty?
 
 #    Handle continuations of the conversation which don't include a player response
     else
-      page.render_dialogue_line(descendant.line_generator, descendant.line_generator.thumbnail.url(:small), descendant, fade_in_time, delay_timer)
+      page.render_dialogue_line(descendant.line_generator, 
+        descendant.line_generator.thumbnail.url(:small),
+        descendant,
+        fade_in_time,
+        delay_timer)
       page.dialogue_scroll_to_bottom(delay_timer + scroll_wait_time)
       
       delay_timer += delay_timer_calc(descendant) unless descendant.descendants.empty?

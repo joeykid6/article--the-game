@@ -153,10 +153,10 @@ module RoomsHelper
     end
   end
 
-#  Generates the avatar div in the avatar partial so we can create a link_to_remote properly
+#  Generates the avatar div in the player avatar box
   def avatar_div(avatar)
     html_content = "#{image_tag(avatar.thumbnail.url(:medium))}\n<h3>#{h(truncate(avatar.short_name, :length => 14))}</h3>"
-    content_tag :div, :class => avatar.class.to_s.downcase, :id => avatar.id, :alt => avatar.short_name do
+    content_tag :div, :class => avatar.class.to_s.downcase, :id => "#{avatar.class.to_s.downcase}_#{avatar.id}" do
       html_content
     end
   end
@@ -187,8 +187,8 @@ module RoomsHelper
 #  Sets the delay time for building dialogue sequences in build_conversation.rjs
   def delay_timer_calc(dialogue_line)
     delay_time = case dialogue_line.content.length/30
-      when (0..2) then 2
-      when (10..1000) then 10
+    when (0..2) then 2
+    when (10..1000) then 10
     else
       dialogue_line.content.length/30
     end
@@ -207,6 +207,15 @@ module RoomsHelper
 #  used to create a timestamp for distinguishing dialogue lines
   def dialogue_time_stamp
     Time.now.strftime("%j%H%M%S")
+  end
+
+  def dialogue_line_class(line_generator_name)
+    case line_generator_name
+    when "player_response" then "dialogue_line_player"
+    when "game_info" then "dialogue_line_game"
+    else
+      "dialogue_line"
+    end
   end
 
 end

@@ -1,4 +1,4 @@
-<div class="dialogue_line<%= "_player" if dialogue_line.line_generator.name == 'player_response'%>" id="dialogue_line_<%= dialogue_line.id.to_s + "_" + d_time_stamp %>">
+<div class="<%= dialogue_line_class(dialogue_line.line_generator.name) %>" id="dialogue_line_<%= dialogue_line.id.to_s + "_" + d_time_stamp %>">
   <%= image_tag(avatar_thumbnail) %>
   <h4><%= h(avatar.short_name) %> says:</h4>
   <p>
