@@ -98,3 +98,27 @@ body
     overflow: auto;
 }
 
+
+#build_menu
+{
+    border: 3px solid #000000;
+    background: #FFFF99 ;
+    top: 20px;
+    right: 20px;
+    z-index:10;
+    position: fixed;
+    height: 800px;
+    width: 110px;
+
+}
+
+.build_menu
+{
+
+    font-family: Verdana, Geneva, Arial, sans-serif ;
+    font-size: 10px;
+    padding: 2px;
+    text-align: left;
+
+
+}

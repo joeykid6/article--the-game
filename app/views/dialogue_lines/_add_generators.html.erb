@@ -2,19 +2,40 @@
 
   <h3>Build Menu</h3>
 
-  
-    <%= link_to 'New Line', new_section_room_dialogue_line_path(@section,@room) -%>
+<%current_uri = request.env['PATH_INFO']%>
+
+  <% if current_uri =~/rooms\//  %>
+
+    <%my_room="no"%>
+  <%else  %>
+    <%my_room="yes"%>
+  <%end%>
+
+<% if current_uri!="/sections" && my_room!="yes"%>
+     Lines:<br />
+    <%= link_to 'New line for this room', new_section_room_dialogue_line_path(@section,@room) -%>
+
+    
+    <br />
+    <br />
+    
+    <%= link_to 'Line list for this room',  section_room_dialogue_lines_path(@section,@room) %>
+    <br />
+    <br />
+    Sections:<br />
+    <%= link_to 'All sections in game', sections_path -%>
+
+    <br />
+    <br />
+    Rooms:<br />
+    <%= link_to 'Rooms in this section', section_rooms_path(@section) -%>
 
 
     <br />
-    <%= link_to 'Line List for Room',  section_room_dialogue_lines_path(@section,@room) %>
     <br />
 
-    <%= link_to 'Section Map', section_rooms_path(@section) -%>
 
-
-    <br />
-    <br />
+    <%end%>
     Guides:<br />
     <%=link_to  "New", new_guide_path, :class=>"lightview", :title=>"Guides:: :: width: 400, height: 800"  %>
     &nbsp;|

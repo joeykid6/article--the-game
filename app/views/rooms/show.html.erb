@@ -1,3 +1,13 @@
+<%if session[:authenticated]=="yes" %>
+
+<%=render :partial=>'dialogue_lines/add_generators'%>
+
+<%end%>
+
+
+
+
+
 <div id="header">
 
   <h1 id="title"><%= @room.name %></h1>

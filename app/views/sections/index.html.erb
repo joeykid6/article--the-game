@@ -1,3 +1,11 @@
+<%if session[:authenticated]=="yes" %>
+
+<%=render :partial=>'dialogue_lines/add_generators'%>
+
+<%end%>
+
+
+
 <h1>All article sections</h1>
 <p>Drag and drop to reorder.</p>
 <ul id="section_list">
