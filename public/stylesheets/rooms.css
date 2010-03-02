@@ -132,7 +132,7 @@
     left: inherit;
     height: 590px;
     width: 105px;
-    background: rgba(0, 0, 0, 0);
+/*  background: rgba(0, 0, 0, 0); */
     z-index: 4;
 }
 
@@ -505,7 +505,7 @@ td.room #room_content ul
     font-size: .7em;
     font-weight: bold;
     font-family: Arial, sans-serif;
-    padding-top: 2px;
+    padding-top: 1px;
     margin-top: 0px;
     color: #000;
 }

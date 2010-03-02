@@ -2,5 +2,7 @@
   <%= link_to image_tag( "globe_icon.jpg", :alt => "World Map", :title => "World Map" ),
     article_map_path(@section),
     :class => "lightview",
+    :rel => "iframe",
     :title => "Worldmap:: Click to go to a section of the article you've already visited. :: width: 600, height: 600" %>
 </div>
+<!-- TODO adjust height and width of lightview modal window for IE -->
