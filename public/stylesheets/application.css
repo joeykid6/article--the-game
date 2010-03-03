@@ -99,16 +99,35 @@ body
 }
 
 
-#build_menu
+#build_toggle_extra_space
 {
+
+
+
     border: 3px solid #000000;
     background: #FFFF99 ;
-    top: 20px;
+    top: 120px;
     right: 20px;
     z-index:10;
     position: fixed;
-    height: 800px;
     width: 110px;
+
+
+}
+
+
+
+#build_menu
+{
+
+    border: 3px solid #000000;
+    background: #FFFF99 ;
+    top: 120px;
+    right: 20px;
+    z-index:10;
+    position: fixed;
+    width: 110px;
+
 
 }
 
