@@ -30,11 +30,11 @@ class ApplicationController < ActionController::Base
     authenticate_or_request_with_http_basic do |user_name, password|
       user_name == USER_NAME && password == PASSWORD
       
-      if user_name==USER_NAME && password == PASSWORD
-      session[:authenticated] = "yes"
+      if user_name == USER_NAME && password == PASSWORD
+        session[:authenticated] = "yes"
       end
-     end
     end
+  end
 
 
   def current_game

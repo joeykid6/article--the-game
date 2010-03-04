@@ -1,12 +1,4 @@
-<%if session[:authenticated]=="yes" %>
-
-<%=render :partial=>'dialogue_lines/add_generators'%>
-
-<%end%>
-
-
-
-
+<%= render :partial => 'dialogue_lines/add_generators' if session[:authenticated] == "yes" %>
 
 <div id="header">
 

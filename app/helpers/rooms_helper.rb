@@ -188,7 +188,7 @@ module RoomsHelper
   def delay_timer_calc(dialogue_line)
     delay_time = case dialogue_line.content.length/30
     when (0..2) then 2
-    when (10..1000) then 10
+    when (15..1000) then 15
     else
       dialogue_line.content.length/30
     end
@@ -209,6 +209,7 @@ module RoomsHelper
     Time.now.strftime("%j%H%M%S")
   end
 
+#  picks the proper css class for dialogue lines based on who says them
   def dialogue_line_class(line_generator_name)
     case line_generator_name
     when "player_response" then "dialogue_line_player"
@@ -218,4 +219,7 @@ module RoomsHelper
     end
   end
 
+  def is_dialogue_line_long(dialogue_line)
+    true if delay_timer_calc(dialogue_line) >= 4
+  end
 end

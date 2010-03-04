@@ -1,4 +1,4 @@
-<%=render :partial=>'add_generators'%>
+<%= render :partial => 'add_generators' %>
 
 <h1>New dialogue_line</h1>
 Room id:  <%= params[:room_id] %>
@@ -7,7 +7,7 @@ Room id:  <%= params[:room_id] %>
 
 
 
-<% form_for([@section,@room,@dialogue_line]) do |f| %>
+<% form_for([@section, @room, @dialogue_line]) do |f| %>
   <%= f.error_messages %>
 
   Dialogue line visible when player enters room for first time?
@@ -46,6 +46,9 @@ Room id:  <%= params[:room_id] %>
 
 
   <p>
-    <%= f.submit 'Create line' %> <%= link_to 'Back to list', section_room_dialogue_lines_path %>
+    <!-- The submit text here MUST match the conditional in the create action -->
+    <%= f.submit 'Save line and return to list' %>
+    <%= f.submit 'Save line and add another' %>
+    <%= link_to 'Back to list', section_room_dialogue_lines_path %>
   </p>
 <% end %>

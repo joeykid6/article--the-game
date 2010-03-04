@@ -1,13 +1,4 @@
-<%current_uri = request.env['PATH_INFO']%>
-  <%=current_uri%>
-
-
-
-<%if session[:authenticated]=="yes" %>
-
-<%=render :partial=>'dialogue_lines/add_generators'%>
-
-<%end%>
+<%= render :partial=>'dialogue_lines/add_generators' if session[:authenticated] == "yes" %>
 
 <h2>Section Map: "<%= @section.name %>"</h2>
 <% map_rooms %>

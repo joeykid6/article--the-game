@@ -46,7 +46,9 @@ class DialogueLinesController < ApplicationController
      @section=Section.find(params[:section_id])
      @room = Room.find(params[:room_id])
      @dialogue_line = DialogueLine.find(params[:id])
-     @media_objects=MediaObject.find(:all, :conditions=>['dialogue_line_id = ?', @dialogue_line.id], :joins=>:dialogue_lines)
+     @media_objects = MediaObject.find(:all, 
+       :conditions => ['dialogue_line_id = ?', @dialogue_line.id],
+       :joins => :dialogue_lines)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -127,8 +129,13 @@ class DialogueLinesController < ApplicationController
 
     respond_to do |format|
       if @dialogue_line.save
-        flash[:notice] = 'DialogueLine was successfully created.'
-        format.html { redirect_to(edit_section_room_dialogue_line_path(@section,@room,@dialogue_line)) }
+        flash[:message] = 'DialogueLine was successfully created.'
+        
+#        The string conditional below must match the submit text in new.html.erb
+        format.html { redirect_to( params[:commit] == "Save line and return to list" ?
+              section_room_dialogue_lines_path(@section, @room) : 
+              new_section_room_dialogue_line_path(@section, @room)) }
+        
         format.xml  { render :xml => @dialogue_line, :status => :created, :location => @dialogue_line }
       else
         #format.html { render :action => "new" }
@@ -151,10 +158,10 @@ class DialogueLinesController < ApplicationController
       if @dialogue_line.update_attributes(params[:dialogue_line])
         
         flash[:message] = "Dialogue line successfully updated."
-        redirect_to(edit_section_room_dialogue_line_path(@section,@room,@dialogue_line))
+        redirect_to(section_room_dialogue_lines_path(@section, @room))
 
       else
-        flash[:message] = "There was an error saving the dialogue line."
+        flash[:notice] = "There was an error saving the dialogue line."
 
       end
 
@@ -243,7 +250,7 @@ class DialogueLinesController < ApplicationController
 private
 
   def no_method_recover
-    render :partial =>"problem"
+    render :partial => "problem"
   end
 
 

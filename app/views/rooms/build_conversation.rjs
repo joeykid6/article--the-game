@@ -14,7 +14,7 @@
 # 12) Figure out proper use of h and sanitize on all user input and view output
 # 13) Force thumbnails to be square DAVE WILL DO
 # 14) Make entire player response div clickable DONE
-# 15) Unwrap avatar divs so a tags are inside; validate XHTML
+# 15) Unwrap avatar divs so a tags are inside; validate XHTML DONE
 # 16) Test and fix interface in IE 6,7,8
 
 # set the fade in time for dialogue lines to appear, and the necessary wait time for the
@@ -22,6 +22,8 @@
 fade_in_time = 1.5
 fade_out_time = 0.5
 scroll_wait_time = 0.2
+
+response_window_default_text = "<h2>Player Responses</h2>"
 
 page.render_dialogue_line(@avatar, @avatar_thumbnail, @dialogue_line, fade_in_time)
 
@@ -32,7 +34,7 @@ if @dialogue_line.line_generator.name == 'player_response'
   @dialogue_line.self_and_siblings.each { |player_response| page.visual_effect(:fade,
       "player_response_#{player_response.id}",
       :duration => fade_out_time) }
-  page.delay(fade_out_time) { page[:response_window].replace_html "<h2>Player Responses</h2>" }
+  page.delay(fade_out_time) { page[:response_window].replace_html response_window_default_text }
 end
 
 # disable clicking other avatars for the duration of a conversation
@@ -53,15 +55,26 @@ page.insert_html :bottom, 'media_window',
 # start a delay timer to pace all lines of dialogue properly
 delay_timer = delay_timer_calc(@dialogue_line)
 
+# start a timer to pace all loading spinners properly; need to carefully revisit this timing issue.
+loading_timer = delay_timer_calc(@dialogue_line)/2
+
+# only start the loading timer for long lines
+previous_line_is_long = is_dialogue_line_long(@dialogue_line)
+
 # handle all descendants of the current dialogue line
 unless @dialogue_line.descendants.empty?
 
   @dialogue_line.descendants.each do |descendant|
 
 #    Handle groups of player responses
-#    Note that all siblilngs of a player response will be treated as player responses
+#    Note that all siblings of a player response will be treated as player responses
     if descendant.line_generator.name == 'player_response'
       @player_responses = descendant.self_and_siblings
+
+      page.delay(loading_timer) do
+        page[:response_window].replace_html :partial => 'dialogue_spinner',
+          :locals => { :waiting_text => "<em>You begin to type a response...</em>" }
+      end if previous_line_is_long
 
       page.delay(delay_timer) do
         page[:response_window].replace_html :partial => 'player_response',
@@ -77,13 +90,26 @@ unless @dialogue_line.descendants.empty?
 
 #    Handle continuations of the conversation which don't include a player response
     else
+      page.delay(loading_timer) do
+        page[:response_window].replace_html :partial => 'dialogue_spinner',
+          :locals => { :waiting_text => "<em>#{descendant.line_generator.short_name} has started typing...</em>" }
+      end if previous_line_is_long
+
+      page.delay(delay_timer) do
+        page.visual_effect(:fade, "dialogue_spinner", :duration => fade_out_time)
+        page.delay(fade_out_time) { page[:response_window].replace_html response_window_default_text }
+      end
+
       page.render_dialogue_line(descendant.line_generator, 
         descendant.line_generator.thumbnail.url(:small),
         descendant,
         fade_in_time,
         delay_timer)
       page.dialogue_scroll_to_bottom(delay_timer + scroll_wait_time)
-      
+
+      previous_line_is_long = is_dialogue_line_long(descendant)
+
+      loading_timer += delay_timer_calc(descendant)/2
       delay_timer += delay_timer_calc(descendant) unless descendant.descendants.empty?
 
   #    This is where the conversation ending/reset sequence happens when there are no more descendants
