@@ -1,4 +1,20 @@
-<div id="build_menu" class="build_menu">
+<div id="build_toggle_extra_space" class="build_menu">
+    <%= link_to_function(image_tag("up.png",:title=>"show/hide more",:alt=>"show/hide more"),
+            "$('build_menu').toggle(); $('build_toggle_extra_space').toggle();")%>
+    <%= link_to_function "Build",
+            "$('build_menu').toggle(); $('build_toggle_extra_space').toggle();"%>
+   </div>
+
+
+
+<div id="build_menu" style="display:none" class="build_menu">
+
+  <%= link_to_function(image_tag("down.png",:title=>"show/hide more",:alt=>"show/hide more"),
+            "$('build_menu').toggle(); $('build_toggle_extra_space').toggle();")%>
+
+      <%= link_to_function "Hide",
+            "$('build_menu').toggle(); $('build_toggle_extra_space').toggle();"%>
+
 
   <h3>Build Menu</h3>
 
@@ -56,11 +72,7 @@
     <br />
     
     
-    Game Robots:<br />
-    <%=link_to  "New", new_game_robot_path, :class=>"lightview",:rel=>"iframe", :title=>"Game Robots:: :: width: 400, height: 400"  %>
-    &nbsp;|
-    <%=link_to  "Edit/Destroy", game_robots_path, :class=>"lightview",:rel=>"iframe", :title=>"Game Robots:: :: width: 400, height: 400"  %>
-
+    
 
 
     <br />
