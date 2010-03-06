@@ -12,7 +12,7 @@
   <tr  style="cursor: move;"  id="dialogue_line_<%= dialogue_line.id -%>" >
    
 
-    <td valign="top">
+    <td valign="top" width="25px">
 
       <% triggered_ids=DialogueLine.find(:all,
       :select=>"invisible_dialogue_line_id",
@@ -41,7 +41,7 @@
       
     </td>
 
-  <td valign="top">
+  <td valign="top" width="25px">
     <%-doors=Door.find(:all, :conditions=>['dialogue_line_id = ?', dialogue_line.id], :joins=>:dialogue_lines)  -%>
     <% doors.each do |door| %>
 
@@ -73,7 +73,7 @@
 
   </td>
 
-  <td valign="top">
+  <td valign="top" width="25px">
       <%- media_instances = MediaObject.count_by_sql("SELECT COUNT(*) FROM dialogue_lines_media_objects where dialogue_line_id = '#{dialogue_line.id}'") -%>
 
 
@@ -93,7 +93,7 @@
 
       <% end %>
   </td>
-  <td valign="top" >
+  <td valign="top" width="25px">
 
     <% if dialogue_line.content.length > 50 %>
       <%= link_to_function(image_tag("my_toggle.png",:title=>"show/hide more",:alt=>"show/hide more"),
@@ -136,7 +136,7 @@
     
   </td>
 
-  <td valign="top" class="utterer">
+  <td valign="top" class="utterer" width="50px">
       <% generator_name  = dialogue_line.line_generator_type.constantize.find(:all,
         :select=>"name",
         :conditions=> ["id = ?", dialogue_line.line_generator_id]) %>
@@ -164,7 +164,7 @@
 -%>
 <%= drop_receiving_element(
        "dialogue_line_#{dialogue_line.id}",
-       :update => 'catlist',
+       #:update => 'catlist',
        :with => "'subcategory_id=' + element.id",
        :url => { :action => 'restructure', :dialogue_line_id => dialogue_line.id, :room_id=>@room,:section_id=>@section },
        :hoverclass => "row_highlight"

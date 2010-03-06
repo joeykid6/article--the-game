@@ -5,31 +5,17 @@
 <%end%>
 
 <h1>Dialogue Lines</h1>
+<p>Drag and drop a line to nest it under another.  You can move lines among conversations.</p>
+<p>Room name: <%=  link_to @room.name, section_room_path(@section,params[:room_id]) %></p>
 
 <%- if @dialogue_lines.empty? -%>
   <p><em>No lines have been created yet.</em></p>
 <%- else -%>
-  <br />
-  <p>Room name: <%=  link_to @room.name, section_room_path(@section,params[:room_id]) %></p>
-  <table>
-    <thead>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
 
-        <th width="600">Utterance</th>
-        <th width="150">Utterer</th>
-        <td></td>
-        
-      </tr>
-    </thead>
-    <tbody id="catlist">
-  <%= render :partial => 'dialogue_lines_tree' -%>
-  
-    </tbody>
-  </table>
-<%- end -%>
+ 
+      <%= render :partial => 'dialogue_lines_tree', :locals => {:dialogue_lines => @dialogue_lines} -%>
+
+
 
   
+    <% end  %>

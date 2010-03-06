@@ -1,5 +1,7 @@
 class DialogueLine < ActiveRecord::Base
   acts_as_nested_set :scope => :room
+  validates_presence_of :line_generator_id
+  validates_presence_of :line_generator_type
   validates_presence_of :content
 #  validates_uniqueness_of :content  TODO Find out why this is here?
 

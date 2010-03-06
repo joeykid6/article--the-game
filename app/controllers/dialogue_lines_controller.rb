@@ -32,7 +32,6 @@ class DialogueLinesController < ApplicationController
 
     @dialogue_lines = DialogueLine.find(:all,
       :conditions=> ["room_id = ? and parent_id is NULL",params[:room_id]] )
-    
 
     respond_to do |format|
       format.html # index.html.erb
@@ -195,8 +194,14 @@ class DialogueLinesController < ApplicationController
     @dialogue_lines = DialogueLine.find(:all,
      :conditions=> ["room_id = ? and parent_id is NULL",params[:room_id]] )
     
-    render :partial => 'dialogue_lines_tree',
-           :locals=>{:dialogue_lines=>@dialogue_lines}
+    if request.xhr?
+        render :update do |page|
+      page.redirect_to(:action=>'index', :room_id=>@room, :section_id=>@section)
+    end
+    end
+    
+    #render :partial => 'dialogue_lines_tree',
+           #:locals=>{:dialogue_lines=>@dialogue_lines}
 
   rescue ActiveRecord::ActiveRecordError
     logger.error("Attempt to put a parent into its child")

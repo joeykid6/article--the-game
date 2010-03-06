@@ -1,9 +1,71 @@
-<%- @dialogue_lines.each do |dialogue_line| -%>  
-  
-  
-  <%= render :partial => 'dialogue_line_row', :locals => {:dialogue_line => dialogue_line} -%>
 
 
-<%- end -%>
+
+ 
+  
+  
+<%- @dialogue_lines.each do |dialogue_line| -%>
+
+  <%  if dialogue_line.parent_id.blank?%>
+
+
+<div id=<%="Root_Id_#{dialogue_line.id}_toggle_extra_space"%> style="display:none" class="line_menu">
+    <%= link_to_function(image_tag(dialogue_line.line_generator.thumbnail.url(:small),
+        :title=>"show",:alt=>"show"),
+            "$('Root_Id_#{dialogue_line.id}').toggle(); $('Root_Id_#{dialogue_line.id}_toggle_extra_space').toggle();")%>
+    <%= link_to_function truncate(dialogue_line.content, :length => 20),
+            "$('Root_Id_#{dialogue_line.id}').toggle(); $('Root_Id_#{dialogue_line.id}_toggle_extra_space').toggle();"%>
+   </div>
+
+
+
+
+<div id=<%="Root_Id_#{dialogue_line.id}"%> class="line_menu" >
+  <%= link_to_function(image_tag(dialogue_line.line_generator.thumbnail.url(:small),:title=>"hide",:alt=>"hide"),
+            "$('Root_Id_#{dialogue_line.id}').toggle(); $('Root_Id_#{dialogue_line.id}_toggle_extra_space').toggle();")%>
+
+      <%= link_to_function "Hide this conversation",
+            "$('Root_Id_#{dialogue_line.id}').toggle(); $('Root_Id_#{dialogue_line.id}_toggle_extra_space').toggle();"%>
+
+
+
+
+
+  <table>
+
+    <thead>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+
+        <th >Line</th>
+        <th >Generator</th>
+        <td></td>
+
+      </tr>
+    </thead>
+    <tbody id="catlist">
+      <%= render :partial => 'dialogue_line_row', :locals => {:dialogue_line => dialogue_line} -%>
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+
+
+
+
+  <% end %>
+  <% end %>
+ 
+
+
+ 
+
+
 
 
