@@ -159,7 +159,8 @@
 <%= draggable_element(
       "dialogue_line_#{dialogue_line.id}",
       :ghosting => true,
-      :revert => true
+      :revert => true,
+      :scroll=> "window"
     )
 -%>
 <%= drop_receiving_element(
