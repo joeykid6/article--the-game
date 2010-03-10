@@ -222,6 +222,26 @@ class DialogueLinesController < ApplicationController
     
   end
 
+  def copy_line
+    @section = params[:section_id]
+    @room = params[:room_id]
+    
+    copy_line = DialogueLine.find(params[:dialogue_line_id])
+
+
+    my_line = DialogueLine.new
+    my_line.content = copy_line.content
+    my_line.line_generator_id = copy_line.line_generator_id
+    my_line.line_generator_type = copy_line.line_generator_type
+    my_line.room_id = copy_line.room_id
+    my_line.visible = copy_line.visible
+    my_line.save
+
+    redirect_to(section_room_dialogue_lines_path(@section,@room))
+    
+  end
+
+
   def find_generators
     @generators = params[:value].constantize.find(:all, :order=>'name')
   end
