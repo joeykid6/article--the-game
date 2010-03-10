@@ -117,7 +117,8 @@
     <% my_stub=dialogue_line.content.slice(0..50) + " . . . " -%>
      <%= my_stub -%>
      <% else%>
-    <%= dialogue_line.content -%>
+    
+    <%=h dialogue_line.content -%>
     <% end %> <!-- TODO Ask Dave about stub id to see if we can use truncate helper -->
   </div>
     
@@ -131,6 +132,7 @@
     
 
 
+      
       <%=h dialogue_line.content -%>
     </div>
     
@@ -145,14 +147,14 @@
   </td>
   
   <td valign="top" class="utterer">
-    
+      <%= link_to "Duplicate",{:action=>"copy_line",:dialogue_line_id => dialogue_line.id, :room_id=>@room, :section_id=>@section}%>|
       <%= link_to 'Edit', edit_section_room_dialogue_line_path(@section,@room,dialogue_line), :method=>:get-%> |
       <%= link_to 'Destroy', section_room_dialogue_line_path(@section,@room,dialogue_line), :confirm=>"Are you sure?  When you delete this line, you'll delete all its children too.", :method=>:delete-%>
       
 
 
       <%if dialogue_line.level != 0  %>
-        | <%= link_to "Make root",{:action=>"make_root",:dialogue_line_id => dialogue_line.id, :room_id=>@room, :section_id=>@section}%>
+        | <%= link_to "Make_root",{:action=>"make_root",:dialogue_line_id => dialogue_line.id, :room_id=>@room, :section_id=>@section}%>
       <%end%>
   </td>
 </tr>
