@@ -2,7 +2,7 @@
 # TODO
 # 1) Disable all avatar clickables at start of conversation  DONE
 # 2) Force dialogue window to drop to the bottom when new content is added DONE
-# 3) Work on spinner waiting subroutine
+# 3) Work on spinner waiting subroutine DONE
 # 4) modify response window background DONE
 # 5) Add player thumbnail to response window right side DONE
 # 6) Properly refresh response window at the end of the view routine below DONE
@@ -15,7 +15,10 @@
 # 13) Force thumbnails to be square DAVE WILL DO
 # 14) Make entire player response div clickable DONE
 # 15) Unwrap avatar divs so a tags are inside; validate XHTML DONE
-# 16) Test and fix interface in IE 6,7,8
+# 16) Test and fix interface in IE 6,7,8 (+8 compatibility mode; briefly check 7,8 in Vista as well)
+# 17) Test and fix interface in Chrome, Safari, and Opera (briefly check Safari, FF, Chrome, Opera on Mac/Linux/Vista as well)
+# 18) debug JS error in dialogue fade DONE
+# 19) fix lightview worldmap and section map navigation in IE
 
 # set the fade in time for dialogue lines to appear, and the necessary wait time for the
 # scroll to happen properly.
@@ -55,11 +58,11 @@ page.insert_html :bottom, 'media_window',
 # start a delay timer to pace all lines of dialogue properly
 delay_timer = delay_timer_calc(@dialogue_line)
 
-# start a timer to pace all loading spinners properly; need to carefully revisit this timing issue.
+# start a timer to pace all loading spinners properly; TODO need to carefully revisit this timing issue.
 loading_timer = delay_timer_calc(@dialogue_line)/2
 
 # only start the loading timer for long lines
-previous_line_is_long = is_dialogue_line_long(@dialogue_line)
+previous_line_is_long = is_dialogue_line_long?(@dialogue_line)
 
 # handle all descendants of the current dialogue line
 unless @dialogue_line.descendants.empty?
@@ -98,7 +101,7 @@ unless @dialogue_line.descendants.empty?
       page.delay(delay_timer) do
         page.visual_effect(:fade, "dialogue_spinner", :duration => fade_out_time)
         page.delay(fade_out_time) { page[:response_window].replace_html response_window_default_text }
-      end
+      end if previous_line_is_long
 
       page.render_dialogue_line(descendant.line_generator, 
         descendant.line_generator.thumbnail.url(:small),
@@ -107,7 +110,7 @@ unless @dialogue_line.descendants.empty?
         delay_timer)
       page.dialogue_scroll_to_bottom(delay_timer + scroll_wait_time)
 
-      previous_line_is_long = is_dialogue_line_long(descendant)
+      previous_line_is_long = is_dialogue_line_long?(descendant)
 
       loading_timer += delay_timer_calc(descendant)/2
       delay_timer += delay_timer_calc(descendant) unless descendant.descendants.empty?

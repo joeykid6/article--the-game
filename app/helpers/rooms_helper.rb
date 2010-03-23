@@ -4,7 +4,6 @@ module RoomsHelper
 
 #  Creates a rectangular array to display the locations of all rooms in a given section. The
 #  resulting data is meant to be rendered as a table.
-#  TODO Refactor to remove all references to minimap.
   def map_rooms
 
 #    First, we need a new array.
@@ -219,7 +218,7 @@ module RoomsHelper
     end
   end
 
-  def is_dialogue_line_long(dialogue_line)
+  def is_dialogue_line_long?(dialogue_line)
     true if delay_timer_calc(dialogue_line) >= 4
   end
 end

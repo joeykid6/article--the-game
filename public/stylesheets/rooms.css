@@ -132,7 +132,9 @@
     left: inherit;
     height: 590px;
     width: 105px;
-/*  background: rgba(0, 0, 0, 0); */
+    background-color: #999;
+    opacity: 0;
+    filter: alpha(opacity = 0);
     z-index: 4;
 }
 
@@ -550,9 +552,46 @@ h2
 h4
 {
 
- font: .75em Arial, sans-serif;
+    font: .75em Arial, sans-serif;
     font-weight:bold;
     padding-top: 5px;
     margin-top: 0px;
+
+}
+
+/* IE HACKS */
+/* IE 7 and 8 */
+#ie7 h1, #ie8plus h1
+{
+    font-family: Impact, sans-serif;
+    font-weight: normal;
+}
+#ie7 h2, #ie8plus h2
+{
+    font-family: Impact, sans-serif;
+    font-size: 1.1em;
+    font-weight: normal;
+}
+
+#ie7 #response_window h2, #ie8plus #response_window h2
+{
+    font-size: 1.6em;
+    margin-top: 35px;
+}
+
+#ie7 #compass
+{
+    float: left;
+}
+
+#ie7 .game h3
+{
+    margin-top: -2px;
+    padding-top: 0px;
+}
+
+/* IE 6 */
+#ie6
+{
 
 }

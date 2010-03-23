@@ -8,7 +8,6 @@ class SectionsController < ApplicationController
   # GET /sections
   # GET /sections.xml
   def index
-#    TODO create a drag/drop list for reordering sections. Use "new" method/view to add new sections at the end of the list.
     @sections = Section.all(:order => :position)
 
     respond_to do |format|
