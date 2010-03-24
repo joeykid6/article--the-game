@@ -21,6 +21,8 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem "rmagick", :lib => "RMagick2"
   # config.gem "authlogic"
+  config.gem 'nokogiri', :version => '~> 1.4.1', :source => 'http://gems.github.com'
+  config.gem 'sanitize', :version => '~> 1.2.0', :source => 'http://gems.github.com'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -41,4 +43,12 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
   config.active_record.colorize_logging = false
+
+
+
+
+
+
+
 end
+

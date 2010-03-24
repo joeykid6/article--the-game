@@ -2,6 +2,6 @@
   <%= image_tag(avatar_thumbnail) %>
   <h4><%= h(avatar.short_name) %> says:</h4>
   <p>
-    <%= wrap_dialogue(avatar, dialogue_line.content) %>
+    <%= wrap_dialogue(avatar, lightview_link(dialogue_line.content)) %>
   </p>
 </div>

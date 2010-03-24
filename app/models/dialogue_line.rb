@@ -42,5 +42,12 @@ class DialogueLine < ActiveRecord::Base
   def self.conversation_root(room)
     conversation_roots(room.id).find_by_line_generator_id_and_line_generator_type(self.line_generator_id, self.line_generator_type)
   end
+
+
+  def before_save
+    self.content=Sanitize.clean(self.content, :elements => ['a','br','strong','em'],
+      :attributes => {'a' => ['href']},
+      :protocols => {'a' => {'href' => ['http', 'https']}})
+  end
   
 end
