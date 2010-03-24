@@ -1,4 +1,4 @@
-# Be sure to restart your server when you modify this file
+ # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
 #RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
@@ -21,8 +21,7 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem "rmagick", :lib => "RMagick2"
   # config.gem "authlogic"
-  config.gem 'nokogiri', :version => '~> 1.4.1', :source => 'http://gems.github.com'
-  config.gem 'sanitize', :version => '~> 1.2.0', :source => 'http://gems.github.com'
+  
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -44,11 +43,24 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
   config.active_record.colorize_logging = false
 
-
-
-
-
-
-
 end
+
+
+Rails::Initializer.run do |config|
+  config.gem 'nokogiri', :version => '~> 1.4.1', :source => 'http://gems.github.com'
+end
+
+gem 'nokogiri', '~> 1.4.1'
+
+require 'nokogiri'
+
+Rails::Initializer.run do |config|
+  config.gem 'sanitize', :version => '~> 1.2.0', :source => 'http://gems.github.com'
+end
+
+gem 'sanitize', '~> 1.2.0'
+
+require 'sanitize'
+
+
 
