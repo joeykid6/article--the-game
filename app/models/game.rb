@@ -13,4 +13,8 @@ class Game < ActiveRecord::Base
   
   validates_presence_of :short_name
 
+  def before_save
+    self.short_name=Sanitize.clean(self.short_name)
+  end
+
 end

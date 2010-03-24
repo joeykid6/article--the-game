@@ -1,3 +1,4 @@
+
 class GamesController < ApplicationController
 
   before_filter :authenticate, :except => [:index, :new, :create]
@@ -54,7 +55,7 @@ class GamesController < ApplicationController
 
     respond_to do |format|
       if @game.save
-  
+        
         @starting_section = Section.first(:order => :position)
         @starting_room = @starting_section.rooms.find_by_starting_room(true)
 
@@ -79,6 +80,8 @@ class GamesController < ApplicationController
   # PUT /games/1.xml
   def update
     @game = Game.find(params[:id])
+    
+
 
     respond_to do |format|
       if @game.update_attributes(params[:game])

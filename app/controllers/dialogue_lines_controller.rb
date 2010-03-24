@@ -1,3 +1,5 @@
+require 'sanitize'
+
 class DialogueLinesController < ApplicationController
 
   before_filter :authenticate
@@ -15,6 +17,7 @@ class DialogueLinesController < ApplicationController
 
                               :force_br_newlines=>'true',
                               :forced_root_block=>''
+
                             }
 
 
@@ -80,6 +83,16 @@ class DialogueLinesController < ApplicationController
     @section=Section.find(params[:section_id])
     @room = Room.find(params[:room_id])
     @dialogue_line = DialogueLine.find(params[:id])
+
+    
+
+
+
+
+
+
+
+
     @all_generators = LineGenerator.find(:all,
                                         :select=>"line_generator_type",
                                         :group=>"line_generator_type")
@@ -125,6 +138,8 @@ class DialogueLinesController < ApplicationController
     @section=Section.find(params[:section_id])
     @room = Room.find(params[:room_id])
     @dialogue_line = DialogueLine.new(params[:dialogue_line])
+    
+
 
     respond_to do |format|
       if @dialogue_line.save
@@ -152,7 +167,6 @@ class DialogueLinesController < ApplicationController
     @section=Section.find(params[:section_id])
     @room = Room.find(params[:room_id])
     @dialogue_line = DialogueLine.find(params[:id])
-    
     
       if @dialogue_line.update_attributes(params[:dialogue_line])
         

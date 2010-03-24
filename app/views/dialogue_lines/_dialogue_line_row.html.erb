@@ -95,7 +95,7 @@
   </td>
   <td valign="top" width="25px">
 
-    <% if dialogue_line.content.length > 50 %>
+    <% if dialogue_line.content.length > 75 %>
       <%= link_to_function(image_tag("my_toggle.png",:title=>"show/hide more",:alt=>"show/hide more"),
             "$('content-#{dialogue_line.id}').toggle(); $('stub-#{dialogue_line.id}').toggle();")-%>
           <% end %>
@@ -112,14 +112,14 @@
   <% if dialogue_line.level==0 %>
     <span class="root">root:</span>
       <% end %>
-<% if dialogue_line.content.length > 50 %>
+<% if dialogue_line.content.length > 75 %>
   <%="<div id='stub-#{dialogue_line.id}'>"-%>
-    <% my_stub=dialogue_line.content.slice(0..50) + " . . . " -%>
-     <%= my_stub -%>
+    <% my_stub=truncate(dialogue_line.content,75," . . . ")-%>
+     <%= lightview_link(my_stub) -%>
      <% else%>
     
-    <%=h dialogue_line.content -%>
-    <% end %> <!-- TODO Ask Dave about stub id to see if we can use truncate helper -->
+    <%= lightview_link(dialogue_line.content) -%>
+    <% end %>
   </div>
     
 
@@ -133,7 +133,7 @@
 
 
       
-      <%=h dialogue_line.content -%>
+      <%= lightview_link(dialogue_line.content) -%>
     </div>
     
   </td>
