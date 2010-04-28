@@ -9,13 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100218181628) do
-
-  create_table "dialogue_generators", :force => true do |t|
-    t.string   "generator_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20100415045542) do
 
   create_table "dialogue_lines", :force => true do |t|
     t.text     "content"
@@ -106,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20100218181628) do
     t.integer  "object_height"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "source_name"
   end
 
   create_table "rooms", :force => true do |t|
@@ -130,7 +125,7 @@ ActiveRecord::Schema.define(:version => 20100218181628) do
     t.string   "name"
     t.string   "short_name"
     t.string   "title"
-    t.string   "source_name"
+    t.text     "source_name"
     t.string   "source_type"
     t.string   "url"
     t.string   "thumbnail_file_name"

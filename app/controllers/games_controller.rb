@@ -1,7 +1,8 @@
 
 class GamesController < ApplicationController
 
-  before_filter :authenticate, :except => [:index, :new, :create]
+  before_filter :authenticate, :except => [:index, :new, :create, :journal]
+  before_filter :game_check_then_authenticate, :only => :journal
 
   # GET /games
   # GET /games.xml
@@ -106,5 +107,21 @@ class GamesController < ApplicationController
       format.html { redirect_to(root_path) }
 #      format.xml  { head :ok }
     end
+  end
+
+  def journal
+    prawnto :inline => false
+    prawnto :prawn => {
+          :left_margin => 60,
+          :right_margin => 48,
+          :top_margin => 48,
+          :bottom_margin => 48}
+
+    @game = current_game
+    @visible_rooms = @game.visible_rooms
+    @visible_speakers = Speaker.all(@visible_rooms, :order => :source_name)
+
+    render :layout => false
+    
   end
 end

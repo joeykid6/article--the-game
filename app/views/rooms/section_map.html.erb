@@ -6,7 +6,7 @@
     <% unless room.id == @room.id -%>
     <area shape="rect" coords="<%= room.coords(@current_room_usable_row,
       @current_room_usable_column, 580, 580, 50, 6) %>" title="<%= room.name %>" 
-      href="<%= section_room_path(@section, room) %>" onClick="parent.Lightview.hide();parent.location='<%= section_room_path(@section, room) %>';" />
+      href="<%= section_room_path(@section, room) %>" onClick="parent.location='<%= section_room_path(@section, room) %>';parent.Lightview.hide();" />
     <% end -%>
   <% end %>
 </map>

@@ -1,0 +1,14 @@
+<div style="font:13px Arial,Helvetica,sans-serif; padding-bottom: 5px;">
+  <%= button_to "Save this bibliography as a PDF", journal_path(@game, :format => :pdf) %>
+  <% @visible_rooms.each do |visible_room| -%>
+    <% unless visible_room.speakers.blank? -%>
+    <div style="border-bottom: 1px solid #000;">
+      <h3 style="margin-bottom: 9px;border-bottom: 1px solid #000;">Room #<%= visible_room.id %>: <%= visible_room.name %></h3>
+      <% visible_room.speakers.each do |speaker| -%>
+        <p style="text-indent: -12px;padding-left: 12px; margin: 8px;"><%= speaker.source_name %></p>
+      <% end -%>
+    </div>
+    <% end -%>
+  <% end -%>
+</div>
+<!-- TODO Figure out a way to move all these styles into a CSS file-->

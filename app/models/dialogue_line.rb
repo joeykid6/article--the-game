@@ -45,7 +45,7 @@ class DialogueLine < ActiveRecord::Base
 
 
   def before_save
-    self.content=Sanitize.clean(self.content, :elements => ['a','br','strong','em'],
+    self.content=Sanitize.clean(self.content, :elements => ['a','br','strong','em','u'],
       :attributes => {'a' => ['href']},
       :protocols => {'a' => {'href' => ['http', 'https']}})
   end

@@ -431,7 +431,7 @@ include Magick
     @game = current_game
     @section = Section.find(params[:section_id])
     @room = Room.find(params[:id])
-    @rooms = Room.find_all_by_section_id(params[:section_id]) #TODO Change this to visible rooms only so links on the section map will be correct
+    @rooms = @game.visible_rooms.find_all_by_section_id(params[:section_id])
 
 #    Vars for image map links on top of section map
     @current_room_usable_row = (@room.row + 1).to_i

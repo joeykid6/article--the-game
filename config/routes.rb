@@ -14,6 +14,7 @@ ActionController::Routing::Routes.draw do |map|
   map.section_map '/sections/:section_id/rooms/:id/section_map', :controller => 'rooms', :action => 'section_map'
   map.worldmap '/sections/:section_id/worldmap', :controller => 'sections', :action => 'worldmap'
   map.article_map '/sections/:section_id/article_map', :controller => 'sections', :action => 'article_map'
+  map.journal '/games/:game_id/journal.:format', :controller => 'games', :action => 'journal'
   
   map.resources :games
 

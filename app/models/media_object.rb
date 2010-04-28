@@ -10,4 +10,10 @@ class MediaObject < ActiveRecord::Base
   has_attached_file :thumbnail, :styles => {:large=>"121x121#", :medium=>"80x80#", :small=>"30x30#", :tiny=>"12x12#"}
   validates_attachment_presence :thumbnail
 
+  def before_save
+    self.source_name = Sanitize.clean(self.source_name, :elements => ['a','strong','em','u','i'],
+      :attributes => {'a' => ['href']},
+      :protocols => {'a' => {'href' => ['http', 'https']}})
+  end
+
 end

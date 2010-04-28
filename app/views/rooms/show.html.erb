@@ -8,8 +8,8 @@
   <%  if @room_root.nil? %><h1><%= link_to "Add dialogue", section_room_dialogue_lines_path(@section, @room) %></h1><% end %>
 
   <div id="heads_up_area">
+    <%= render :partial => 'journal' %>
     <%= render :partial => 'worldmap' %>
-    <%= render :partial => 'minimap' %>
     <%= render :partial => 'compass', :locals => {
       :top_entrance => @top_entrance,
       :left_entrance => @left_entrance,
@@ -17,6 +17,7 @@
       :bottom_exit => @bottom_exit
       }
     %>
+    <%= render :partial => 'minimap' %>
   </div>
 
 </div>
@@ -68,7 +69,7 @@
       <%= avatar_div(@game) %>
     </div>
 
-</div>
+  </div>
 
   
     <div id="media_area">
