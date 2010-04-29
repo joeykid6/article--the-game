@@ -118,8 +118,12 @@ class GamesController < ApplicationController
           :bottom_margin => 48}
 
     @game = current_game
-    @visible_rooms = @game.visible_rooms
+    @visible_rooms = @game.visible_rooms.order_by_section
     @visible_speakers = Speaker.all(@visible_rooms, :order => :source_name)
+
+    room_count = Room.all.length.to_r
+    visible_room_count = @visible_rooms.length.to_r
+    @progress = (visible_room_count / room_count * 100).to_f
 
     render :layout => false
     

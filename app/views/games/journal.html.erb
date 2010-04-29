@@ -1,14 +1,25 @@
-<div style="font:13px Arial,Helvetica,sans-serif; padding-bottom: 5px;">
-  <%= button_to "Save this bibliography as a PDF", journal_path(@game, :format => :pdf) %>
-  <% @visible_rooms.each do |visible_room| -%>
-    <% unless visible_room.speakers.blank? -%>
-    <div style="border-bottom: 1px solid #000;">
-      <h3 style="margin-bottom: 9px;border-bottom: 1px solid #000;">Room #<%= visible_room.id %>: <%= visible_room.name %></h3>
-      <% visible_room.speakers.each do |speaker| -%>
-        <p style="text-indent: -12px;padding-left: 12px; margin: 8px;"><%= speaker.source_name %></p>
-      <% end -%>
-    </div>
+<div style="font:12px Arial,Helvetica,sans-serif; padding-bottom: 5px;">
+  <p><%= button_to "Save these sources as a PDF bibliography", journal_path(@game, :format => :pdf) %>
+  <em>(Rooms visited: <%= number_to_percentage(@progress, :precision => 0) %>)</em></p>
+
+  <% @visible_rooms.group_by(&:section_id).each do |section_id, visible_rooms| -%>
+  <% section = Section.find(section_id) %>
+    <h2 style="margin-top: 25px;"><%= "Section #{section.position}: #{section.name}" %></h2>
+      <% visible_rooms.sort_by(&:id).each do |visible_room| -%>
+        <div style="border-bottom: 1px solid #000; background-color: #eee;">
+          <h3 style="margin-bottom: 9px;border-bottom: 1px solid #000; background-color: #fff;"><%= visible_room.name %></h3>
+
+          <% unless visible_room.speakers.blank? -%>
+            <% visible_room.speakers.sort_by(&:source_name).each do |speaker| -%>
+              <p style="text-indent: -12px;padding-left: 12px; margin: 8px;"><%= speaker.source_name %></p>
+            <% end -%>
+
+          <% else -%>
+            <p style="margin: 8px;">No sources found.</p>
+          <% end -%>
+        </div>
     <% end -%>
   <% end -%>
 </div>
-<!-- TODO Figure out a way to move all these styles into a CSS file-->
+<!-- TODO Figure out a way to move all these styles into a CSS file (currently stuck with inline because of the Lightview IFRAME);
+     Also should probably use a partial here or an AJAX call as well, since this looks pretty ugly. And move a bunch of stuff to the model... -->

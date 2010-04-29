@@ -12,8 +12,8 @@ class Room < ActiveRecord::Base
     return "#{room_x1}, #{room_y1}, #{room_x2}, #{room_y2}"
   end
 
-  has_and_belongs_to_many :games, :join_table => "visible_rooms"
-
+  
+  named_scope :order_by_section, :include => :section, :order => 'sections.position'
 
   before_update :delete_doors_on_section_move
 
@@ -23,6 +23,10 @@ class Room < ActiveRecord::Base
   validates_uniqueness_of :ending_room, :scope => :section_id, :if => Proc.new { |game| game.ending_room == true }
   validates_uniqueness_of :row, :scope => [:col, :section_id], :message => "and column already taken in this section"
   validates_numericality_of :row, :col
+
+# Associations
+
+  has_and_belongs_to_many :games, :join_table => "visible_rooms"
 
   #  Using has_many_polymorphs to create DialogueLine relationships.
 
