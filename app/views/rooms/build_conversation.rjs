@@ -1,26 +1,7 @@
 
 # TODO
-# 1) Disable all avatar clickables at start of conversation  DONE
-# 2) Force dialogue window to drop to the bottom when new content is added DONE
-# 3) Work on spinner waiting subroutine DONE
-# 4) modify response window background DONE
-# 5) Add player thumbnail to response window right side DONE
-# 6) Properly refresh response window at the end of the view routine below DONE
-# 7) Add fade out for response window post click DONE
-# 8) tweak positions of compass arrows
-# 9) consider different timing of conversation changes DONE
-# 10) write some real content
-# 11) automate URL generation for image-only media objects DAVE WILL DO
-# 12) Figure out proper use of h and sanitize on all user input and view output DAVE WILL DO
-# 13) Force thumbnails to be square DAVE WILL DO
-# 14) Make entire player response div clickable DONE
-# 15) Unwrap avatar divs so a tags are inside; validate XHTML DONE
-# 16) Test and fix interface in IE 6,7,8 (+8 compatibility mode; briefly check 7,8 in Vista as well)
-# 17) Test and fix interface in Chrome, Safari, and Opera (briefly check Safari, FF, Chrome, Opera on Mac/Linux/Vista as well)
-# 18) debug JS error in dialogue fade DONE
-# 19) fix lightview worldmap and section map navigation in IE (does not load new room properly) DONE
-# 20) debug and adjust timing on dialogue delivery
-# 21) change source_name in speakers from string to text
+# 1) Test and fix interface in Chrome, Safari, and Opera (briefly check Safari, FF, Chrome, Opera on Mac/Linux/Vista as well)
+# 2) debug and adjust timing on dialogue delivery
 
 # set the fade in time for dialogue lines to appear, and the necessary wait time for the
 # scroll to happen properly.

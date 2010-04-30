@@ -573,38 +573,60 @@ h4
 }
 
 /* IE HACKS */
-/* IE 7 and 8 */
-#ie7 h1, #ie8plus h1
+/* IE 6, 7, and 8 */
+#ie6 h1, #ie7 h1, #ie8plus h1
 {
     font-family: Impact, sans-serif;
     font-weight: normal;
 }
-#ie7 h2, #ie8plus h2
+#ie6 h2, #ie7 h2, #ie8plus h2
 {
     font-family: Impact, sans-serif;
     font-size: 1.1em;
     font-weight: normal;
 }
 
-#ie7 #response_window h2, #ie8plus #response_window h2
+#ie6 #response_window h2, #ie7 #response_window h2, #ie8plus #response_window h2
 {
     font-size: 1.6em;
     margin-top: 35px;
 }
 
-#ie7 #compass
-{
-    float: left;
-}
-
-#ie7 .game h3
+/* IE 6 and 7 */
+#ie6 .game h3, #ie7 .game h3
 {
     margin-top: -2px;
     padding-top: 0px;
 }
 
-/* IE 6 */
-#ie6
+#ie6 #compass_top, #ie7 #compass_top
 {
+    margin-top: 0px;
+    margin-left: 2px;
+}
 
+#ie6 #compass_bottom, #ie7 #compass_bottom
+{
+    margin-left: 2px;
+}
+
+/* IE 6 only */
+#ie6 #header
+{
+    display: inline-block;
+}
+
+#ie6 #compass
+{
+    overflow: hidden;
+}
+
+#ie6 #compass_left
+{
+    margin-left: 3px;
+}
+
+#ie6 #compass_right
+{
+    margin-right: 2px;
 }
