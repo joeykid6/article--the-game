@@ -1,9 +1,10 @@
 
 # TODO
-# 1) Test and fix interface in Chrome, Safari, and Opera (briefly check Safari, FF, Chrome, Opera on Mac/Linux/Vista as well)
-# 2) debug and adjust timing on dialogue delivery (needs to slow down)
-# 3) test alternatives to auto-scroll on new dialogue line (which is jarring)
-# 4) test alternatives to "... begins to type" for spinner/loading notice (which is not timing well)
+# 1) debug and adjust timing on dialogue delivery (needs to slow down)
+# 2) test alternatives to auto-scroll on new dialogue line (which is jarring)
+# 3) test alternatives to "... begins to type" for spinner/loading notice (which is not timing well)
+# 4) Test media object interactions (esp. Lightview response) on all browsers
+# 5) Test interface in general on Safari, FF, Chrome, Opera on Mac/Linux/Win7, and IE on Win7
 
 # set the fade in time for dialogue lines to appear, and the necessary wait time for the
 # scroll to happen properly.

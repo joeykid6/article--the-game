@@ -422,6 +422,8 @@ td.room #room_content ul
 .dialogue_line, .dialogue_line_player, .dialogue_line_game
 {
     border: 1px solid #000;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px rgba(0,0,0,.4);
     -moz-border-radius: 5px;
     -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.4);
     -webkit-border-radius: 5px;
@@ -477,6 +479,8 @@ td.room #room_content ul
     font-weight: bold;
     background-color: #eee;
     border: 1px solid #000;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px rgba(0,0,0,.4);
     -moz-border-radius: 5px;
     -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.4);
     -webkit-border-radius: 5px;
@@ -509,6 +513,8 @@ td.room #room_content ul
 {   
     background-color: #ddd;
     border: 1px solid #888;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px rgba(0,0,0,.4);
     -moz-border-radius: 5px;
     -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.4);
     -webkit-border-radius: 5px;
@@ -536,6 +542,7 @@ td.room #room_content ul
 {
     padding: 4px;
     border: 1px solid #888;
+    border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     background-color: #ffffff;
