@@ -119,7 +119,11 @@ class GamesController < ApplicationController
 
     @game = current_game
     @visible_rooms = @game.visible_rooms.order_by_section
-    @visible_speakers = Speaker.all(@visible_rooms, :order => :source_name)
+    
+    @visible_lines_speakers = DialogueLine.find(:all,
+      :conditions => ["line_generator_type = (?) and room_id IN (?)", "Speaker",  @visible_rooms.map(&:id)])
+
+    @visible_speakers = Speaker.all(:conditions=>[" id IN (?)",  @visible_lines_speakers.map(&:line_generator_id)])
 
     room_count = Room.all.length.to_r
     visible_room_count = @visible_rooms.length.to_r
