@@ -4,10 +4,10 @@
 
   <% @visible_rooms.group_by(&:section_id).each do |section_id, visible_rooms| -%>
   <% section = Section.find(section_id) %>
-    <h2 style="margin-top: 25px;"><%= "Section #{section.position}: #{section.name}" %></h2>
+    <h2 style="margin-top: 25px;"><%= "Section #{section.position}: #{h(section.name)}" %></h2>
       <% visible_rooms.sort_by(&:id).each do |visible_room| -%>
         <div style="border-bottom: 1px solid #000; background-color: #eee;">
-          <h3 style="margin-bottom: 9px;border-bottom: 1px solid #000; background-color: #fff;"><%= visible_room.name %></h3>
+          <h3 style="margin-bottom: 9px;border-bottom: 1px solid #000; background-color: #fff;"><%= h(visible_room.name) %></h3>
 
           <% unless visible_room.speakers.blank? -%>
             <% visible_room.speakers.sort_by(&:source_name).each do |speaker| -%>

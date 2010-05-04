@@ -1,6 +1,6 @@
 <%= render :partial=>'dialogue_lines/add_generators' if session[:authenticated] == "yes" %>
 
-<h2>Section Map: "<%= @section.name %>"</h2>
+<h2>Section Map: "<%= h(@section.name) %>"</h2>
 <% map_rooms %>
     <table id="room_map">
       <% @room_map.each do |row| -%>

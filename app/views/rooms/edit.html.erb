@@ -1,4 +1,4 @@
-<h1>Editing <%= @room.name %> in <%= @section.name %></h1>
+<h1>Editing <%= h(@room.name) %> in <%= h(@section.name) %></h1>
 
 <% form_for([@section, @room]) do |f| %>
   <%= f.error_messages %>
@@ -32,4 +32,4 @@
   </p>
 <% end %>
 
-<%= link_to "Room map for #{@section.name}", section_rooms_path(@section) %>
+<%= link_to "Room map for #{h(@section.name)}", section_rooms_path(@section) %>

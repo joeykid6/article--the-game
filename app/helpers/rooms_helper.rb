@@ -187,7 +187,7 @@ module RoomsHelper
   def delay_timer_calc(dialogue_line)
     delay_time = case dialogue_line.content.length/30
     when (0..2) then 2
-    when (15..1000) then 15
+    when (60..1000) then 60
     else
       dialogue_line.content.length/30
     end
