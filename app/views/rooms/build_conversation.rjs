@@ -1,6 +1,6 @@
 
 # TODO
-# 1) debug and adjust timing on dialogue delivery (needs to slow down)
+# 1) debug and adjust timing on dialogue delivery (needs to slow down) NEED TO ALLOW FOR INTERRUPTS VIA CLICK OR WHEEL
 # 2) test alternatives to auto-scroll on new dialogue line (which is jarring)
 # 3) test alternatives to "... begins to type" for spinner/loading notice (which is not timing well)
 # 4) Test media object interactions (esp. Lightview response) on all browsers
@@ -10,21 +10,23 @@
 # scroll to happen properly.
 fade_in_time = 1.5
 fade_out_time = 0.5
-scroll_wait_time = 0.2
+scroll_wait_time = 2
+player_response_delay = 4
 
 response_window_default_text = "<h2>Player Responses</h2>"
 
 page.render_dialogue_line(@avatar, @avatar_thumbnail, @dialogue_line, fade_in_time)
 
-page.dialogue_scroll_to_bottom(scroll_wait_time)
 
 # Properly fade player responses and refresh response window
 if @dialogue_line.line_generator.name == 'player_response'
-  @dialogue_line.self_and_siblings.each { |player_response| page.visual_effect(:fade,
-      "player_response_#{player_response.id}",
-      :duration => fade_out_time) }
+#  @dialogue_line.self_and_siblings.each { |player_response| page.visual_effect(:fade,
+#      "player_response_#{player_response.id}",
+#      :duration => fade_out_time) } # TODO test whether this fade can be reintroduced; do we even need it?
   page.delay(fade_out_time) { page[:response_window].replace_html response_window_default_text }
 end
+
+page.dialogue_scroll_to_bottom(scroll_wait_time, @dialogue_line.content.length, 4) #TODO this is inconsistent at the end of a conversation, continue to test
 
 # disable clicking other avatars for the duration of a conversation
 page[:click_blocker].show
@@ -44,7 +46,7 @@ page.insert_html :bottom, 'media_window',
 # start a delay timer to pace all lines of dialogue properly
 delay_timer = delay_timer_calc(@dialogue_line)
 
-# start a timer to pace all loading spinners properly; TODO need to carefully revisit this timing issue.
+# start a timer to pace all loading spinners properly
 loading_timer = delay_timer_calc(@dialogue_line)/2
 
 # only start the loading timer for long lines
@@ -60,12 +62,12 @@ unless @dialogue_line.descendants.empty?
     if descendant.line_generator.name == 'player_response'
       @player_responses = descendant.self_and_siblings
 
-      page.delay(loading_timer) do
-        page[:response_window].replace_html :partial => 'dialogue_spinner',
-          :locals => { :waiting_text => "<em>You begin to type a response...</em>" }
-      end if previous_line_is_long
+#      page.delay(loading_timer) do
+#        page[:response_window].replace_html :partial => 'dialogue_spinner',
+#          :locals => { :waiting_text => "You begin to type a response..." }
+#      end if previous_line_is_long
 
-      page.delay(delay_timer) do
+      page.delay(delay_timer - delay_timer_calc(descendant.parent) + player_response_delay) do
         page[:response_window].replace_html :partial => 'player_response',
           :collection => @player_responses,
           :locals => { :room => @room }
@@ -79,14 +81,20 @@ unless @dialogue_line.descendants.empty?
 
 #    Handle continuations of the conversation which don't include a player response
     else
-      page.delay(loading_timer) do
+      
+      page.delay(loading_timer) do # TODO adjust loading_timer depending on current line's length?
         page[:response_window].replace_html :partial => 'dialogue_spinner',
-          :locals => { :waiting_text => "<em>#{descendant.line_generator.short_name} has started typing...</em>" }
+          :locals => { :waiting_text => "#{descendant.line_generator.short_name} is typing..." }
       end if previous_line_is_long
 
       page.delay(delay_timer) do
         page.visual_effect(:fade, "dialogue_spinner", :duration => fade_out_time)
-        page.delay(fade_out_time) { page[:response_window].replace_html response_window_default_text }
+          page.delay(fade_out_time) { page[:response_window].replace_html response_window_default_text }
+#        if descendant.children.count > 0 # need this extra if to avoid an eval error on the next line; I know it's not DRY
+#          page.delay(fade_out_time) { page[:response_window].replace_html response_window_default_text } if descendant.children.first.line_generator.name != "player_response"
+#        else
+#          page.delay(fade_out_time) { page[:response_window].replace_html response_window_default_text }
+#        end # TODO Decide whether this fade check should be left in or out
       end if previous_line_is_long
 
       page.render_dialogue_line(descendant.line_generator, 
@@ -94,11 +102,11 @@ unless @dialogue_line.descendants.empty?
         descendant,
         fade_in_time,
         delay_timer)
-      page.dialogue_scroll_to_bottom(delay_timer + scroll_wait_time)
+
+      page.dialogue_scroll_to_bottom(delay_timer + scroll_wait_time, descendant.content.length, 6)
 
       previous_line_is_long = is_dialogue_line_long?(descendant)
-
-      loading_timer += delay_timer_calc(descendant)/2
+      loading_timer = delay_timer + delay_timer_calc(descendant)/2
       delay_timer += delay_timer_calc(descendant) unless descendant.descendants.empty?
 
   #    This is where the conversation ending/reset sequence happens when there are no more descendants
