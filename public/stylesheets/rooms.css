@@ -409,6 +409,14 @@ td.room #room_content ul
     margin-left: 15px;
 }
 
+#dialogue_spinner
+{
+    text-align: center;
+    font-family: Libel, Arial, sans-serif;
+    margin-top: 40px;
+    font-size: 28px;
+}
+
 #player_avatar_box
 {
     border: 3px solid #000000;

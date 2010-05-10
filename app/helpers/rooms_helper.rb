@@ -39,7 +39,7 @@ module RoomsHelper
 #      In the next bit, we check if the current cell is nil, then see if it's next to any
 #      existing rooms (or the section is empty), and then we generate the "Add Room" link inside.
       row.map! do |x|
-        if x.nil? && (is_next_to_room( @section, @room_map.index(row), row.index(x) ) || (@rooms.length == 0) )
+        if x.nil? && (is_next_to_room?( @section, @room_map.index(row), row.index(x) ) || (@rooms.length == 0) )
           add_room_td_cell( @room_map.index(row), row.index(x) )
         elsif x.nil? #for cases where there needs to be a cell but no "Add Room" link
           empty_room_td_cell
@@ -136,7 +136,7 @@ module RoomsHelper
   end
 
 #  Determines whether a given empty array cell is next to a room in the room map.
-  def is_next_to_room(section, row, col)
+  def is_next_to_room?(section, row, col)
     [[(row - 1), col], [row, (col - 1)], [(row + 1), col], [row, (col + 1)]].each do |x|
       return true unless section.rooms.find_by_row_and_col( x[0], x[1] ).nil?
     end
@@ -186,7 +186,7 @@ module RoomsHelper
 #  Sets the delay time for building dialogue sequences in build_conversation.rjs
   def delay_timer_calc(dialogue_line)
     delay_time = case dialogue_line.content.length/30
-    when (0..2) then 2
+    when (0..3) then 3
     when (60..1000) then 60
     else
       dialogue_line.content.length/30
@@ -195,11 +195,22 @@ module RoomsHelper
   end
 
 #  Scrolls the dialogue window to the bottom TODO requires cross-browser testing
-  def dialogue_scroll_to_bottom(delay = 0)
-    page.delay(delay) do #necessary for proper window height
-      page << 'var objDiv = $("dialogue_window");'
-      page << 'objDiv.scrollTop = 0;' #I believe this is necessary for IE to scroll properly
-      page << 'objDiv.scrollTop = objDiv.scrollHeight;'
+  def dialogue_scroll_to_bottom(delay, content_length, set_duration = nil)
+    if set_duration == nil
+      duration = content_length < 90 ? 3 : (content_length/30).to_i #should set duration for now; scriptaculous does not like this
+    else
+      duration = set_duration
+    end
+    page.delay(delay) do #delay necessary for proper window height TODO here is where the new livepipe call should go!!
+      visual_effect(:scroll, "dialogue_window",
+        :queue => {:scope => 'dialogue'},
+        :duration => duration,
+        :x => 0,
+        :y => 0,
+        :to_bottom => true)
+#      page << 'var objDiv = $("dialogue_window");'
+#      page << 'objDiv.scrollTop = 0;' #I believe this is necessary for IE to scroll properly
+#      page << 'objDiv.scrollTop = objDiv.scrollHeight;'
     end
   end
 
@@ -219,6 +230,6 @@ module RoomsHelper
   end
 
   def is_dialogue_line_long?(dialogue_line)
-    true if delay_timer_calc(dialogue_line) >= 4
+    true if delay_timer_calc(dialogue_line) >= 6
   end
 end
