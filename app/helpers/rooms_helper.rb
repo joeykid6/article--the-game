@@ -152,7 +152,7 @@ module RoomsHelper
     end
   end
 
-#  Generates the avatar div in the player avatar box
+#  Generates the avatar div in the player or media avatar box
   def avatar_div(avatar)
     html_content = "#{image_tag(avatar.thumbnail.url(:medium))}\n<h3>#{h(truncate(avatar.short_name, :length => 14))}</h3>"
     content_tag :div, :class => avatar.class.to_s.downcase, :id => "#{avatar.class.to_s.downcase}_#{avatar.id}" do
@@ -164,13 +164,16 @@ module RoomsHelper
   def render_dialogue_line(avatar, avatar_thumbnail, dialogue_line, fade_in_time, delay = 0)
     page.delay(delay) do
       d_time_stamp = dialogue_time_stamp
-      page.insert_html :bottom, 'dialogue_window', :partial => 'dialogue_line', :locals => {
+      page << 'last_scroll_height = $("dialogue_window_content").scrollHeight'
+      page.insert_html :bottom, 'dialogue_window_content', :partial => 'dialogue_line', :locals => {
         :avatar => avatar,
         :avatar_thumbnail => avatar_thumbnail,
         :d_time_stamp => d_time_stamp,
         :dialogue_line => dialogue_line }
       page.hide "dialogue_line_#{dialogue_line.id}_#{d_time_stamp}"
       page.visual_effect(:appear, "dialogue_line_#{dialogue_line.id}_#{d_time_stamp}", :duration => fade_in_time)
+      page.delay(0.2) { page.call 'dialogue_scrollbar.recalculateLayout' }
+      page.delay(1.7) { page << 'dialogue_scrollbar.scrollTo("bottom", true);' }
     end
   end
 
@@ -185,33 +188,13 @@ module RoomsHelper
 
 #  Sets the delay time for building dialogue sequences in build_conversation.rjs
   def delay_timer_calc(dialogue_line)
-    delay_time = case dialogue_line.content.length/30
-    when (0..3) then 3
-    when (60..1000) then 60
+    delay_time = case dialogue_line.content.length/25
+    when (0..5) then 5
+    when (90..10000) then 90
     else
-      dialogue_line.content.length/30
+      dialogue_line.content.length/25
     end
     return delay_time
-  end
-
-#  Scrolls the dialogue window to the bottom TODO requires cross-browser testing
-  def dialogue_scroll_to_bottom(delay, content_length, set_duration = nil)
-    if set_duration == nil
-      duration = content_length < 90 ? 3 : (content_length/30).to_i #should set duration for now; scriptaculous does not like this
-    else
-      duration = set_duration
-    end
-    page.delay(delay) do #delay necessary for proper window height TODO here is where the new livepipe call should go!!
-      visual_effect(:scroll, "dialogue_window",
-        :queue => {:scope => 'dialogue'},
-        :duration => duration,
-        :x => 0,
-        :y => 0,
-        :to_bottom => true)
-#      page << 'var objDiv = $("dialogue_window");'
-#      page << 'objDiv.scrollTop = 0;' #I believe this is necessary for IE to scroll properly
-#      page << 'objDiv.scrollTop = objDiv.scrollHeight;'
-    end
   end
 
 #  used to create a timestamp for distinguishing dialogue lines
@@ -230,6 +213,6 @@ module RoomsHelper
   end
 
   def is_dialogue_line_long?(dialogue_line)
-    true if delay_timer_calc(dialogue_line) >= 6
+    true if delay_timer_calc(dialogue_line) >= 8
   end
 end

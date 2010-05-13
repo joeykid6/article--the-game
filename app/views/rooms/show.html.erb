@@ -52,13 +52,16 @@
     <h2>Chat</h2>
 
     <div id="dialogue_window">
-      
-      <%= render :partial => 'dialogue_line', :locals => {
-          :dialogue_line => @room_root,
-          :d_time_stamp => dialogue_time_stamp,
-          :avatar => @room_root.line_generator,
-          :avatar_thumbnail => @room_root.line_generator.thumbnail.url(:small)} unless @room_root.nil? %>
-      
+      <div id="scrollbar_track"><div id="scrollbar_handle"></div></div>
+        <div id="dialogue_window_content">
+
+        <%= render :partial => 'dialogue_line', :locals => {
+            :dialogue_line => @room_root,
+            :d_time_stamp => dialogue_time_stamp,
+            :avatar => @room_root.line_generator,
+            :avatar_thumbnail => @room_root.line_generator.thumbnail.url(:small)} unless @room_root.nil? %>
+
+        </div>
     </div>
 
     <div id="response_window">

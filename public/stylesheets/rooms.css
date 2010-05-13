@@ -369,6 +369,7 @@ td.room #room_content ul
 
 #dialogue_window
 {
+    position: relative;
     border: 3px solid #000000;
     background-color: #ffffff;
     padding: 5px;
@@ -376,13 +377,42 @@ td.room #room_content ul
     font-family: Arial, sans-serif;
     margin-top: 0px;
     margin-bottom: 10px;
-    overflow: auto;
+    overflow: hidden;
 }
 
 #dialogue_window h3
 {
     font-size: 1.2em;
     font-family: Arial, sans-serif;
+}
+
+#dialogue_window_content
+{
+    width: 611px;
+    border-right: 1px solid #aaa;
+    padding-right: 5px;
+    height: 450px;
+    overflow: hidden;
+}
+
+#scrollbar_track
+{
+    position: absolute;
+    top: 5px;
+    right: 3px;
+    height: 98%;
+    width: 15px;
+    background-color: transparent;
+    cursor: n-resize;
+ }
+
+#scrollbar_handle {
+    width: 10px;
+    margin-left: 3px;
+    background-color: #88dd88;
+    cursor: n-resize;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 
 #response_window
@@ -440,6 +470,7 @@ td.room #room_content ul
     color: #000;
     list-style-type: none;
     margin-bottom: 5px;
+    /*width: 603px;*/
     padding: 4px;
 }
 
@@ -488,7 +519,7 @@ td.room #room_content ul
     background-color: #eee;
     border: 1px solid #000;
     border-radius: 5px;
-    box-shadow: 2px 2px 2px rgba(0,0,0,.4);
+    /*box-shadow: 2px 2px 2px rgba(0,0,0,.4);*/
     -moz-border-radius: 5px;
     -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.4);
     -webkit-border-radius: 5px;
@@ -614,6 +645,12 @@ h4
     margin-top: 35px;
 }
 
+#ie6 #dialogue_spinner, #ie7 #dialogue_spinner, #ie8plus #dialogue_spinner
+{
+    font-family: Impact, sans-serif;
+    font-size: 26px;
+}
+
 /* IE 6 and 7 */
 #ie6 .game h3, #ie7 .game h3
 {
@@ -630,6 +667,11 @@ h4
 #ie6 #compass_bottom, #ie7 #compass_bottom
 {
     margin-left: 2px;
+}
+
+#ie6 #dialogue_spinner, #ie7 #dialogue_spinner
+{
+    margin-top: 45px;
 }
 
 /* IE 6 only */

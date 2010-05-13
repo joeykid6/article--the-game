@@ -10,7 +10,7 @@
           <h3 style="margin-bottom: 9px;border-bottom: 1px solid #000; background-color: #fff;"><%= h(visible_room.name) %></h3>
 
           <% unless visible_room.speakers.blank? -%>
-            <% visible_room.speakers.sort_by(&:source_name).each do |speaker| -%>
+            <% visible_room.speakers.uniq.sort_by(&:source_name).each do |speaker| -%>
               <p style="text-indent: -12px;padding-left: 12px; margin: 8px;"><%= speaker.source_name %></p>
             <% end -%>
 
