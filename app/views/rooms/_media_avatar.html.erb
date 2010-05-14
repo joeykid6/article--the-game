@@ -4,11 +4,11 @@
 
 
 <%= link_to avatar_div(media_avatar),
-        "#{media_avatar.thumbnail.url}",
+        media_object_path(media_avatar),
         :class => "lightview",
         :rel => "iframe",
-        :autosize=>"true",
-        :title => h(media_avatar.short_name) %>
+        :fullscreen=>"true",
+        :title => h(media_avatar.short_name) + ':: ::fullscreen: true' %>
 
 
 <%else%>

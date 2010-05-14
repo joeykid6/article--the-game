@@ -11,6 +11,12 @@
 
 ActiveRecord::Schema.define(:version => 20100415045542) do
 
+  create_table "dialogue_generators", :force => true do |t|
+    t.string   "generator_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "dialogue_lines", :force => true do |t|
     t.text     "content"
     t.integer  "parent_id"
