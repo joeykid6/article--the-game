@@ -1,2 +1,2 @@
-<% my_object=MediaObject.find(:first, params[:id]) %>
+<% my_object=MediaObject.find params[:id] %>
 <%= image_tag my_object.thumbnail.url %>
