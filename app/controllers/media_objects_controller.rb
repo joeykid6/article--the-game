@@ -1,6 +1,6 @@
 class MediaObjectsController < ApplicationController
 
-  before_filter :authenticate
+  before_filter :authenticate, :except => [:show]
   rescue_from ::NoMethodError, :with=>:no_method_recover
   # GET /media_objects
   # GET /media_objects.xml
