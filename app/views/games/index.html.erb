@@ -7,12 +7,14 @@ article. So we thought, why not us? We can do this.</p>
 old-fashioned theory (of the composition, rhetoric, new media, and game flavors), we've
 made ourselves a pretty hot little stew. If it sounds like something you'd like to taste, try the link below.</p>
 
+<p>
 <%= link_to 'New game', new_game_path %>
 <%= '(Will overwrite your saved game)' if @game %>
 <br />
 <%= link_to 'Continue saved game', section_room_path(@current_section, @current_room) if @game %>
+</p>
 
-
+<% if session[:authenticated] == "yes" %>
 <h1>Current games in DB</h1>
 <table>
   <tr>
@@ -32,3 +34,4 @@ made ourselves a pretty hot little stew. If it sounds like something you'd like 
   </tr>
 <% end %>
 </table>
+<% end %>

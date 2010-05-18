@@ -188,11 +188,11 @@ module RoomsHelper
 
 #  Sets the delay time for building dialogue sequences in build_conversation.rjs
   def delay_timer_calc(dialogue_line)
-    delay_time = case dialogue_line.content.length/25
+    delay_time = case dialogue_line.content.length/20
     when (0..5) then 5
-    when (90..10000) then 90
+    when (120..10000) then 120
     else
-      dialogue_line.content.length/25
+      dialogue_line.content.length/20
     end
     return delay_time
   end

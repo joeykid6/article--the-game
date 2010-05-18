@@ -1,22 +1,40 @@
-<% #Generates the avatars for media objects %>
+<% #Generates the avatars for media objects TODO refactor this and the other avatar partial into helpers -%>
 
- <% if media_avatar.image_object == true%>
+ <% if media_avatar.image_object == true -%>
 
+  <div class="<%= media_avatar.class.to_s.downcase %>" id="<%= "#{media_avatar.class.to_s.downcase}_#{media_avatar.id}" %>">
+    <%= link_to image_tag(media_avatar.thumbnail.url(:medium)),
+        media_avatar.thumbnail.url,
+        :class => "lightview",
+        :rel => "image",
+        :title => h(media_avatar.name) %>
+    <h3>
+    <%= link_to h(truncate(media_avatar.short_name, :length => 14)),
+        media_avatar.thumbnail.url,
+        :class => "lightview",
+        :rel => "image",
+        :title => h(media_avatar.name) %>
+    </h3>
+  </div>
 
-<%= link_to avatar_div(media_avatar),
-        "#{media_avatar.thumbnail.url}",
+<%  else -%>
+
+  <div class="<%= media_avatar.class.to_s.downcase %>" id="<%= "#{media_avatar.class.to_s.downcase}_#{media_avatar.id}" %>">
+    <%= link_to image_tag(media_avatar.thumbnail.url(:medium)),
+        media_avatar.url,
         :class => "lightview",
         :rel => "iframe",
-        :autosize=>"true",
-        :title => h(media_avatar.short_name) %>
-
-
-<%else%>
-
-<%= link_to avatar_div(media_avatar),
-        "#{media_avatar.url}",
+        :title => h(media_avatar.name) + ':: :: width: '+ media_avatar.object_width.to_s + ', height: ' + media_avatar.object_height.to_s  %>
+    <h3>
+    <%= link_to h(truncate(media_avatar.short_name, :length => 14)),
+        media_avatar.url,
         :class => "lightview",
         :rel => "iframe",
-        :title => h(media_avatar.short_name) + ':: :: width: '+ media_avatar.object_width.to_s + ', height: ' + media_avatar.object_height.to_s  %>
+        :title => h(media_avatar.name) + ':: :: width: '+ media_avatar.object_width.to_s + ', height: ' + media_avatar.object_height.to_s  %>
+    </h3>
+  </div>
 
-<%end%>
+<%  end -%>
+
+
+

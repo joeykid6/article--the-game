@@ -77,7 +77,8 @@ var Lightview = {
     defaultOptions : {                                     // Default options for each type of view
       image: {
         menubar: 'bottom',
-        closeButton: 'large'
+        closeButton: 'small',
+        topclose: true
       },
       gallery: {
         menubar: 'bottom',

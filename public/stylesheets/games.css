@@ -1,0 +1,14 @@
+/* 
+    Document   : games
+    Created on : May 17, 2010, 2:19:01 PM
+    Author     : Joe
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#content_wrapper
+{
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
