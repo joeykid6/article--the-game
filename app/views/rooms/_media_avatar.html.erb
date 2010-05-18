@@ -4,13 +4,15 @@
 
   <div class="<%= media_avatar.class.to_s.downcase %>" id="<%= "#{media_avatar.class.to_s.downcase}_#{media_avatar.id}" %>">
     <%= link_to image_tag(media_avatar.thumbnail.url(:medium)),
-        media_avatar.thumbnail.url,
+        #fixed_paperclip_route(media_avatar), # Uncomment this line in production
+        media_avatar.thumbnail.url, # Comment this line in production
         :class => "lightview",
         :rel => "image",
         :title => h(media_avatar.name) %>
     <h3>
     <%= link_to h(truncate(media_avatar.short_name, :length => 14)),
-        media_avatar.thumbnail.url,
+        #fixed_paperclip_route(media_avatar), # Uncomment this line in production
+        media_avatar.thumbnail.url, # Comment this line in production
         :class => "lightview",
         :rel => "image",
         :title => h(media_avatar.name) %>

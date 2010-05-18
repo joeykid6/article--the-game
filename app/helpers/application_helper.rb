@@ -9,6 +9,9 @@ def lightview_link(line_content)
           end
 end
 
-
+# only sends out default sized thumbnail routes right now  TODO refactor to include size
+def fixed_paperclip_route(object)
+  "/kairosgame#{object.thumbnail.url}"
+end
 
 end
