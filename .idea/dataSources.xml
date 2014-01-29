@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="3474616588">
+    <data-source source="LOCAL" name="Rails article--the-game: development" uuid="8075d477-0f16-47fb-9328-058c059bdd3a">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1/kairosgame_development</jdbc-url>
+      <user-name>kairosgame</user-name>
+      <user-password>dfc1dfcbdfc3dfd8dfc5dfd9dfcddfcbdfc7dfcf</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails article--the-game: test" uuid="20e1e2fc-c474-48a1-ba0f-216199e6d1bd">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1/kairosgame_test</jdbc-url>
+      <user-name>kairosgame</user-name>
+      <user-password>dfc1dfcbdfc3dfd8dfc5dfd9dfcddfcbdfc7dfcf</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails article--the-game: production" uuid="1412b3fd-1442-4e93-b335-968f3dc767ce">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1/kairosgame_production</jdbc-url>
+      <user-name>kairosgame</user-name>
+      <user-password>dfc1dfcbdfc3dfd8dfc5dfd9dfcddfcbdfc7dfcf</user-password>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+
